@@ -1,12 +1,47 @@
 <resources>
-    <string name="app_name">ExpenseManager</string>
     <string name="action_settings">Settings</string>
-    <!-- Strings used for fragments for navigation -->
-    <string name="first_fragment_label">First Fragment</string>
-    <string name="second_fragment_label">Second Fragment</string>
-    <string name="next">Next</string>
-    <string name="previous">Previous</string>
-
-    <string name="hello_first_fragment">Hello first fragment</string>
-    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+    <string name="app_name">ProjectManager</string>
+    <string name="title_activity_main2">Projects</string>
+    <string name="income">Income</string>
+    <string name="expenses">Expenses</string>
+    <string name="title_activity_new_project">new_project</string>
+    <string name="title_activity_project_transactions">project_transactions</string>
+    <string name="title_activity_new_transaction">new_transaction</string>
+    <string name="lbl_date">Date</string>
+    <string name="lbl_amount">Amount</string>
+    <string name="lbl_num1">1</string>
+    <string name="lbl_num2">2</string>
+    <string name="lbl_num3">3</string>
+    <string name="num0">0</string>
+    <string name="lbl_num4">4</string>
+    <string name="lbl_num5">5</string>
+    <string name="lbl_num6">6</string>
+    <string name="lbl_period">.</string>
+    <string name="lbl_num7">7</string>
+    <string name="lbl_num8">8</string>
+    <string name="lbl_num9">9</string>
+    <string name="lbl_num_clear">C</string>
+    <string name="btn_ok">OK</string>
+    <string name="lbl_project_name">Project Name</string>
+    <string name="lbl_proj_due_date">Due Date</string>
+    <string name="lbl_proj_type">Project Type</string>
+    <string name="create_project">Create Project</string>
+    <string name="et_proj_name">Name</string>
+    <string name="et_due_date">01/01/1990</string>
+    <string name="enter_project_name">Enter project name</string>
+    <string name="choose_approximate_due_date">Choose approximate due date</string>
+    <string name="total_spent">Total Spent</string>
+    <string name="tv_amount">0.00</string>
+    <string name="total_incomes">Total Incomes:</string>
+    <string name="tv_total_incomes">4,567.00</string>
+    <string name="lbl_transactions">Transactions</string>
+    <string name="btn_add_trans">+ ADD</string>
+    <string name="background_project">Background project</string>
+    <string name="tv_incomes">0.00</string>
+    <string name="lbl_expenses">0.00</string>
+    <string name="lbl_due_date">12 May 2020</string>
+    <string name="cv_project_name">My Project</string>
+    <string name="lbl_trans_desc">Bloques</string>
+    <string name="lbl_trans_date">01/01/1990</string>
+    <string name="lbl_trans_amount">0.00</string>
 </resources>

@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#6200EE</color>
-    <color name="colorPrimaryDark">#3700B3</color>
-    <color name="colorAccent">#03DAC5</color>
+    <color name="colorPrimary">#0F6DF7</color>
+    <color name="colorPrimaryDark">#075BDA</color>
+    <color name="colorPrimaryDark_org">#3700B3</color>
+    <color name="colorAccent">#FFCB77</color>
+    <color name="backgroundColor">#EDF3F7</color>
+    <color name="expense_color">#FE6D73</color>
+    <color name="income_color">#17C3B2</color>
+    <color name="darker_color">#227C9D</color>
+    <color name="project_title">#021D3D</color>
+    <color name="done_status">#CAF4AE</color>
+    <color name="transaction_text">#254E89</color>
 </resources>

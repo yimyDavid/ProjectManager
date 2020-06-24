@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/backgroundColor"
-    android:paddingLeft="10dp"
-    android:paddingRight="10dp">
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp">
 
     <androidx.cardview.widget.CardView
         android:id="@+id/card_view"
@@ -63,8 +63,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
+                android:layout_marginEnd="24dp"
                 android:text="@string/expenses"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:textSize="16sp"

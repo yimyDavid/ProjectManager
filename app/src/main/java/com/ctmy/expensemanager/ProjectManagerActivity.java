@@ -74,8 +74,9 @@ public class ProjectManagerActivity extends AppCompatActivity {
         };
         mDatabaseReference.addChildEventListener(mChildListener);
 
-        initializeDisplayContent();
         //saveProject();
+        initializeDisplayContent();
+
 
 
     }

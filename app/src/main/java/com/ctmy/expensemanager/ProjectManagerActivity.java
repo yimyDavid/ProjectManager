@@ -1,5 +1,6 @@
 package com.ctmy.expensemanager;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -40,8 +41,10 @@ public class ProjectManagerActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                /*Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();*/
+                Intent newProjIntent = new Intent(ProjectManagerActivity.this, newProject.class);
+                startActivity(newProjIntent);
             }
         });
 

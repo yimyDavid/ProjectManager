@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="project_category">
+        <item>House</item>
+        <item>Birthday</item>
+        <item>Halloween</item>
+    </string-array>
+</resources>

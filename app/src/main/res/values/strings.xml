@@ -1,6 +1,7 @@
 <resources>
     <string name="action_settings">Settings</string>
     <string name="app_name">ProjectManager</string>
+    <string name="new_project_title">New Project</string>
     <string name="title_activity_main2">Projects</string>
     <string name="income">Income</string>
     <string name="expenses">Expenses</string>

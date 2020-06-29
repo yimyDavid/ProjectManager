@@ -40,14 +40,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
-                android:layout_marginLeft="24dp"
                 android:layout_marginTop="4dp"
                 android:autofillHints=""
                 android:ems="10"
                 android:hint="@string/enter_project_name"
                 android:inputType="textPersonName"
                 android:text="@string/et_proj_name"
-                android:textSize="24sp"
+                android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/lbl_project_name" />
 
@@ -67,14 +66,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
-                android:layout_marginLeft="24dp"
                 android:layout_marginTop="4dp"
                 android:autofillHints=""
                 android:ems="10"
                 android:hint="@string/choose_approximate_due_date"
                 android:inputType="textPersonName"
                 android:text="@string/et_due_date"
-                android:textSize="24sp"
+                android:textSize="20sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/lbl_due_date" />
 
@@ -94,13 +92,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="24dp"
+                android:background="@drawable/outline_spinner"
+                android:backgroundTintMode="src_atop"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/lbl_proj_type"
-                tools:listitem="@layout/item_type"
-                style="@style/spinner_look"/>
+                tools:listitem="@layout/item_type" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>

@@ -7,26 +7,37 @@
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        style="@style/spinner_look">
+        android:layout_height="wrap_content">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/backgroundColor">
 
             <ImageView
                 android:id="@+id/imgType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:backgroundTintMode="src_over"
+                android:paddingLeft="8dp"
+                android:paddingTop="8dp"
+                android:paddingRight="8dp"
+                android:paddingBottom="8dp"
+                android:tint="@color/colorPrimary"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:srcCompat="@tools:sample/avatars" />
 
             <TextView
                 android:id="@+id/tv_desc_type"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:paddingLeft="8dp"
+                android:paddingTop="8dp"
+                android:paddingBottom="8dp"
                 android:text="TextView"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textSize="20sp"
                 app:layout_constraintStart_toEndOf="@+id/imgType"
                 app:layout_constraintTop_toTopOf="parent" />
 

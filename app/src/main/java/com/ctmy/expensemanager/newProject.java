@@ -49,8 +49,8 @@ public class newProject extends AppCompatActivity {
 
     private void initList() {
         mProjList = new ArrayList<>();
-        mProjList.add(new ProjectType("Construction", R.mipmap.ic_cake_white_24dp));
-        mProjList.add(new ProjectType("Halloween", R.mipmap.ic_domain_white_24dp));
+        mProjList.add(new ProjectType("Cumpleanos", R.mipmap.ic_cake_white_24dp));
+        mProjList.add(new ProjectType("Construccion", R.mipmap.ic_domain_white_24dp));
 
     }
 }

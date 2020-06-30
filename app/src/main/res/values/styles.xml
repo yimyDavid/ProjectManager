@@ -16,9 +16,4 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
 
-    <style name="spinner_look" parent="TextAppearance.AppCompat.Widget.TextView.SpinnerItem">
-        <item name="android:textSize">22sp</item>
-        <item name="android:color">@color/transaction_text</item>
-    </style>
-
 </resources>

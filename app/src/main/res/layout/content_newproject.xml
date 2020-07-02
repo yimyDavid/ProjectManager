@@ -99,6 +99,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/lbl_proj_type"
+                android:onClick="showDatePickerDialog"
                 tools:listitem="@layout/item_type" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -9,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.DialogFragment;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
@@ -63,5 +64,10 @@ public class newProject extends AppCompatActivity {
         mProjList.add(new ProjectType("Cumpleanos", R.mipmap.ic_cake_white_24dp));
         mProjList.add(new ProjectType("Construccion", R.mipmap.ic_domain_white_24dp));
 
+    }
+
+    public void showDatePickerDiaglog(View v){
+        DialogFragment newFragment = new DatePickerFragment();
+        newFragment.show(getSupportFragmentManager(), "datePicker");
     }
 }

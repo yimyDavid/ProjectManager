@@ -10,14 +10,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDialogFragment;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
@@ -80,5 +74,5 @@ public class newProject extends AppCompatActivity {
         newFragment.show(getSupportFragmentManager(), "datePicker");
 
     }
-    
+
 }

@@ -45,34 +45,62 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
-                android:id="@+id/lbl_income"
+                android:id="@+id/tv_due_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
-                android:layout_marginTop="16dp"
+                android:text="@string/lbl_due_date"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_proj_name" />
+
+            <TextView
+                android:id="@+id/lbl_balance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Balance"
+                android:textSize="16sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tv_due_date" />
+
+            <TextView
+                android:id="@+id/tv_balance"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="34.432.00"
+                android:textColor="@color/colorPrimary"
+                android:textSize="24sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/lbl_balance" />
+
+            <TextView
+                android:id="@+id/lbl_income"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="32dp"
                 android:text="@string/income"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_due_date" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_balance" />
 
             <TextView
                 android:id="@+id/lbl_income2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:layout_marginEnd="24dp"
+                android:layout_marginEnd="32dp"
                 android:text="@string/expenses"
                 android:textAppearance="@style/TextAppearance.AppCompat.Small"
                 android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_due_date" />
+                app:layout_constraintTop_toBottomOf="@+id/tv_balance" />
 
             <TextView
                 android:id="@+id/tv_incomes"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
+                android:layout_marginStart="32dp"
                 android:layout_marginBottom="16dp"
                 android:text="@string/tv_incomes"
                 android:textAppearance="@style/TextAppearance.AppCompat.Medium"
@@ -95,15 +123,6 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/lbl_income2"
                 app:layout_constraintTop_toBottomOf="@+id/lbl_income2" />
-
-            <TextView
-                android:id="@+id/tv_due_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:text="@string/lbl_due_date"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tv_proj_name" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

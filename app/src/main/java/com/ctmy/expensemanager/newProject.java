@@ -1,26 +1,40 @@
 package com.ctmy.expensemanager;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 
 public class newProject extends AppCompatActivity {
-    private ArrayList<ProjectType> mProjList;
+    private ArrayList<ProjectType> mProjectTypes;
     private TypeAdapter mAdapter;
-    String selectedDate;
-    public static final int REQUEST_CODE = 11;
     TextView tvSelectedDate;
+
+    private static final String TAG = "DocSnippets";
+
+    private FirebaseDatabase mFiredatabaseDatabase;
+    private DatabaseReference mDatabaseReference;
+    private ChildEventListener mChildListener;
+
+    // List of project types
+    ArrayList mbadprojectype;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,9 +50,10 @@ public class newProject extends AppCompatActivity {
 
         initList();
 
+        getProjectTypeList();
         Spinner spinnerProjType = findViewById(R.id.spn_proj_type);
 
-        mAdapter = new TypeAdapter(this, mProjList);
+        mAdapter = new TypeAdapter(this, mProjectTypes);
         spinnerProjType.setAdapter(mAdapter);
 
         spinnerProjType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -54,6 +69,8 @@ public class newProject extends AppCompatActivity {
 
             }
         });
+
+
     }
 
     @Override
@@ -63,9 +80,39 @@ public class newProject extends AppCompatActivity {
     }
 
     private void initList() {
-        mProjList = new ArrayList<>();
-        mProjList.add(new ProjectType("Cumpleanos", R.mipmap.ic_cake_white_24dp));
-        mProjList.add(new ProjectType("Construccion", R.mipmap.ic_domain_white_24dp));
+        mProjectTypes = new ArrayList<>();
+        mProjectTypes.add(new ProjectType("Cumpleanos", R.mipmap.ic_cake_white_24dp));
+        mProjectTypes.add(new ProjectType("Construccion", R.mipmap.ic_domain_white_24dp));
+
+    }
+
+    private void getProjectTypeList(){
+        FirebaseUtil.openFbReference("project_type");
+        mFiredatabaseDatabase = FirebaseUtil.mFirebaseDatabase;
+        mDatabaseReference = FirebaseUtil.mDatabaseReference;
+
+        mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                //long res = snapshot.getChildrenCount();
+               /* HashMap result;
+                result = (HashMap) snapshot.getValue();*/
+               mbadprojectype = new ArrayList();
+               String val;
+               for(DataSnapshot types: snapshot.getChildren()){
+                   val = (String) types.getValue();
+                   mbadprojectype.add(val);
+                   Log.d(TAG, String.valueOf(val));
+               }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
 
     }
 

@@ -50,7 +50,7 @@ public class newProject extends AppCompatActivity {
 
         initList();
 
-        getProjectTypeList();
+        //getProjectTypeList(); /* will use hard coded values for now */
         Spinner spinnerProjType = findViewById(R.id.spn_proj_type);
 
         mAdapter = new TypeAdapter(this, mProjectTypes);
@@ -81,8 +81,9 @@ public class newProject extends AppCompatActivity {
 
     private void initList() {
         mProjectTypes = new ArrayList<>();
-        mProjectTypes.add(new ProjectType("Cumpleanos", R.mipmap.ic_cake_white_24dp));
+        mProjectTypes.add(new ProjectType("Celebracion", R.mipmap.ic_cake_white_24dp));
         mProjectTypes.add(new ProjectType("Construccion", R.mipmap.ic_domain_white_24dp));
+        mProjectTypes.add(new ProjectType("Convivencia", R.mipmap.ic_local_dining_white_24dp));
 
     }
 

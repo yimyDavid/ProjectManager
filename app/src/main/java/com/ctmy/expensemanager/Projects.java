@@ -4,15 +4,18 @@ public class Projects {
     private String projectId;
     private String DueDate;
     private String projectName;
+    private String projectType;
+
     // private double totalExpenses;
     // private double totalIncomes;
 
     public Projects(){}
 
-    public Projects(String projectName, String dueDate){
+    public Projects(String projectName, String dueDate, String projectType){
         this.setProjectId(projectId);
         this.setProjectName(projectName);
         this.setDueDate(dueDate);
+        this.setProjectType(projectType);
         // this.setTotalExpenses(totalExpenses);
         // this.setTotalIncomes(totalIncomes);
     }
@@ -39,6 +42,14 @@ public class Projects {
 
     public void setDueDate(String dueDate) {
         DueDate = dueDate;
+    }
+
+    public String getProjectType() {
+        return projectType;
+    }
+
+    public void setProjectType(String projectType) {
+        this.projectType = projectType;
     }
 
     /*public double getTotalExpenses() {

@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,15 +31,21 @@ public class newProject extends AppCompatActivity {
 
     private static final String TAG = "DocSnippets";
 
-    private FirebaseDatabase mFiredatabaseDatabase;
+    private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
     private ChildEventListener mChildListener;
+
+    // view's fields
+    EditText txtTitle;
+    TextView tvDueDate;
+    String spProjType;
+    Button btSaveProject;
 
     // List of project types
     ArrayList mbadprojectype;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_newproject);
         Toolbar toolbar = findViewById(R.id.toolbar);
@@ -47,6 +55,14 @@ public class newProject extends AppCompatActivity {
         // Add back button
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        FirebaseUtil.openFbReference("projects");
+        mFirebaseDatabase = FirebaseUtil.mFirebaseDatabase;
+        mDatabaseReference = FirebaseUtil.mDatabaseReference;
+
+        txtTitle = (EditText) findViewById(R.id.tv_proj_name);
+        tvDueDate = (TextView) findViewById(R.id.dueDate);
+        btSaveProject = (Button) findViewById(R.id.btn_create_proj);
 
         initList();
 
@@ -60,13 +76,26 @@ public class newProject extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 ProjectType clickedItem = (ProjectType) parent.getItemAtPosition(position);
-                String clickedProjType = clickedItem.getTypeName();
-                Toast.makeText(newProject.this, clickedProjType + " selected", Toast.LENGTH_SHORT).show();
+                spProjType = clickedItem.getTypeName();
+                Toast.makeText(newProject.this, spProjType + " selected", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
+            }
+        });
+
+        btSaveProject.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try{
+                    saveProject();
+                    Toast.makeText(newProject.this, "Project saved", Toast.LENGTH_LONG).show();
+                    cleanFields();
+                }catch (Exception e){
+                    Toast.makeText(newProject.this, "Error saving project", Toast.LENGTH_LONG).show();
+                }
             }
         });
 
@@ -89,7 +118,7 @@ public class newProject extends AppCompatActivity {
 
     private void getProjectTypeList(){
         FirebaseUtil.openFbReference("project_type");
-        mFiredatabaseDatabase = FirebaseUtil.mFirebaseDatabase;
+        mFirebaseDatabase = FirebaseUtil.mFirebaseDatabase;
         mDatabaseReference = FirebaseUtil.mDatabaseReference;
 
         mDatabaseReference.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -117,10 +146,23 @@ public class newProject extends AppCompatActivity {
 
     }
 
-    public void showDatePickerDiaglog(View v){
+    private void showDatePickerDiaglog(View v){
         DialogFragment newFragment = new DatePickerFragment();
         newFragment.show(getSupportFragmentManager(), "datePicker");
 
+    }
+
+    private void saveProject(){
+        String projectTitle = txtTitle.getText().toString();
+        String dueDate = tvDueDate.getText().toString();
+
+        Projects project = new Projects(projectTitle, dueDate, spProjType);
+        mDatabaseReference.push().setValue(project);
+    }
+
+    private void cleanFields(){
+        txtTitle.setText("");
+        tvDueDate.setText("");
     }
 
 }

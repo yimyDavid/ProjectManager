@@ -155,9 +155,9 @@ public class newProject extends AppCompatActivity {
     private void saveProject(){
         String projectTitle = txtTitle.getText().toString();
         String dueDate = tvDueDate.getText().toString();
-
-        Projects project = new Projects(projectTitle, dueDate, spProjType);
-        mDatabaseReference.push().setValue(project);
+        String projectId = mDatabaseReference.push().getKey();
+        Projects project = new Projects(projectId, projectTitle, dueDate, spProjType);
+        mDatabaseReference.setValue(project);
     }
 
     private void cleanFields(){

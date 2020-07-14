@@ -86,7 +86,7 @@ public class ProjectManagerActivity extends AppCompatActivity {
 
     //TEST save
     private void saveProject(){
-        Projects pd = new Projects("Halloween", "01/12/2019","");
+        Projects pd = new Projects("234343","Halloween", "01/12/2019","");
 
         mDatabaseReference.push().setValue(pd);
     }

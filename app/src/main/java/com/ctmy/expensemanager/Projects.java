@@ -11,7 +11,7 @@ public class Projects {
 
     public Projects(){}
 
-    public Projects(String projectName, String dueDate, String projectType){
+    public Projects(String projectId, String projectName, String dueDate, String projectType){
         this.setProjectId(projectId);
         this.setProjectName(projectName);
         this.setDueDate(dueDate);

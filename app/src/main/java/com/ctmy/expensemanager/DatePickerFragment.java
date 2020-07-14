@@ -12,8 +12,6 @@ import android.widget.Toast;
 
 import androidx.fragment.app.DialogFragment;
 
-import org.w3c.dom.Text;
-
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;

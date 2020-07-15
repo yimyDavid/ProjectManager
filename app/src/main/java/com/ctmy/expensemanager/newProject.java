@@ -22,7 +22,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
 
 public class newProject extends AppCompatActivity {
     private ArrayList<ProjectType> mProjectTypes;
@@ -38,6 +43,7 @@ public class newProject extends AppCompatActivity {
     EditText txtTitle;
     TextView tvDueDate;
     String spProjType;
+    String creationDate;
     Button btSaveProject;
 
     // List of project types
@@ -161,13 +167,20 @@ public class newProject extends AppCompatActivity {
         String projectTitle = txtTitle.getText().toString();
         String dueDate = tvDueDate.getText().toString();
         String projectId = mDatabaseReference.push().getKey();
-        Projects project = new Projects(projectId, projectTitle, dueDate, spProjType);
+        creationDate = getCurrentDate();
+        Projects project = new Projects(projectId, projectTitle, dueDate, creationDate, spProjType);
         mDatabaseReference.child(projectId).setValue(project);
     }
 
     private void cleanFields(){
         txtTitle.setText("");
         tvDueDate.setText("");
+    }
+
+    private String getCurrentDate(){
+        Calendar c = Calendar.getInstance();
+        String selectedDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:s", Locale.ENGLISH).format(c.getTime());
+        return selectedDate;
     }
 
 }

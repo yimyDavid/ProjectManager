@@ -3,6 +3,7 @@ package com.ctmy.expensemanager;
 public class Projects {
     private String projectId;
     private String DueDate;
+    private String creationDate;
     private String projectName;
     private String projectType;
 
@@ -11,10 +12,11 @@ public class Projects {
 
     public Projects(){}
 
-    public Projects(String projectId, String projectName, String dueDate, String projectType){
+    public Projects(String projectId, String projectName, String dueDate, String creationDate, String projectType){
         this.setProjectId(projectId);
         this.setProjectName(projectName);
         this.setDueDate(dueDate);
+        this.setCreationDate(creationDate);
         this.setProjectType(projectType);
         // this.setTotalExpenses(totalExpenses);
         // this.setTotalIncomes(totalIncomes);
@@ -42,6 +44,14 @@ public class Projects {
 
     public void setDueDate(String dueDate) {
         DueDate = dueDate;
+    }
+
+    public String getCreationDate() {
+        return creationDate;
+    }
+
+    public void setCreationDate(String creationDate) {
+        this.creationDate = creationDate;
     }
 
     public String getProjectType() {

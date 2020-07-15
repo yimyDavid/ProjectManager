@@ -86,9 +86,8 @@ public class ProjectManagerActivity extends AppCompatActivity {
 
     //TEST save
     private void saveProject(){
-        Projects pd = new Projects("234343","Halloween", "01/12/2019","");
-
-        mDatabaseReference.push().setValue(pd);
+        //Projects pd = new Projects("234343","Halloween", "01/12/2019","");
+        //mDatabaseReference.push().setValue(pd);
     }
     private void initializeDisplayContent(){
         RecyclerView rvProjects = (RecyclerView) findViewById(R.id.projects);

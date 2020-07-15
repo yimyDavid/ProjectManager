@@ -30,7 +30,7 @@
     <string name="et_proj_name">Name</string>
     <string name="et_due_date">01/01/1990</string>
     <string name="enter_project_name">Enter project name</string>
-    <string name="choose_approximate_due_date">Choose approximate due date</string>
+    <string name="choose_approximate_due_date">Click to pick date</string>
     <string name="total_spent">Total Spent</string>
     <string name="tv_amount">0.00</string>
     <string name="total_incomes">Total Incomes:</string>

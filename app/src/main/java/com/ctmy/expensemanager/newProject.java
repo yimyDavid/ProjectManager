@@ -27,7 +27,6 @@ import java.util.ArrayList;
 public class newProject extends AppCompatActivity {
     private ArrayList<ProjectType> mProjectTypes;
     private TypeAdapter mAdapter;
-    TextView tvSelectedDate;
 
     private static final String TAG = "DocSnippets";
 
@@ -51,7 +50,6 @@ public class newProject extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        tvSelectedDate = findViewById(R.id.tv_due_date);
         // Add back button
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -83,6 +81,13 @@ public class newProject extends AppCompatActivity {
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
 
+            }
+        });
+
+        tvDueDate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePickerDiaglog(v);
             }
         });
 
@@ -157,7 +162,7 @@ public class newProject extends AppCompatActivity {
         String dueDate = tvDueDate.getText().toString();
         String projectId = mDatabaseReference.push().getKey();
         Projects project = new Projects(projectId, projectTitle, dueDate, spProjType);
-        mDatabaseReference.setValue(project);
+        mDatabaseReference.child(projectId).setValue(project);
     }
 
     private void cleanFields(){

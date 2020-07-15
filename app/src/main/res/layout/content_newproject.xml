@@ -72,7 +72,6 @@
                 android:ems="10"
                 android:hint="@string/choose_approximate_due_date"
                 android:inputType="textPersonName"
-                android:onClick="showDatePickerDiaglog"
                 android:text="@string/et_due_date"
                 android:textColor="?android:attr/colorForeground"
                 android:textSize="20sp"

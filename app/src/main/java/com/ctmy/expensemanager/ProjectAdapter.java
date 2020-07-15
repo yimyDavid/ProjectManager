@@ -26,7 +26,7 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ProjectV
     private ChildEventListener mChildListener;
 
     public ProjectAdapter(){
-        FirebaseUtil.openFbReference("yimy");
+        FirebaseUtil.openFbReference("projects");
         mFiredatabaseDatabase = FirebaseUtil.mFirebaseDatabase;
         mDatabaseReference = FirebaseUtil.mDatabaseReference;
         projectsList = FirebaseUtil.mProjects;

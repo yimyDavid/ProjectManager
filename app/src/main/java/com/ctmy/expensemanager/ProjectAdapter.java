@@ -30,7 +30,6 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ProjectV
         mFiredatabaseDatabase = FirebaseUtil.mFirebaseDatabase;
         mDatabaseReference = FirebaseUtil.mDatabaseReference;
         projectsList = FirebaseUtil.mProjects;
-        Log.d("Hello Yimy","ww");
 
         mChildListener = new ChildEventListener() {
             @Override

@@ -18,8 +18,10 @@
         app:contentPadding="0dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clProjCard"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:clickable="false">
 
             <ImageView
                 android:id="@+id/imgv_bg_proj"

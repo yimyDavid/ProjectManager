@@ -84,15 +84,22 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ProjectV
         return projectsList.size();
     }
 
-    public class ProjectViewHolder extends RecyclerView.ViewHolder {
+    public class ProjectViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView tvTitle;
         public ProjectViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTitle = (TextView) itemView.findViewById(R.id.tv_proj_name);
+            itemView.setOnClickListener(this);
         }
 
         public void bind(Projects project){
             tvTitle.setText(project.getProjectName());
+        }
+
+        @Override
+        public void onClick(View v) {
+            int position = getAdapterPosition();
+            Log.d("Click", String.valueOf(position));
         }
     }
 }

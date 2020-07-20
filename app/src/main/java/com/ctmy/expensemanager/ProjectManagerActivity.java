@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,6 +24,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class ProjectManagerActivity extends AppCompatActivity {
 
+    ConstraintLayout clProjRow;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,6 +33,8 @@ public class ProjectManagerActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        clProjRow = (ConstraintLayout) findViewById(R.id.clProjCard);
 
         FloatingActionButton fab = findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -39,6 +44,14 @@ public class ProjectManagerActivity extends AppCompatActivity {
                 startActivity(newProjIntent);
             }
         });
+
+       /* clProjRow.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent projectIntent = new Intent(ProjectManagerActivity.this, project_transactions.class);
+                startActivity(projectIntent);
+            }
+        });*/
 
         initializeDisplayContent();
 

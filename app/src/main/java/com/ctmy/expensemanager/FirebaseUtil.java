@@ -9,7 +9,7 @@ public class FirebaseUtil {
     public static FirebaseDatabase mFirebaseDatabase;
     public static DatabaseReference mDatabaseReference;
     private static FirebaseUtil firebaseUtil;
-    public static ArrayList<Projects> mProjects;
+    public static ArrayList<Project> mProjects;
 
     private FirebaseUtil(){};
 

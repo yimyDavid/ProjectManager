@@ -23,10 +23,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 public class newProject extends AppCompatActivity {
@@ -168,7 +166,7 @@ public class newProject extends AppCompatActivity {
         String dueDate = tvDueDate.getText().toString();
         String projectId = mDatabaseReference.push().getKey();
         creationDate = getCurrentDate();
-        Projects project = new Projects(projectId, projectTitle, dueDate, creationDate, spProjType);
+        Project project = new Project(projectId, projectTitle, dueDate, creationDate, spProjType);
         mDatabaseReference.child(projectId).setValue(project);
     }
 

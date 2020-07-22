@@ -1,6 +1,8 @@
 package com.ctmy.expensemanager;
 
-public class Projects {
+import java.io.Serializable;
+
+public class Project implements Serializable {
     private String projectId;
     private String DueDate;
     private String creationDate;
@@ -10,9 +12,9 @@ public class Projects {
     // private double totalExpenses;
     // private double totalIncomes;
 
-    public Projects(){}
+    public Project(){}
 
-    public Projects(String projectId, String projectName, String dueDate, String creationDate, String projectType){
+    public Project(String projectId, String projectName, String dueDate, String creationDate, String projectType){
         this.setProjectId(projectId);
         this.setProjectName(projectName);
         this.setDueDate(dueDate);

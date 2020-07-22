@@ -1,6 +1,7 @@
 package com.ctmy.expensemanager;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,7 +21,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 
 public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ProjectViewHolder> {
-    ArrayList<Projects> projectsList;
+    ArrayList<Project> projectList;
     private FirebaseDatabase mFiredatabaseDatabase;
     private DatabaseReference mDatabaseReference;
     private ChildEventListener mChildListener;
@@ -29,16 +30,16 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ProjectV
         FirebaseUtil.openFbReference("projects");
         mFiredatabaseDatabase = FirebaseUtil.mFirebaseDatabase;
         mDatabaseReference = FirebaseUtil.mDatabaseReference;
-        projectsList = FirebaseUtil.mProjects;
+        projectList = FirebaseUtil.mProjects;
 
         mChildListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-                Projects project = dataSnapshot.getValue(Projects.class);
+                Project project = dataSnapshot.getValue(Project.class);
                 Log.d("Deal: ", project.getProjectName());
                 project.setProjectId(dataSnapshot.getKey());
-                projectsList.add(project);
-                notifyItemInserted(projectsList.size()-1);
+                projectList.add(project);
+                notifyItemInserted(projectList.size()-1);
             }
 
             @Override
@@ -75,13 +76,13 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ProjectV
 
     @Override
     public void onBindViewHolder(@NonNull ProjectViewHolder holder, int position) {
-        Projects proj = projectsList.get(position);
+        Project proj = projectList.get(position);
         holder.bind(proj);
     }
 
     @Override
     public int getItemCount() {
-        return projectsList.size();
+        return projectList.size();
     }
 
     public class ProjectViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
@@ -92,7 +93,7 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ProjectV
             itemView.setOnClickListener(this);
         }
 
-        public void bind(Projects project){
+        public void bind(Project project){
             tvTitle.setText(project.getProjectName());
         }
 
@@ -100,6 +101,10 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ProjectV
         public void onClick(View v) {
             int position = getAdapterPosition();
             Log.d("Click", String.valueOf(position));
+            Project selectedProj = projectList.get(position);
+            Intent intent = new Intent(v.getContext(), project_transactions.class);
+            intent.putExtra("Project", selectedProj);
+            v.getContext().startActivity(intent);
         }
     }
 }

@@ -24,6 +24,11 @@
             android:label="@string/new_project_title"
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
+        <activity
+            android:name=".project_transactions"
+            android:label="@string/proj_trans_acitivity"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>

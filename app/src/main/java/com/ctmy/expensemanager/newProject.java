@@ -51,7 +51,7 @@ public class newProject extends AppCompatActivity {
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_newproject);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbarTrans);
         setSupportActionBar(toolbar);
 
         // Add back button

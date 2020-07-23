@@ -27,7 +27,8 @@
         <activity
             android:name=".project_transactions"
             android:label="@string/proj_trans_acitivity"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".ProjectManagerActivity">
         </activity>
     </application>
 

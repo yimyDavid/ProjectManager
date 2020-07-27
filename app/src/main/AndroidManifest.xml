@@ -30,6 +30,11 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:parentActivityName=".ProjectManagerActivity">
         </activity>
+        <activity
+            android:name=".new_transaction"
+            android:label="New Transaction"
+            android:theme="@style/AppTheme.NoActionBar">
+        </activity>
     </application>
 
 </manifest>

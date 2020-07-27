@@ -25,7 +25,8 @@ public class project_transactions extends AppCompatActivity {
         addTransaction.setOnClickListener(new View.OnClickListener() {
                                               @Override
                                               public void onClick(View v) {
-                                                  Intent transIntent = 
+                                                  Intent transIntent = new Intent(project_transactions.this, new_transaction.class);
+                                                  startActivity(transIntent);
                                               }
                                           }
 

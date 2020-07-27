@@ -13,7 +13,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.DialogFragment;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -25,6 +24,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 public class newProject extends AppCompatActivity {
@@ -143,21 +143,29 @@ public class newProject extends AppCompatActivity {
                    mbadprojectype.add(val);
                    Log.d(TAG, String.valueOf(val));
                }
-
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
-
-
     }
 
     private void showDatePickerDiaglog(View v){
-        DialogFragment newFragment = new DatePickerFragment();
-        newFragment.show(getSupportFragmentManager(), "datePicker");
+
+        DatePickerFragment ddf = new DatePickerFragment();
+
+        ddf.setDateDialogFragmentListener(new DateDialogFragmentListener(){
+
+            @Override
+            public void dateDialogFragmentDateSet(Calendar date) {
+                TextView tv = (TextView) findViewById(R.id.dueDate);
+                String stringOfDate = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(date.getTime());
+                tv.setText(stringOfDate);
+            }
+        });
+
+        ddf.show(getSupportFragmentManager(), "datePickerNewProj");
 
     }
 

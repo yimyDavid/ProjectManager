@@ -14,6 +14,9 @@ public class project_transactions extends AppCompatActivity {
     private Project project;
     TextView addTransaction;
 
+    String mProjectTitle;
+    final String PROJECT_NAME = "project_name";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,6 +48,21 @@ public class project_transactions extends AppCompatActivity {
 
         this.project = project;
         setTitle(getResources().getText(R.string.proj_trans_acitivity) + " " + project.getProjectName());
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+
+        savedInstanceState.putString(PROJECT_NAME, mProjectTitle);
+        savedInstanceState.putSerializable("project", project);
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState){
+        super.onRestoreInstanceState(savedInstanceState);
+
+        project = (Project) savedInstanceState.getSerializable("project");
     }
 
 }

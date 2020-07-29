@@ -33,7 +33,8 @@
         <activity
             android:name=".new_transaction"
             android:label="New Transaction"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:parentActivityName=".project_transactions">
         </activity>
     </application>
 

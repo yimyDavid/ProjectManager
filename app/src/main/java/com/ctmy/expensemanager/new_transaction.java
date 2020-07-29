@@ -21,6 +21,10 @@ public class new_transaction extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbarTrans);
         setSupportActionBar(toolbar);
 
+        // Add back button
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
         tvTransDate = (TextView) findViewById(R.id.tv_date);
 
         tvTransDate.setOnClickListener(new View.OnClickListener() {

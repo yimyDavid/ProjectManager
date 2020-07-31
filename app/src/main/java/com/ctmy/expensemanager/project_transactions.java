@@ -2,6 +2,7 @@ package com.ctmy.expensemanager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -9,12 +10,14 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
 
+import static android.webkit.ConsoleMessage.MessageLevel.LOG;
+
 public class project_transactions extends AppCompatActivity {
 
     private Project project;
     TextView addTransaction;
 
-    String mProjectTitle;
+    String mProjectTitle="Test";
     final String PROJECT_NAME = "project_name";
 
     @Override
@@ -24,6 +27,14 @@ public class project_transactions extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbarTrans);
         setSupportActionBar(toolbar);
 
+       /* if(savedInstanceState != null){
+            mProjectTitle = savedInstanceState.getString(PROJECT_NAME);
+            Log.d("Null", "null object");
+        }*/
+
+        if(savedInstanceState == null){
+            Log.d("Null","savedinstance");
+        }
         addTransaction = (TextView) findViewById(R.id.btAdd);
         addTransaction.setOnClickListener(new View.OnClickListener() {
                                               @Override
@@ -40,14 +51,20 @@ public class project_transactions extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
-        Project project = (Project) intent.getSerializableExtra("Project");
+        project = (Project) intent.getSerializableExtra("Project");
+
+        if(project == null){
+            Log.d("project","project is null");
+        }
 
         if(project == null){
             project = new Project();
+        }else{
+            mProjectTitle = project.getProjectName();
         }
 
         this.project = project;
-        setTitle(getResources().getText(R.string.proj_trans_acitivity) + " " + project.getProjectName());
+        setTitle(getResources().getText(R.string.proj_trans_acitivity) + " " + mProjectTitle);
     }
 
     @Override
@@ -55,14 +72,15 @@ public class project_transactions extends AppCompatActivity {
         super.onSaveInstanceState(savedInstanceState);
 
         savedInstanceState.putString(PROJECT_NAME, mProjectTitle);
-        savedInstanceState.putSerializable("project", project);
+        Log.d("Name", mProjectTitle);
     }
 
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState){
         super.onRestoreInstanceState(savedInstanceState);
 
-        project = (Project) savedInstanceState.getSerializable("project");
+        mProjectTitle = savedInstanceState.getString(PROJECT_NAME);
+        Log.d("restore", "Entered Restored");
     }
 
 }

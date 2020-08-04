@@ -36,7 +36,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 Transaction transaction = snapshot.getValue(Transaction.class);
-                Log.d("TRANS: ", transaction.getDescription());
+                Log.d("TRANS: ", transaction.getDescription() + transaction.getDate());
                 //project.setProjectId(dataSnapshot.getKey());
                 projTransactions.add(transaction);
                 notifyItemInserted(projTransactions.size()-1);
@@ -82,7 +82,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
     @Override
     public int getItemCount() {
-        return projTransactions.size()-1;
+        return projTransactions.size();
     }
 
     public class TransactionViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{

@@ -1,38 +1,105 @@
 package com.ctmy.expensemanager;
 
+import android.content.Context;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.constraintlayout.solver.widgets.Snapshot;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.ArrayList;
+
 public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.TransactionViewHolder> {
+    ArrayList<Transaction> projTransactions;
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mDatabaseReferene;
+    private ChildEventListener mChildListener;
+
+    public TransactionAdapter(){
+        FirebaseUtil.openFbReference("transactions/MACUjjie8CJ84dfLGfH");
+        mFirebaseDatabase = FirebaseUtil.mFirebaseDatabase;
+        mDatabaseReferene = FirebaseUtil.mDatabaseReference;
+        projTransactions = new ArrayList<>();
+
+        mChildListener = new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+                Transaction transaction = snapshot.getValue(Transaction.class);
+                Log.d("TRANS: ", transaction.getDescription());
+                //project.setProjectId(dataSnapshot.getKey());
+                projTransactions.add(transaction);
+                notifyItemInserted(projTransactions.size()-1);
+
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot snapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        };
+        mDatabaseReferene.addChildEventListener(mChildListener);
+    }
 
     @NonNull
     @Override
     public TransactionViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return null;
+        Context context = parent.getContext();
+        View itemView = LayoutInflater.from(context).inflate(R.layout.transaction_list, parent, false);
+        return new TransactionViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(@NonNull TransactionViewHolder holder, int position) {
-
+        Transaction transaction = projTransactions.get(position);
+        holder.bind(transaction);
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return projTransactions.size()-1;
     }
 
     public class TransactionViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
+        TextView tvDescription;
 
         public TransactionViewHolder(@NonNull View itemView){
             super(itemView);
+            tvDescription = (TextView) itemView.findViewById(R.id.tv_trans_desc);
         }
 
         @Override
         public void onClick(View v) {
 
+        }
+
+        public void bind(Transaction transaction) {
+            tvDescription.setText(transaction.getDescription());
         }
     }
 }

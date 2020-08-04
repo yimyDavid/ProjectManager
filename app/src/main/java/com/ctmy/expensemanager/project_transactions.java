@@ -9,6 +9,8 @@ import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.DialogFragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import static android.webkit.ConsoleMessage.MessageLevel.LOG;
 
@@ -65,6 +67,16 @@ public class project_transactions extends AppCompatActivity {
 
         this.project = project;
         setTitle(getResources().getText(R.string.proj_trans_acitivity) + " " + mProjectTitle);
+
+        initializeDisplayTransactions();
+    }
+
+    private void initializeDisplayTransactions(){
+        RecyclerView rvTransactions = (RecyclerView)findViewById(R.id.Transactions);
+        final TransactionAdapter transactionAdapter = new TransactionAdapter();
+        rvTransactions.setAdapter(transactionAdapter);
+        LinearLayoutManager transationsLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        rvTransactions.setLayoutManager(transationsLayoutManager);
     }
 
     @Override

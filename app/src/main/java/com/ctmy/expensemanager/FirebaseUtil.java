@@ -17,8 +17,8 @@ public class FirebaseUtil {
         if(firebaseUtil == null){
             firebaseUtil = new FirebaseUtil();
             mFirebaseDatabase = FirebaseDatabase.getInstance();
-            mProjects = new ArrayList<>();
         }
+        mProjects = new ArrayList<>();
         mDatabaseReference = mFirebaseDatabase.getReference().child(ref);
     }
 }

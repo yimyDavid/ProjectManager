@@ -58,7 +58,7 @@ public class newProject extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        FirebaseUtil.openFbReference("projects");
+        FirebaseUtil.openFbReference("projects", null);
         mFirebaseDatabase = FirebaseUtil.mFirebaseDatabase;
         mDatabaseReference = FirebaseUtil.mDatabaseReference;
 
@@ -126,7 +126,7 @@ public class newProject extends AppCompatActivity {
     }
 
     private void getProjectTypeList(){
-        FirebaseUtil.openFbReference("project_type");
+        FirebaseUtil.openFbReference("project_type", null);
         mFirebaseDatabase = FirebaseUtil.mFirebaseDatabase;
         mDatabaseReference = FirebaseUtil.mDatabaseReference;
 

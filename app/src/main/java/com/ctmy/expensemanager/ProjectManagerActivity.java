@@ -38,8 +38,6 @@ public class ProjectManagerActivity extends AppCompatActivity {
             }
         });*/
 
-        initializeDisplayContent();
-
     }
 
     private void initializeDisplayContent(){
@@ -48,5 +46,19 @@ public class ProjectManagerActivity extends AppCompatActivity {
         rvProjects.setAdapter(projectAdapter);
         LinearLayoutManager projectsLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rvProjects.setLayoutManager(projectsLayoutManager);
+    }
+
+    @Override
+    protected void onPause(){
+        super.onPause();
+        FirebaseUtil.detachListener();
+    }
+
+    @Override
+    protected void onResume(){
+        super.onResume();
+        FirebaseUtil.openFbReference("projects", this);
+        initializeDisplayContent();
+        FirebaseUtil.attachListener();
     }
 }

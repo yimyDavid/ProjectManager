@@ -27,7 +27,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     private ChildEventListener mChildListener;
 
     public TransactionAdapter(){
-        FirebaseUtil.openFbReference("transactions/-MCAUjjie8CJ84dfLGfH");
+        FirebaseUtil.openFbReference("transactions/-MCAUjjie8CJ84dfLGfH", null);
         mFirebaseDatabase = FirebaseUtil.mFirebaseDatabase;
         mDatabaseReferene = FirebaseUtil.mDatabaseReference;
         projTransactions = new ArrayList<>();

@@ -8,6 +8,7 @@ import androidx.annotation.Nullable;
 
 import com.firebase.ui.auth.AuthUI;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -45,8 +46,8 @@ public class FirebaseUtil {
                     if(firebaseAuth.getCurrentUser() == null){
                         FirebaseUtil.signIn();
                     }else{
-                        String userId = firebaseAuth.getUid();
-                        checkAdmin(userId);
+                       // String userId = firebaseAuth.getUid();
+                       // checkAdmin(userId);
                     }
                 }
             };

@@ -102,7 +102,7 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ProjectV
             int position = getAdapterPosition();
             Log.d("Click", String.valueOf(position));
             Project selectedProj = projectList.get(position);
-            Intent intent = new Intent(v.getContext(), project_transactions.class);
+            Intent intent = new Intent(v.getContext(), ProjectTransaction.class);
             intent.putExtra("Project", selectedProj);
             v.getContext().startActivity(intent);
         }

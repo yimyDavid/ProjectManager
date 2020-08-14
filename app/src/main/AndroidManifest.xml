@@ -25,16 +25,16 @@
             android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
-            android:name=".project_transactions"
+            android:name=".ProjectTransaction"
             android:label="@string/proj_trans_acitivity"
             android:theme="@style/AppTheme.NoActionBar"
             android:parentActivityName=".ProjectManagerActivity">
         </activity>
         <activity
-            android:name=".new_transaction"
+            android:name=".NewTransaction"
             android:label="New Transaction"
             android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".project_transactions">
+            android:parentActivityName=".ProjectTransaction">
         </activity>
     </application>
 

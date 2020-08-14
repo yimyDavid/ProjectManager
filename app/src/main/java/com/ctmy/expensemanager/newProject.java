@@ -24,7 +24,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 
 public class newProject extends AppCompatActivity {
@@ -91,7 +90,7 @@ public class newProject extends AppCompatActivity {
         tvDueDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDatePickerDiaglog(v);
+                showDatePickerDialog(v);
             }
         });
 
@@ -151,7 +150,7 @@ public class newProject extends AppCompatActivity {
         });
     }
 
-    private void showDatePickerDiaglog(View v){
+    private void showDatePickerDialog(View v){
 
         DatePickerFragment ddf = new DatePickerFragment();
 

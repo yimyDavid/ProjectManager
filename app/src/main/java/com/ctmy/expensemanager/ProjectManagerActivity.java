@@ -41,7 +41,7 @@ public class ProjectManagerActivity extends AppCompatActivity {
        /* clProjRow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent projectIntent = new Intent(ProjectManagerActivity.this, project_transactions.class);
+                Intent projectIntent = new Intent(ProjectManagerActivity.this, ProjectTransaction.class);
                 startActivity(projectIntent);
             }
         });*/

@@ -8,13 +8,10 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.fragment.app.DialogFragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import static android.webkit.ConsoleMessage.MessageLevel.LOG;
-
-public class project_transactions extends AppCompatActivity {
+public class ProjectTransaction extends AppCompatActivity {
 
     private Project project;
     TextView addTransaction;
@@ -41,7 +38,7 @@ public class project_transactions extends AppCompatActivity {
         addTransaction.setOnClickListener(new View.OnClickListener() {
                                               @Override
                                               public void onClick(View v) {
-                                                  Intent transIntent = new Intent(project_transactions.this, new_transaction.class);
+                                                  Intent transIntent = new Intent(ProjectTransaction.this, NewTransaction.class);
                                                   startActivity(transIntent);
                                               }
                                           }
@@ -75,8 +72,8 @@ public class project_transactions extends AppCompatActivity {
         RecyclerView rvTransactions = (RecyclerView)findViewById(R.id.Transactions);
         final TransactionAdapter transactionAdapter = new TransactionAdapter();
         rvTransactions.setAdapter(transactionAdapter);
-        LinearLayoutManager transationsLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
-        rvTransactions.setLayoutManager(transationsLayoutManager);
+        LinearLayoutManager transactionsLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
+        rvTransactions.setLayoutManager(transactionsLayoutManager);
     }
 
     @Override

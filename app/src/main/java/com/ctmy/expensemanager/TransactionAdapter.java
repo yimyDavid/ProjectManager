@@ -18,6 +18,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.TransactionViewHolder> {
@@ -87,10 +89,12 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
     public class TransactionViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView tvDescription;
+        TextView tvAmount;
 
         public TransactionViewHolder(@NonNull View itemView){
             super(itemView);
             tvDescription = (TextView) itemView.findViewById(R.id.tv_trans_desc);
+            tvAmount = (TextView) itemView.findViewById(R.id.tv_trans_amount);
         }
 
         @Override
@@ -100,6 +104,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
         public void bind(Transaction transaction) {
             tvDescription.setText(transaction.getDescription());
+            tvAmount.setText(transaction.getAmount());
         }
     }
 }

@@ -89,11 +89,13 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
     public class TransactionViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView tvDescription;
+        TextView tvDate;
         TextView tvAmount;
 
         public TransactionViewHolder(@NonNull View itemView){
             super(itemView);
             tvDescription = (TextView) itemView.findViewById(R.id.tv_trans_desc);
+            tvDate = (TextView) itemView.findViewById(R.id.tv_trans_date);
             tvAmount = (TextView) itemView.findViewById(R.id.tv_trans_amount);
         }
 
@@ -104,7 +106,8 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
         public void bind(Transaction transaction) {
             tvDescription.setText(transaction.getDescription());
-            tvAmount.setText(transaction.getAmount());
+            tvDate.setText(transaction.getDate());
+            tvAmount.setText(String.valueOf(transaction.getAmount()));
         }
     }
 }

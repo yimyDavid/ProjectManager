@@ -53,10 +53,6 @@ public class ProjectTransaction extends AppCompatActivity {
         project = (Project) intent.getSerializableExtra("Project");
 
         if(project == null){
-            Log.d("project","project is null");
-        }
-
-        if(project == null){
             project = new Project();
         }else{
             mProjectTitle = project.getProjectName();
@@ -77,19 +73,16 @@ public class ProjectTransaction extends AppCompatActivity {
     }
 
     @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        super.onSaveInstanceState(savedInstanceState);
+    public void onResume() {
+        super.onResume();
 
-        savedInstanceState.putString(PROJECT_NAME, mProjectTitle);
-        Log.d("Name", mProjectTitle);
     }
 
     @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState){
-        super.onRestoreInstanceState(savedInstanceState);
+    public void onPause(){
+        super.onPause();
 
-        mProjectTitle = savedInstanceState.getString(PROJECT_NAME);
-        Log.d("restore", "Entered Restored");
     }
+    
 
 }

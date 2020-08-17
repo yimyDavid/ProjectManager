@@ -1,6 +1,8 @@
 package com.ctmy.expensemanager;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -17,7 +19,7 @@ public class ProjectTransaction extends AppCompatActivity {
     TextView addTransaction;
 
     String mProjectTitle="Test";
-    final String PROJECT_NAME = "project_name";
+    final String PROJECT_NAME = "com.ctmy.expensemanager.PROJECT_NAME";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,7 +83,10 @@ public class ProjectTransaction extends AppCompatActivity {
     @Override
     public void onPause(){
         super.onPause();
+        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(PROJECT_NAME, 0);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
 
+        editor.putString(PROJECT_NAME, project.getProjectName());
     }
     
 

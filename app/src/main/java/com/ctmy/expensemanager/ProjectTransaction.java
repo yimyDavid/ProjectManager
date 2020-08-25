@@ -18,7 +18,7 @@ public class ProjectTransaction extends AppCompatActivity {
     private Project project;
     TextView addTransaction;
 
-    String mProjectTitle="Test";
+    String mProjectTitle="";
     final String PROJECT_NAME = "com.ctmy.expensemanager.PROJECT_NAME";
 
     @Override
@@ -28,14 +28,7 @@ public class ProjectTransaction extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbarTrans);
         setSupportActionBar(toolbar);
 
-       /* if(savedInstanceState != null){
-            mProjectTitle = savedInstanceState.getString(PROJECT_NAME);
-            Log.d("Null", "null object");
-        }*/
 
-        if(savedInstanceState == null){
-            Log.d("Null","savedinstance");
-        }
         addTransaction = (TextView) findViewById(R.id.btAdd);
         addTransaction.setOnClickListener(new View.OnClickListener() {
                                               @Override
@@ -56,11 +49,17 @@ public class ProjectTransaction extends AppCompatActivity {
 
         if(project == null){
             project = new Project();
+            SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(PROJECT_NAME, 0);
+            mProjectTitle = sharedPreferences.getString("project_name", "");
         }else{
             mProjectTitle = project.getProjectName();
+            SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(PROJECT_NAME, 0);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+
+            editor.putString("project_name", project.getProjectName());
+            editor.commit();
         }
 
-        this.project = project;
         setTitle(getResources().getText(R.string.proj_trans_acitivity) + " " + mProjectTitle);
 
         initializeDisplayTransactions();
@@ -73,21 +72,5 @@ public class ProjectTransaction extends AppCompatActivity {
         LinearLayoutManager transactionsLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rvTransactions.setLayoutManager(transactionsLayoutManager);
     }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-
-    }
-
-    @Override
-    public void onPause(){
-        super.onPause();
-        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(PROJECT_NAME, 0);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-
-        editor.putString(PROJECT_NAME, project.getProjectName());
-    }
-    
 
 }

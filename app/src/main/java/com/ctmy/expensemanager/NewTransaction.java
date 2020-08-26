@@ -2,6 +2,7 @@ package com.ctmy.expensemanager;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -13,6 +14,7 @@ import java.util.Locale;
 
 public class NewTransaction extends AppCompatActivity {
     TextView tvTransDate;
+    Button btnSave;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +28,7 @@ public class NewTransaction extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         tvTransDate = (TextView) findViewById(R.id.tv_date);
+        btnSave = (Button) findViewById(R.id.btn_ok);
 
         tvTransDate.setOnClickListener(new View.OnClickListener() {
                @Override
@@ -34,6 +37,14 @@ public class NewTransaction extends AppCompatActivity {
                }
            }
         );
+
+        btnSave.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 
     private void showDatePickerDiaglog(View v){
@@ -51,5 +62,9 @@ public class NewTransaction extends AppCompatActivity {
         });
 
         ddf.show(getSupportFragmentManager(), "datePickerTrans");
+    }
+
+    private void saveTransaction(){
+
     }
 }

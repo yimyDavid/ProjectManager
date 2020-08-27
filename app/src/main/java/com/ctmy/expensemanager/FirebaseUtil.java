@@ -29,6 +29,7 @@ public class FirebaseUtil {
     public static boolean isAdmin;
 
     private static final int RC_SIGN_IN = 123;
+    final static String PROJECT_NAME = "com.ctmy.expensemanager.PROJECT_NAME";
     private static Activity caller;
 
     private FirebaseUtil(){};

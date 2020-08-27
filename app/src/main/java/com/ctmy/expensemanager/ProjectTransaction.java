@@ -13,13 +13,15 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import static com.ctmy.expensemanager.FirebaseUtil.PROJECT_NAME;
+
 public class ProjectTransaction extends AppCompatActivity {
 
     private Project project;
     TextView addTransaction;
 
     String mProjectTitle="";
-    final String PROJECT_NAME = "com.ctmy.expensemanager.PROJECT_NAME";
+    // final String PROJECT_NAME = "com.ctmy.expensemanager.PROJECT_NAME";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +59,7 @@ public class ProjectTransaction extends AppCompatActivity {
             SharedPreferences.Editor editor = sharedPreferences.edit();
 
             editor.putString("project_name", project.getProjectName());
+            editor.putString("project_id", project.getProjectId());
             editor.commit();
         }
 

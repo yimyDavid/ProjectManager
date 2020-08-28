@@ -10,7 +10,7 @@ public class Transaction {
 
     public Transaction(){}
 
-    public Transaction(String id, String date, String description, double amount){
+    public Transaction(String id, String date, double amount,String description){
         this.setId(id);
         this.setDate(date);
         this.setAmount(amount);

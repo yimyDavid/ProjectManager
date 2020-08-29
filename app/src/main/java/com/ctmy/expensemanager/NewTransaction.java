@@ -102,9 +102,7 @@ public class NewTransaction extends AppCompatActivity {
         String date = tvTransDate.getText().toString();
         Double amount = Double.valueOf(etAmount.getText().toString());
         String description = atvDescription.getText().toString();
-        Transaction transaction = new Transaction(id, date, amount, description);
+        Transaction transaction = new Transaction(id, date, amount, description, mCurrentUserName);
         mDatabaseReference.child(mCurrentProjectId + "/" + id).setValue(transaction);
-        //TODO: complete mehtod
-
     }
 }

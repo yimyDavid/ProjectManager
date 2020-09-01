@@ -1,6 +1,7 @@
 package com.ctmy.expensemanager;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,14 +23,23 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 
+import static com.ctmy.expensemanager.FirebaseUtil.PROJECT_NAME;
+
 public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.TransactionViewHolder> {
     ArrayList<Transaction> projTransactions;
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReferene;
     private ChildEventListener mChildListener;
+    private String currentProjectId;
+    private Context context;
 
-    public TransactionAdapter(){
-        FirebaseUtil.openFbReference("transactions/-MCAUjjie8CJ84dfLGfH", null);
+    public TransactionAdapter(Context context){
+        this.context = context;
+        SharedPreferences sharedPreferences = context.getSharedPreferences(PROJECT_NAME, 0);
+        currentProjectId = sharedPreferences.getString("project_id", "");
+        Log.d("Id from Adapter", currentProjectId);
+
+        FirebaseUtil.openFbReference("transactions/" + currentProjectId, null);
         mFirebaseDatabase = FirebaseUtil.mFirebaseDatabase;
         mDatabaseReferene = FirebaseUtil.mDatabaseReference;
         projTransactions = new ArrayList<>();

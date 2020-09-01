@@ -70,7 +70,7 @@ public class ProjectTransaction extends AppCompatActivity {
 
     private void initializeDisplayTransactions(){
         RecyclerView rvTransactions = (RecyclerView)findViewById(R.id.Transactions);
-        final TransactionAdapter transactionAdapter = new TransactionAdapter();
+        final TransactionAdapter transactionAdapter = new TransactionAdapter(getApplicationContext());
         rvTransactions.setAdapter(transactionAdapter);
         LinearLayoutManager transactionsLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rvTransactions.setLayoutManager(transactionsLayoutManager);

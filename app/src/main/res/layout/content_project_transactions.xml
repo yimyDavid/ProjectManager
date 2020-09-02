@@ -43,7 +43,7 @@
                         app:layout_constraintTop_toTopOf="parent" />
 
                     <TextView
-                        android:id="@+id/tvTotalIncomesAmount"
+                        android:id="@+id/tvTotalExpenses"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
@@ -64,7 +64,7 @@
                         android:textSize="16sp"
                         app:layout_constraintEnd_toStartOf="@+id/tvTotalSpentAmount"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tvTotalIncomesAmount" />
+                        app:layout_constraintTop_toBottomOf="@+id/tvTotalExpenses" />
 
                     <TextView
                         android:id="@+id/tvTotalSpentAmount"
@@ -77,7 +77,7 @@
                         android:textStyle="bold"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toEndOf="@+id/tvTotalIncomes"
-                        app:layout_constraintTop_toBottomOf="@+id/tvTotalIncomesAmount" />
+                        app:layout_constraintTop_toBottomOf="@+id/tvTotalExpenses" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.cardview.widget.CardView>

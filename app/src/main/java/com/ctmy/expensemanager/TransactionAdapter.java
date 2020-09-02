@@ -31,6 +31,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     private DatabaseReference mDatabaseReferene;
     private ChildEventListener mChildListener;
     private String currentProjectId;
+    private double mTotalExpenses;
     private Context context;
 
     public TransactionAdapter(Context context){
@@ -48,7 +49,9 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 Transaction transaction = snapshot.getValue(Transaction.class);
-                Log.d("TRANS: ", transaction.getDescription() + transaction.getDate());
+                mTotalExpenses += transaction.getAmount();
+                Log.d("TRANS: ", transaction.getDescription() + transaction.getDate() + mTotalExpenses);
+
                 //project.setProjectId(dataSnapshot.getKey());
                 projTransactions.add(transaction);
                 notifyItemInserted(projTransactions.size()-1);
@@ -76,6 +79,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
             }
         };
         mDatabaseReferene.addChildEventListener(mChildListener);
+
     }
 
     @NonNull

@@ -22,6 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import org.w3c.dom.Text;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import static com.ctmy.expensemanager.FirebaseUtil.PROJECT_NAME;
 
@@ -31,11 +32,16 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     private DatabaseReference mDatabaseReferene;
     private ChildEventListener mChildListener;
     private String currentProjectId;
+    HashMap<String, Double> mProjectTotals = new HashMap<>();
     private double mTotalExpenses;
     private Context context;
 
-    public TransactionAdapter(Context context){
+    final String INCOMES = "ingresos";
+    final String EXPENSES = "egresos";
+
+    public TransactionAdapter(Context context, ValuesFromAdapter valuesFromAdapter){
         this.context = context;
+        this.valuesFromAdapter = valuesFromAdapter;
         SharedPreferences sharedPreferences = context.getSharedPreferences(PROJECT_NAME, 0);
         currentProjectId = sharedPreferences.getString("project_id", "");
         Log.d("Id from Adapter", currentProjectId);
@@ -49,6 +55,22 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 Transaction transaction = snapshot.getValue(Transaction.class);
+                String transactionDesc = transaction.getDescription().toLowerCase();
+                if(transactionDesc == INCOMES){
+                    Double subTotal = mProjectTotals.get(INCOMES);
+                    if(subTotal != null){
+                        mProjectTotals.put(INCOMES, subTotal + transaction.getAmount());
+                    }else{
+                        mProjectTotals.put(INCOMES, transaction.getAmount());
+                    }
+                }else {
+                    Double subTotalExp = mProjectTotals.get(EXPENSES);
+                    if(subTotalExp != null){
+                        mProjectTotals.put(EXPENSES, subTotalExp + transaction.getAmount());
+                    }else{
+                        mProjectTotals.put(EXPENSES, transaction.getAmount());
+                    }
+                }
                 mTotalExpenses += transaction.getAmount();
                 Log.d("TRANS: ", transaction.getDescription() + transaction.getDate() + mTotalExpenses);
 
@@ -82,6 +104,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
     }
 
+    private ValuesFromAdapter valuesFromAdapter;
     @NonNull
     @Override
     public TransactionViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -94,6 +117,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     public void onBindViewHolder(@NonNull TransactionViewHolder holder, int position) {
         Transaction transaction = projTransactions.get(position);
         holder.bind(transaction);
+        valuesFromAdapter.getTotalExpenses(mProjectTotals);
     }
 
     @Override

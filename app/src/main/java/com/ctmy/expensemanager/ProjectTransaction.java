@@ -13,12 +13,17 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import org.w3c.dom.Text;
+
+import java.util.HashMap;
+
 import static com.ctmy.expensemanager.FirebaseUtil.PROJECT_NAME;
 
-public class ProjectTransaction extends AppCompatActivity {
+public class ProjectTransaction extends AppCompatActivity  implements ValuesFromAdapter{
 
     private Project project;
     TextView addTransaction;
+    TextView tvTotalExpenses;
 
     String mProjectTitle="";
     // final String PROJECT_NAME = "com.ctmy.expensemanager.PROJECT_NAME";
@@ -29,6 +34,7 @@ public class ProjectTransaction extends AppCompatActivity {
         setContentView(R.layout.activity_project_transactions);
         Toolbar toolbar = findViewById(R.id.toolbarTrans);
         setSupportActionBar(toolbar);
+        tvTotalExpenses = (TextView) findViewById(R.id.tvTotalExpenses);
 
 
         addTransaction = (TextView) findViewById(R.id.btAdd);
@@ -70,10 +76,15 @@ public class ProjectTransaction extends AppCompatActivity {
 
     private void initializeDisplayTransactions(){
         RecyclerView rvTransactions = (RecyclerView)findViewById(R.id.Transactions);
-        final TransactionAdapter transactionAdapter = new TransactionAdapter(getApplicationContext());
+        final TransactionAdapter transactionAdapter = new TransactionAdapter(getApplicationContext(), this);
         rvTransactions.setAdapter(transactionAdapter);
         LinearLayoutManager transactionsLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rvTransactions.setLayoutManager(transactionsLayoutManager);
     }
 
+    @Override
+    public void getTotalExpenses(HashMap totalAmount) {
+        Double expenses = (Double) totalAmount.get("egresos");
+        tvTotalExpenses.setText(Double.valueOf(expenses).toString());
+    }
 }

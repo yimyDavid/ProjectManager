@@ -56,7 +56,9 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
                 Transaction transaction = snapshot.getValue(Transaction.class);
                 String transactionDesc = transaction.getDescription().toLowerCase();
-                if(transactionDesc == INCOMES){
+
+                if(transactionDesc.equals(INCOMES)){
+                    Log.d("ingresos", transactionDesc);
                     Double subTotal = mProjectTotals.get(INCOMES);
                     if(subTotal != null){
                         mProjectTotals.put(INCOMES, subTotal + transaction.getAmount());
@@ -71,8 +73,8 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
                         mProjectTotals.put(EXPENSES, transaction.getAmount());
                     }
                 }
-                mTotalExpenses += transaction.getAmount();
-                Log.d("TRANS: ", transaction.getDescription() + transaction.getDate() + mTotalExpenses);
+               // mTotalExpenses += transaction.getAmount();
+               // Log.d("TRANS: ", transaction.getDescription() + transaction.getDate() + mTotalExpenses);
 
                 //project.setProjectId(dataSnapshot.getKey());
                 projTransactions.add(transaction);

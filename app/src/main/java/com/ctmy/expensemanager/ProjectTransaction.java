@@ -24,6 +24,7 @@ public class ProjectTransaction extends AppCompatActivity  implements ValuesFrom
     private Project project;
     TextView addTransaction;
     TextView tvTotalExpenses;
+    TextView tvTotalIncomes;
 
     String mProjectTitle="";
     // final String PROJECT_NAME = "com.ctmy.expensemanager.PROJECT_NAME";
@@ -35,6 +36,7 @@ public class ProjectTransaction extends AppCompatActivity  implements ValuesFrom
         Toolbar toolbar = findViewById(R.id.toolbarTrans);
         setSupportActionBar(toolbar);
         tvTotalExpenses = (TextView) findViewById(R.id.tvTotalExpenses);
+        tvTotalIncomes = (TextView) findViewById(R.id.tvTotalIncome);
 
 
         addTransaction = (TextView) findViewById(R.id.btAdd);
@@ -85,6 +87,8 @@ public class ProjectTransaction extends AppCompatActivity  implements ValuesFrom
     @Override
     public void getTotalExpenses(HashMap totalAmount) {
         Double expenses = (Double) totalAmount.get("egresos");
+        Double incomes = (Double) totalAmount.get("ingresos");
         tvTotalExpenses.setText(Double.valueOf(expenses).toString());
+        tvTotalIncomes.setText(Double.valueOf(incomes).toString());
     }
 }

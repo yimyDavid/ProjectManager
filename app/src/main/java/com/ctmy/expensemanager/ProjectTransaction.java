@@ -85,9 +85,9 @@ public class ProjectTransaction extends AppCompatActivity  implements ValuesFrom
     }
 
     @Override
-    public void getTotalExpenses(HashMap totalAmount) {
-        Double expenses = (Double) totalAmount.get("egresos");
-        Double incomes = (Double) totalAmount.get("ingresos");
+    public void getTotalExpenses(HashMap<String, Double> totalAmount) {
+        Double expenses = totalAmount.get("egresos");
+        Double incomes =  totalAmount.get("ingresos");
         tvTotalExpenses.setText(Double.valueOf(expenses).toString());
         tvTotalIncomes.setText(Double.valueOf(incomes).toString());
     }

@@ -51,6 +51,10 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         mDatabaseReferene = FirebaseUtil.mDatabaseReference;
         projTransactions = new ArrayList<>();
 
+        //Set them to 0 since there are only two types of transactions
+        mProjectTotals.put(INCOMES, 0.00);
+        mProjectTotals.put(EXPENSES, 0.00);
+
         mChildListener = new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
@@ -60,26 +64,13 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
                 if(transactionDesc.equals(INCOMES)){
                     Log.d("ingresos", transactionDesc);
                     Double subTotal = mProjectTotals.get(INCOMES);
-                    if(subTotal != null){
-                        mProjectTotals.put(INCOMES, subTotal + transaction.getAmount());
-                    }else{
-                        mProjectTotals.put(INCOMES, transaction.getAmount());
-                    }
+                    mProjectTotals.put(INCOMES, subTotal + transaction.getAmount());
                 }else {
                     Double subTotalExp = mProjectTotals.get(EXPENSES);
-                    if(subTotalExp != null){
-                        mProjectTotals.put(EXPENSES, subTotalExp + transaction.getAmount());
-                    }else{
-                        mProjectTotals.put(EXPENSES, transaction.getAmount());
-                    }
+                    mProjectTotals.put(EXPENSES, subTotalExp + transaction.getAmount());
                 }
-               // mTotalExpenses += transaction.getAmount();
-               // Log.d("TRANS: ", transaction.getDescription() + transaction.getDate() + mTotalExpenses);
-
-                //project.setProjectId(dataSnapshot.getKey());
                 projTransactions.add(transaction);
                 notifyItemInserted(projTransactions.size()-1);
-
             }
 
             @Override

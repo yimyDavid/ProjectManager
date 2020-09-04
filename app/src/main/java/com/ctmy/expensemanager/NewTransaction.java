@@ -30,6 +30,7 @@ public class NewTransaction extends AppCompatActivity {
     private String mReferenceFirebase = "transactions";
     private String mCurrentProjectId;
     private String mCurrentUserName;
+    private String mCurrentDate;
 
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
@@ -53,6 +54,7 @@ public class NewTransaction extends AppCompatActivity {
         tvTransDate = (TextView) findViewById(R.id.tv_date);
         etAmount = (EditText) findViewById(R.id.etAmount);
         atvDescription = (MultiAutoCompleteTextView) findViewById(R.id.atvDescription);
+        btnSave = (Button) findViewById(R.id.btn_ok);
 
         FirebaseUtil.openFbReference("transactions", null);
         mFirebaseDatabase = FirebaseUtil.mFirebaseDatabase;
@@ -60,8 +62,10 @@ public class NewTransaction extends AppCompatActivity {
         FirebaseAuth firebaseAuth = FirebaseUtil.mFirebaseAuth;
         mCurrentUserName = firebaseAuth.getCurrentUser().getDisplayName();
 
-        tvTransDate = (TextView) findViewById(R.id.tv_date);
-        btnSave = (Button) findViewById(R.id.btn_ok);
+        // Set date view to current date at start up
+        Calendar date = Calendar.getInstance();
+        mCurrentDate = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(date.getTime());
+        tvTransDate.setText(mCurrentDate);
 
         tvTransDate.setOnClickListener(new View.OnClickListener() {
                @Override

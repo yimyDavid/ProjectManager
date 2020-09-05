@@ -87,14 +87,17 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ProjectV
 
     public class ProjectViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView tvTitle;
+        TextView tvDueDate;
         public ProjectViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTitle = (TextView) itemView.findViewById(R.id.tv_proj_name);
+            tvDueDate = (TextView) itemView.findViewById(R.id.tv_due_date);
             itemView.setOnClickListener(this);
         }
 
         public void bind(Project project){
             tvTitle.setText(project.getProjectName());
+            tvDueDate.setText(project.getDueDate());
         }
 
         @Override

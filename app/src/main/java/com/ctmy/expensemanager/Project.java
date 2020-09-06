@@ -8,20 +8,19 @@ public class Project implements Serializable {
     private String creationDate;
     private String projectName;
     private String projectType;
-
-    // private double totalExpenses;
-    // private double totalIncomes;
+    private double totalExpenses;
+    private double totalIncomes;
 
     public Project(){}
 
-    public Project(String projectId, String projectName, String dueDate, String creationDate, String projectType){
+    public Project(String projectId, String projectName, String dueDate, String creationDate, String projectType, Double totalExpenses, Double totalIncomes){
         this.setProjectId(projectId);
         this.setProjectName(projectName);
         this.setDueDate(dueDate);
         this.setCreationDate(creationDate);
         this.setProjectType(projectType);
-        // this.setTotalExpenses(totalExpenses);
-        // this.setTotalIncomes(totalIncomes);
+        this.setTotalExpenses(totalExpenses);
+        this.setTotalIncomes(totalIncomes);
     }
 
     public String getProjectId() {
@@ -64,7 +63,7 @@ public class Project implements Serializable {
         this.projectType = projectType;
     }
 
-    /*public double getTotalExpenses() {
+    public double getTotalExpenses() {
         return totalExpenses;
     }
 
@@ -79,7 +78,7 @@ public class Project implements Serializable {
     public void setTotalIncomes(double totalIncomes) {
         this.totalIncomes = totalIncomes;
     }
-*/
+
 
 
 }

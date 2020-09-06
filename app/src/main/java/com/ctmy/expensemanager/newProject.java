@@ -173,7 +173,7 @@ public class newProject extends AppCompatActivity {
         String dueDate = tvDueDate.getText().toString();
         String projectId = mDatabaseReference.push().getKey();
         creationDate = getCurrentDate();
-        Project project = new Project(projectId, projectTitle, dueDate, creationDate, spProjType);
+        Project project = new Project(projectId, projectTitle, dueDate, creationDate, spProjType, 0.00, 0.00);
         mDatabaseReference.child(projectId).setValue(project);
     }
 

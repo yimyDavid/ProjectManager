@@ -1,5 +1,6 @@
 package com.ctmy.expensemanager;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
@@ -34,6 +36,7 @@ public class NewTransaction extends AppCompatActivity {
 
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
+    private Project mProject;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +48,9 @@ public class NewTransaction extends AppCompatActivity {
         // Add back button
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        Intent intent = getIntent();
+        mProject = (Project) intent.getSerializableExtra("NewTransaction");
 
         // get all data needed to save the transaction
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(PROJECT_NAME, 0);
@@ -79,9 +85,19 @@ public class NewTransaction extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                saveTransaction();
+                
+                try{
+                    saveTransaction();
+                    Toast.makeText(NewTransaction.this, "Transaction saved", Toast.LENGTH_LONG).show();
+                    cleanFields();
+                }catch (Exception e){
+                    Toast.makeText(NewTransaction.this, "Error saving transaction", Toast.LENGTH_LONG).show();
+                }
             }
         });
+    }
+
+    private void cleanFields() {
     }
 
     private void showDatePickerDiaglog(View v){

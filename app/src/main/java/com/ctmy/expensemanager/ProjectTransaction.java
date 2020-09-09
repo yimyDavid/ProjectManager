@@ -39,23 +39,24 @@ public class ProjectTransaction extends AppCompatActivity  implements ValuesFrom
         tvTotalIncomes = (TextView) findViewById(R.id.tvTotalIncome);
 
 
-        addTransaction = (TextView) findViewById(R.id.btAdd);
-        addTransaction.setOnClickListener(new View.OnClickListener() {
-                                              @Override
-                                              public void onClick(View v) {
-                                                  Intent transIntent = new Intent(ProjectTransaction.this, NewTransaction.class);
-                                                  startActivity(transIntent);
-                                              }
-                                          }
-
-        );
-
         // Add back button
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
         project = (Project) intent.getSerializableExtra("Project");
+
+        addTransaction = (TextView) findViewById(R.id.btAdd);
+        addTransaction.setOnClickListener(new View.OnClickListener() {
+                                              @Override
+                                              public void onClick(View v) {
+                                                  Intent transIntent = new Intent(ProjectTransaction.this, NewTransaction.class);
+                                                  transIntent.putExtra("NewTransaction", project);
+                                                  startActivity(transIntent);
+                                              }
+                                          }
+
+        );
 
         if(project == null){
             project = new Project();

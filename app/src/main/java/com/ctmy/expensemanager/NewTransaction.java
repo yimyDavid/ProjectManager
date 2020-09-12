@@ -10,12 +10,16 @@ import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -34,8 +38,13 @@ public class NewTransaction extends AppCompatActivity {
     private String mCurrentUserName;
     private String mCurrentDate;
 
+    private Double mTotalExpenses;
+    private Double mTotalIncomes;
+
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
+    private FirebaseDatabase mFirebaseDatabaseTotal;
+    private DatabaseReference mDatabaseReferenceTotal;
     private Project mProject;
 
     @Override
@@ -85,7 +94,6 @@ public class NewTransaction extends AppCompatActivity {
 
             @Override
             public void onClick(View v) {
-                
                 try{
                     saveTransaction();
                     Toast.makeText(NewTransaction.this, "Transaction saved", Toast.LENGTH_LONG).show();
@@ -124,5 +132,26 @@ public class NewTransaction extends AppCompatActivity {
         String description = atvDescription.getText().toString();
         Transaction transaction = new Transaction(id, date, amount, description, mCurrentUserName);
         mDatabaseReference.child(mCurrentProjectId + "/" + id).setValue(transaction);
+    }
+
+    private void updateProjectTotal(Double amount){
+        FirebaseUtil.openFbReference("projects", null);
+        mFirebaseDatabaseTotal = FirebaseUtil.mFirebaseDatabase;
+        mDatabaseReferenceTotal = FirebaseUtil.mDatabaseReference;
+        mDatabaseReferenceTotal.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Project project = snapshot.child(mCurrentProjectId).getValue(Project.class);
+                mTotalExpenses = project.getTotalExpenses();
+                mTotalIncomes = project.getTotalIncomes();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        Double newTotalExpenses = mTotalExpenses + amount;
+        mDatabaseReferenceTotal.child(mCurrentProjectId).child("totalExpenses").setValue(newTotalExpenses);
     }
 }

@@ -51,7 +51,9 @@ public class ProjectTransaction extends AppCompatActivity  implements ValuesFrom
                                               @Override
                                               public void onClick(View v) {
                                                   Intent transIntent = new Intent(ProjectTransaction.this, NewTransaction.class);
-                                                  transIntent.putExtra("NewTransaction", project);
+                                                  /*if(project != null) {
+                                                      transIntent.putExtra("NewTransaction", project);
+                                                  }*/
                                                   startActivity(transIntent);
                                               }
                                           }

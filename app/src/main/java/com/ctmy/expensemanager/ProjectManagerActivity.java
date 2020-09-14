@@ -20,6 +20,7 @@ import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class ProjectManagerActivity extends AppCompatActivity {
+    RecyclerView rvProjects;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,23 +29,6 @@ public class ProjectManagerActivity extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbarTrans);
         setSupportActionBar(toolbar);
-
-        FloatingActionButton fab = findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent newProjIntent = new Intent(ProjectManagerActivity.this, newProject.class);
-                startActivity(newProjIntent);
-            }
-        });
-
-       /* clProjRow.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent projectIntent = new Intent(ProjectManagerActivity.this, ProjectTransaction.class);
-                startActivity(projectIntent);
-            }
-        });*/
 
     }
 
@@ -75,11 +59,12 @@ public class ProjectManagerActivity extends AppCompatActivity {
 
 
     private void initializeDisplayContent(){
-        RecyclerView rvProjects = (RecyclerView) findViewById(R.id.projects);
+        rvProjects = (RecyclerView) findViewById(R.id.projects);
         final ProjectAdapter projectAdapter = new ProjectAdapter();
         rvProjects.setAdapter(projectAdapter);
         LinearLayoutManager projectsLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rvProjects.setLayoutManager(projectsLayoutManager);
+
     }
 
     @Override
@@ -92,7 +77,26 @@ public class ProjectManagerActivity extends AppCompatActivity {
     protected void onResume(){
         super.onResume();
         FirebaseUtil.openFbReference("projects", this);
+        /*Called here instead of onCreate because user has not logged in yet and the list recyclerV shows nothing*/
         initializeDisplayContent();
         FirebaseUtil.attachListener();
+
+        final FloatingActionButton fab = findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent newProjIntent = new Intent(ProjectManagerActivity.this, newProject.class);
+                startActivity(newProjIntent);
+            }
+        });
+        rvProjects.addOnScrollListener(new RecyclerView.OnScrollListener(){
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy){
+                if (dy > 0)
+                    fab.hide();
+                else if (dy < 0)
+                    fab.show();
+            }
+        });
     }
 }

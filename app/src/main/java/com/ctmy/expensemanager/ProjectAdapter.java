@@ -88,16 +88,22 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ProjectV
     public class ProjectViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView tvTitle;
         TextView tvDueDate;
+        TextView tvTotalExpenses;
+        TextView tvTotalIncomes;
         public ProjectViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTitle = (TextView) itemView.findViewById(R.id.tv_proj_name);
             tvDueDate = (TextView) itemView.findViewById(R.id.tv_due_date);
+            tvTotalExpenses = (TextView) itemView.findViewById(R.id.tv_expenses);
+            tvTotalIncomes = (TextView) itemView.findViewById(R.id.tv_incomes);
             itemView.setOnClickListener(this);
         }
 
         public void bind(Project project){
             tvTitle.setText(project.getProjectName());
             tvDueDate.setText(project.getDueDate());
+            tvTotalExpenses.setText(String.valueOf(project.getTotalExpenses()));
+            tvTotalIncomes.setText(String.valueOf(project.getTotalIncomes()));
         }
 
         @Override

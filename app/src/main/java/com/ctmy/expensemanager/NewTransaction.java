@@ -3,6 +3,7 @@ package com.ctmy.expensemanager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -91,7 +92,6 @@ public class NewTransaction extends AppCompatActivity {
         );
 
         btnSave.setOnClickListener(new View.OnClickListener(){
-
             @Override
             public void onClick(View v) {
                 try{
@@ -100,9 +100,12 @@ public class NewTransaction extends AppCompatActivity {
                     cleanFields();
                 }catch (Exception e){
                     Toast.makeText(NewTransaction.this, "Error saving transaction", Toast.LENGTH_LONG).show();
+                    e.printStackTrace();
                 }
             }
         });
+
+
     }
 
     private void cleanFields() {
@@ -128,22 +131,28 @@ public class NewTransaction extends AppCompatActivity {
     private void saveTransaction(){
         String id = mDatabaseReference.push().getKey();
         String date = tvTransDate.getText().toString();
-        Double amount = Double.valueOf(etAmount.getText().toString());
+        Double amount = Double.parseDouble(etAmount.getText().toString());
         String description = atvDescription.getText().toString();
         Transaction transaction = new Transaction(id, date, amount, description, mCurrentUserName);
         mDatabaseReference.child(mCurrentProjectId + "/" + id).setValue(transaction);
+
+        getTotalsProject(amount, description);
     }
 
-    private void updateProjectTotal(Double amount){
+    private void getTotalsProject(final Double amount, final String transactionType){
         FirebaseUtil.openFbReference("projects", null);
         mFirebaseDatabaseTotal = FirebaseUtil.mFirebaseDatabase;
         mDatabaseReferenceTotal = FirebaseUtil.mDatabaseReference;
-        mDatabaseReferenceTotal.addValueEventListener(new ValueEventListener() {
+
+        mDatabaseReferenceTotal.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Project project = snapshot.child(mCurrentProjectId).getValue(Project.class);
                 mTotalExpenses = project.getTotalExpenses();
                 mTotalIncomes = project.getTotalIncomes();
+
+                updateProjectTotal(amount, transactionType);
+                Log.d("Totals", "Exp:" + mTotalExpenses + " Inc:" + mTotalIncomes);
             }
 
             @Override
@@ -151,7 +160,16 @@ public class NewTransaction extends AppCompatActivity {
 
             }
         });
-        Double newTotalExpenses = mTotalExpenses + amount;
-        mDatabaseReferenceTotal.child(mCurrentProjectId).child("totalExpenses").setValue(newTotalExpenses);
+    }
+
+    private void updateProjectTotal(Double amount, String transactionType){
+        if(transactionType.toLowerCase().equals("ingresos")){
+            Double newTotalIncomes = mTotalIncomes + amount;
+            mDatabaseReferenceTotal.child(mCurrentProjectId).child("totalIncomes").setValue(newTotalIncomes);
+        }else{
+            Double newTotalExpenses = mTotalExpenses + amount;
+            mDatabaseReferenceTotal.child(mCurrentProjectId).child("totalExpenses").setValue(newTotalExpenses);
+        }
+
     }
 }

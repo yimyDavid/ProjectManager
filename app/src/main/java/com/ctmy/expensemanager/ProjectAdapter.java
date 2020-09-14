@@ -2,6 +2,7 @@ package com.ctmy.expensemanager;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -90,20 +91,30 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ProjectV
         TextView tvDueDate;
         TextView tvTotalExpenses;
         TextView tvTotalIncomes;
+        TextView tvBalance;
         public ProjectViewHolder(@NonNull View itemView) {
             super(itemView);
             tvTitle = (TextView) itemView.findViewById(R.id.tv_proj_name);
             tvDueDate = (TextView) itemView.findViewById(R.id.tv_due_date);
             tvTotalExpenses = (TextView) itemView.findViewById(R.id.tv_expenses);
             tvTotalIncomes = (TextView) itemView.findViewById(R.id.tv_incomes);
+            tvBalance = (TextView) itemView.findViewById(R.id.tv_balance);
             itemView.setOnClickListener(this);
         }
 
         public void bind(Project project){
+            Double totalExpenses = project.getTotalExpenses();
+            Double totalIncomes = project.getTotalIncomes();
+            Double balance = totalIncomes - totalExpenses;
+
+            if(balance < 0){
+                tvBalance.setTextColor(Color.RED);
+            }
             tvTitle.setText(project.getProjectName());
             tvDueDate.setText(project.getDueDate());
-            tvTotalExpenses.setText(String.valueOf(project.getTotalExpenses()));
-            tvTotalIncomes.setText(String.valueOf(project.getTotalIncomes()));
+            tvTotalExpenses.setText(String.valueOf(totalExpenses));
+            tvTotalIncomes.setText(String.valueOf(totalIncomes));
+            tvBalance.setText(String.valueOf(totalIncomes-totalExpenses));
         }
 
         @Override

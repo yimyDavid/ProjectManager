@@ -64,6 +64,10 @@ public class newProject extends AppCompatActivity {
         txtTitle = (EditText) findViewById(R.id.tv_proj_name);
         tvDueDate = (TextView) findViewById(R.id.dueDate);
         btSaveProject = (Button) findViewById(R.id.btn_create_proj);
+        // Set date view to current date at start up
+        Calendar date = Calendar.getInstance();
+        String mCurrentDate = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(date.getTime());
+        tvDueDate.setText(mCurrentDate);
 
         initList();
 

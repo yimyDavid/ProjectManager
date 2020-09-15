@@ -109,6 +109,9 @@ public class NewTransaction extends AppCompatActivity {
     }
 
     private void cleanFields() {
+        etAmount.setText("");
+        atvDescription.setText("");
+        etAmount.requestFocus();
     }
 
     private void showDatePickerDiaglog(View v){

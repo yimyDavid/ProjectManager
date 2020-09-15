@@ -183,7 +183,7 @@ public class newProject extends AppCompatActivity {
 
     private void cleanFields(){
         txtTitle.setText("");
-        tvDueDate.setText("");
+        //tvDueDate.setText("");
     }
 
     private String getCurrentDate(){

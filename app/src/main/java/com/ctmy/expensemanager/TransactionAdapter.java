@@ -2,6 +2,7 @@ package com.ctmy.expensemanager;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.constraintlayout.solver.widgets.Snapshot;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.firebase.database.ChildEventListener;
@@ -23,6 +25,7 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.ResourceBundle;
 
 import static com.ctmy.expensemanager.FirebaseUtil.PROJECT_NAME;
 
@@ -37,6 +40,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
     private Context context;
 
     final String INCOMES = "ingresos";
+    final String INCOME = "ingreso";
     final String EXPENSES = "egresos";
 
     public TransactionAdapter(Context context, ValuesFromAdapter valuesFromAdapter){
@@ -61,7 +65,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
                 Transaction transaction = snapshot.getValue(Transaction.class);
                 String transactionDesc = transaction.getDescription().toLowerCase();
 
-                if(transactionDesc.equals(INCOMES)){
+                if(transactionDesc.equals(INCOMES) || transactionDesc.equals(INCOME)){
                     Log.d("ingresos", transactionDesc);
                     Double subTotal = mProjectTotals.get(INCOMES);
                     mProjectTotals.put(INCOMES, subTotal + transaction.getAmount());
@@ -139,6 +143,12 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
             tvDescription.setText(transaction.getDescription());
             tvDate.setText(transaction.getDate());
             tvAmount.setText(String.valueOf(transaction.getAmount()));
+
+            String transactionType = transaction.getDescription().toLowerCase();
+            if(transactionType.equals(INCOMES) || transactionType.equals(INCOME)){
+                tvAmount.setTextColor(ContextCompat.getColor(context, R.color.income_color));
+                tvDescription.setTextColor(ContextCompat.getColor(context, R.color.income_color));
+            }
         }
     }
 }

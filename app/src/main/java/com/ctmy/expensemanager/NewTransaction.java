@@ -48,6 +48,9 @@ public class NewTransaction extends AppCompatActivity {
     private DatabaseReference mDatabaseReferenceTotal;
     private Project mProject;
 
+    final String INCOMES = "ingresos";
+    final String INCOME = "ingreso";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -166,7 +169,7 @@ public class NewTransaction extends AppCompatActivity {
     }
 
     private void updateProjectTotal(Double amount, String transactionType){
-        if(transactionType.toLowerCase().equals("ingresos")){
+        if(transactionType.toLowerCase().equals(INCOMES) || transactionType.toLowerCase().equals(INCOME)){
             Double newTotalIncomes = mTotalIncomes + amount;
             mDatabaseReferenceTotal.child(mCurrentProjectId).child("totalIncomes").setValue(newTotalIncomes);
         }else{

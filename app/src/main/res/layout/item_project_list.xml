@@ -71,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:text="34.432.00"
                 android:textColor="@color/colorPrimary"
-                android:textSize="24sp"
+                android:textSize="28sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

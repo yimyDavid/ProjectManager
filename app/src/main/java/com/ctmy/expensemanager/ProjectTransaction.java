@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.TextView;
 
@@ -77,6 +79,13 @@ public class ProjectTransaction extends AppCompatActivity  implements ValuesFrom
         setTitle(getResources().getText(R.string.proj_trans_acitivity) + " " + mProjectTitle);
 
         initializeDisplayTransactions();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu){
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.project_menu, menu);
+        return true;
     }
 
     private void initializeDisplayTransactions(){

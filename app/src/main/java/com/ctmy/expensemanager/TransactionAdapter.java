@@ -148,6 +148,9 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
             if(transactionType.equals(INCOMES) || transactionType.equals(INCOME)){
                 tvAmount.setTextColor(ContextCompat.getColor(context, R.color.income_color));
                 tvDescription.setTextColor(ContextCompat.getColor(context, R.color.income_color));
+            }else {
+                tvAmount.setTextColor(ContextCompat.getColor(context, R.color.transaction_text));
+                tvDescription.setTextColor(ContextCompat.getColor(context, R.color.transaction_text));
             }
         }
     }

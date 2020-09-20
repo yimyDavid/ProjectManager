@@ -53,7 +53,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:text="@string/lbl_amount"
                 android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
@@ -111,211 +111,38 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardView3"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/lblReceipt"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:visibility="invisible"
-        app:cardBackgroundColor="@color/backgroundColor"
-        app:cardElevation="0dp"
+        android:layout_marginTop="8dp"
+        android:text="@string/receipt"
+        android:textColor="@color/colorPrimary"
+        android:textSize="18sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView2">
+        app:layout_constraintTop_toBottomOf="@+id/cardView2" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="32dp"
-            android:layout_marginRight="30dp">
-
-            <Button
-                android:id="@+id/btn_num1"
-                android:layout_width="68dp"
-                android:layout_height="68dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/number_pad"
-                android:text="@string/lbl_num1"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:id="@+id/btn_num2"
-                android:layout_width="68dp"
-                android:layout_height="68dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/number_pad"
-                android:text="@string/lbl_num2"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@+id/btn_num1"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:id="@+id/btn_num3"
-                android:layout_width="68dp"
-                android:layout_height="68dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/number_pad"
-                android:text="@string/lbl_num3"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@+id/btn_num2"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:id="@+id/btn_num0"
-                android:layout_width="68dp"
-                android:layout_height="68dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="8dp"
-                android:layout_marginEnd="16dp"
-                android:layout_marginRight="16dp"
-                android:background="@drawable/number_pad"
-                android:text="@string/num0"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/btn_num3"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <Button
-                android:id="@+id/btn_num4"
-                android:layout_width="68dp"
-                android:layout_height="68dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/number_pad"
-                android:text="@string/lbl_num4"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btn_num1" />
-
-            <Button
-                android:id="@+id/btn_num5"
-                android:layout_width="68dp"
-                android:layout_height="68dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/number_pad"
-                android:text="@string/lbl_num5"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@+id/btn_num4"
-                app:layout_constraintTop_toBottomOf="@+id/btn_num2" />
-
-            <Button
-                android:id="@+id/btn_num6"
-                android:layout_width="68dp"
-                android:layout_height="68dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/number_pad"
-                android:text="@string/lbl_num6"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@+id/btn_num5"
-                app:layout_constraintTop_toBottomOf="@+id/btn_num3" />
-
-            <Button
-                android:id="@+id/btn_period"
-                android:layout_width="68dp"
-                android:layout_height="68dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/number_pad"
-                android:text="@string/lbl_period"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@+id/btn_num6"
-                app:layout_constraintTop_toBottomOf="@+id/btn_num0" />
-
-            <Button
-                android:id="@+id/btn_num7"
-                android:layout_width="68dp"
-                android:layout_height="68dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/number_pad"
-                android:text="@string/lbl_num7"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btn_num4" />
-
-            <Button
-                android:id="@+id/btn_num8"
-                android:layout_width="68dp"
-                android:layout_height="68dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/number_pad"
-                android:text="@string/lbl_num8"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@+id/btn_num7"
-                app:layout_constraintTop_toBottomOf="@+id/btn_num5" />
-
-            <Button
-                android:id="@+id/btn_num9"
-                android:layout_width="68dp"
-                android:layout_height="68dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
-                android:layout_marginBottom="16dp"
-                android:background="@drawable/number_pad"
-                android:text="@string/lbl_num9"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/btn_num8"
-                app:layout_constraintTop_toBottomOf="@+id/btn_num6" />
-
-            <Button
-                android:id="@+id/btn_num_clear"
-                android:layout_width="68dp"
-                android:layout_height="68dp"
-                android:layout_marginStart="16dp"
-                android:layout_marginLeft="16dp"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/number_pad"
-                android:text="@string/lbl_num_clear"
-                android:textColor="@color/expense_color"
-                android:textSize="24sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toEndOf="@+id/btn_num9"
-                app:layout_constraintTop_toBottomOf="@+id/btn_period" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
+    <ImageView
+        android:id="@+id/imgvReceipt"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="16dp"
+        android:adjustViewBounds="true"
+        android:contentDescription="@string/transaction_receipt"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lblReceipt"
+        tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
     <Button
         android:id="@+id/btn_ok"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="24dp"
         android:background="@drawable/rectangle"
         android:paddingLeft="64dp"
         android:paddingRight="64dp"

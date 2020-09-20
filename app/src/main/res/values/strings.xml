@@ -48,4 +48,6 @@
     <string name="proj_trans_acitivity">Project:</string>
     <string name="no_transactions">No Transactions</string>
     <string name="logout">Logout</string>
+    <string name="receipt">Receipt</string>
+    <string name="transaction_receipt">Transaction Receipt</string>
 </resources>

@@ -2,6 +2,7 @@ package com.ctmy.expensemanager;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -13,6 +14,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,12 +24,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.FileProvider;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
 import java.io.File;
 import java.io.IOException;
@@ -36,6 +41,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import io.grpc.Context;
+
 import static com.ctmy.expensemanager.FirebaseUtil.PROJECT_NAME;
 
 public class NewTransaction extends AppCompatActivity {
@@ -43,6 +50,7 @@ public class NewTransaction extends AppCompatActivity {
     EditText etAmount;
     MultiAutoCompleteTextView atvDescription;
     Button btnSave;
+    ImageView ivReceipt;
 
     private String mReferenceFirebase = "transactions";
     private String mCurrentProjectId;
@@ -57,12 +65,14 @@ public class NewTransaction extends AppCompatActivity {
     private FirebaseDatabase mFirebaseDatabaseTotal;
     private DatabaseReference mDatabaseReferenceTotal;
     private Project mProject;
+    private Transaction mTransaction;
 
     final String INCOMES = "ingresos";
     final String INCOME = "ingreso";
     static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int REQUEST_TAKE_PHOTO = 2;
     String currentPhotoPath;
+    Uri mPhotoURI;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,6 +97,7 @@ public class NewTransaction extends AppCompatActivity {
         etAmount = (EditText) findViewById(R.id.etAmount);
         atvDescription = (MultiAutoCompleteTextView) findViewById(R.id.atvDescription);
         btnSave = (Button) findViewById(R.id.btn_ok);
+        ivReceipt = (ImageView) findViewById(R.id.imgvReceipt);
 
         FirebaseUtil.openFbReference("transactions", null);
         mFirebaseDatabase = FirebaseUtil.mFirebaseDatabase;
@@ -141,6 +152,22 @@ public class NewTransaction extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK){
+            //Uri imageUri = data.getData();
+            StorageReference ref = FirebaseUtil.mStorageRef.child(mPhotoURI.getLastPathSegment());
+            ref.putFile(mPhotoURI).addOnSuccessListener(this, new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                @Override
+                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                    String url = taskSnapshot.getMetadata().getReference().getDownloadUrl().toString();
+                    
+                }
+            });
+        }
+    }
+
     private void cleanFields() {
         etAmount.setText("");
         atvDescription.setText("");
@@ -169,8 +196,8 @@ public class NewTransaction extends AppCompatActivity {
         String date = tvTransDate.getText().toString();
         Double amount = Double.parseDouble(etAmount.getText().toString());
         String description = atvDescription.getText().toString();
-        Transaction transaction = new Transaction(id, date, amount, description, mCurrentUserName);
-        mDatabaseReference.child(mCurrentProjectId + "/" + id).setValue(transaction);
+        mTransaction = new Transaction(id, date, amount, description, mCurrentUserName);
+        mDatabaseReference.child(mCurrentProjectId + "/" + id).setValue(mTransaction);
 
         getTotalsProject(amount, description);
     }
@@ -221,8 +248,9 @@ public class NewTransaction extends AppCompatActivity {
             }
             // Continue only if the File was successfully created
             if(photoFile != null){
-                Uri photoURI = FileProvider.getUriForFile(this, "com.ctmy.expensemanager.fileprovider", photoFile);
-                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                mPhotoURI = FileProvider.getUriForFile(this, "com.ctmy.expensemanager.fileprovider", photoFile);
+                Log.d("Create:", String.valueOf(mPhotoURI) + currentPhotoPath);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, mPhotoURI);
                 startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
             }
         }

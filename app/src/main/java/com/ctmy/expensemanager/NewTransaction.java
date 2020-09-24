@@ -2,6 +2,7 @@ package com.ctmy.expensemanager;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
@@ -34,6 +35,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.IOException;
@@ -100,6 +102,10 @@ public class NewTransaction extends AppCompatActivity {
         atvDescription = (MultiAutoCompleteTextView) findViewById(R.id.atvDescription);
         btnSave = (Button) findViewById(R.id.btn_ok);
         ivReceipt = (ImageView) findViewById(R.id.imgvReceipt);
+
+        /*Get transaction object*/
+
+        //showImage(mTransaction.getImageUrl());
 
         FirebaseUtil.openFbReference("transactions", null);
         mFirebaseDatabase = FirebaseUtil.mFirebaseDatabase;
@@ -170,6 +176,8 @@ public class NewTransaction extends AppCompatActivity {
                                 @Override
                                 public void onSuccess(Uri uri) {
                                     mUrl = uri.toString();
+                                    showImage(mUrl);
+                                    Log.d("result", mUrl);
                                 }
                             });
                         }
@@ -182,6 +190,7 @@ public class NewTransaction extends AppCompatActivity {
         etAmount.setText("");
         atvDescription.setText("");
         etAmount.requestFocus();
+        ivReceipt.setImageResource(0);
     }
 
     private void showDatePickerDiaglog(View v){
@@ -280,5 +289,17 @@ public class NewTransaction extends AppCompatActivity {
         // Save a file: path for use with ACTION_VIEW intents
         currentPhotoPath = image.getAbsolutePath();
         return image;
+    }
+
+    private void showImage(String url){
+        if(url != null && url.isEmpty() == false){
+            int width = Resources.getSystem().getDisplayMetrics().widthPixels;
+            Picasso.get()
+                    .load(url)
+                    .resize(width, width*2/3)
+                    .centerCrop()
+                    .into(ivReceipt);
+                    
+        }
     }
 }

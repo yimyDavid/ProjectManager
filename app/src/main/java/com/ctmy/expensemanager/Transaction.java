@@ -1,6 +1,8 @@
 package com.ctmy.expensemanager;
 
-public class Transaction {
+import java.io.Serializable;
+
+public class Transaction implements Serializable {
     private String id;
     private String date;
     private double amount;

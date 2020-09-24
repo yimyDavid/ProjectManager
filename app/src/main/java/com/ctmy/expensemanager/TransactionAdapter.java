@@ -1,6 +1,7 @@
 package com.ctmy.expensemanager;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.util.Log;
@@ -136,7 +137,11 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
         @Override
         public void onClick(View v) {
-
+            int position = getAdapterPosition();
+            Transaction selectedTransaction = projTransactions.get(position);
+            Intent intent = new Intent(v.getContext(), Transaction.class);
+            intent.putExtra("transaction", selectedTransaction);
+            itemView.getContext().startActivity(intent);
         }
 
         public void bind(Transaction transaction) {

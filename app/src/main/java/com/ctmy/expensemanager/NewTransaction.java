@@ -25,6 +25,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.FileProvider;
 
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -56,6 +57,7 @@ public class NewTransaction extends AppCompatActivity {
     private String mCurrentProjectId;
     private String mCurrentUserName;
     private String mCurrentDate;
+    private String mUrl;
 
     private Double mTotalExpenses;
     private Double mTotalIncomes;
@@ -69,10 +71,10 @@ public class NewTransaction extends AppCompatActivity {
 
     final String INCOMES = "ingresos";
     final String INCOME = "ingreso";
-    static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int REQUEST_TAKE_PHOTO = 2;
     String currentPhotoPath;
     Uri mPhotoURI;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -132,7 +134,6 @@ public class NewTransaction extends AppCompatActivity {
             }
         });
 
-
     }
 
     @Override
@@ -156,15 +157,24 @@ public class NewTransaction extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data){
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK){
-            //Uri imageUri = data.getData();
+            /*Uri imageUri = data.getData(); This didn't work, it was returning null
+            * so I ended up saving the uri in a member variable(mPhotoURI) in dispatchTakePictureIntent() */
             StorageReference ref = FirebaseUtil.mStorageRef.child(mPhotoURI.getLastPathSegment());
             ref.putFile(mPhotoURI).addOnSuccessListener(this, new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    String url = taskSnapshot.getMetadata().getReference().getDownloadUrl().toString();
-                    
-                }
-            });
+                    if(taskSnapshot.getMetadata() != null){
+                        if(taskSnapshot.getMetadata().getReference() != null){
+                            Task<Uri> result = taskSnapshot.getStorage().getDownloadUrl();
+                            result.addOnSuccessListener(new OnSuccessListener<Uri>() {
+                                @Override
+                                public void onSuccess(Uri uri) {
+                                    mUrl = uri.toString();
+                                }
+                            });
+                        }
+                    }
+                }});
         }
     }
 
@@ -184,7 +194,6 @@ public class NewTransaction extends AppCompatActivity {
                 TextView tv = (TextView) findViewById(R.id.tv_date);
                 String stringOfDate = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(date.getTime());
                 tv.setText(stringOfDate);
-
             }
         });
 
@@ -196,7 +205,8 @@ public class NewTransaction extends AppCompatActivity {
         String date = tvTransDate.getText().toString();
         Double amount = Double.parseDouble(etAmount.getText().toString());
         String description = atvDescription.getText().toString();
-        mTransaction = new Transaction(id, date, amount, description, mCurrentUserName);
+        mTransaction = new Transaction(id, date, amount, description, mUrl, mCurrentUserName);
+        Log.d("url: ", mUrl);
         mDatabaseReference.child(mCurrentProjectId + "/" + id).setValue(mTransaction);
 
         getTotalsProject(amount, description);
@@ -254,7 +264,6 @@ public class NewTransaction extends AppCompatActivity {
                 startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
             }
         }
-
     }
 
     private File createImageFile()throws IOException{

@@ -5,16 +5,18 @@ public class Transaction {
     private String date;
     private double amount;
     private String description;
+    private String imageUrl;
     private String author;
 
 
     public Transaction(){}
 
-    public Transaction(String id, String date, double amount,String description, String author){
+    public Transaction(String id, String date, double amount,String description, String imageUrl, String author){
         this.setId(id);
         this.setDate(date);
         this.setAmount(amount);
         this.setDescription(description);
+        this.setImageUrl(imageUrl);
         this.setAuthor(author);
     }
 
@@ -40,6 +42,14 @@ public class Transaction {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getImageUrl() {
+        return imageUrl;
+    }
+
+    public void setImageUrl(String imageUrl) {
+        this.imageUrl = imageUrl;
     }
 
     public double getAmount() {

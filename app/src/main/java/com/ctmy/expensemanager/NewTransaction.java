@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.MultiAutoCompleteTextView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,6 +34,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.squareup.picasso.Picasso;
@@ -44,8 +46,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
-import io.grpc.Context;
-
 import static com.ctmy.expensemanager.FirebaseUtil.PROJECT_NAME;
 
 public class NewTransaction extends AppCompatActivity {
@@ -54,6 +54,7 @@ public class NewTransaction extends AppCompatActivity {
     MultiAutoCompleteTextView atvDescription;
     Button btnSave;
     ImageView ivReceipt;
+    ProgressBar pgvReceiptUpload;
 
     private String mReferenceFirebase = "transactions";
     private String mCurrentProjectId;
@@ -102,6 +103,7 @@ public class NewTransaction extends AppCompatActivity {
         atvDescription = (MultiAutoCompleteTextView) findViewById(R.id.atvDescription);
         btnSave = (Button) findViewById(R.id.btn_ok);
         ivReceipt = (ImageView) findViewById(R.id.imgvReceipt);
+        pgvReceiptUpload = (ProgressBar)findViewById(R.id.pbUploadReceipt);
 
         /*Get transaction object*/
 
@@ -177,12 +179,24 @@ public class NewTransaction extends AppCompatActivity {
                                 public void onSuccess(Uri uri) {
                                     mUrl = uri.toString();
                                     showImage(mUrl);
+                                    ivReceipt.setVisibility(View.VISIBLE);
+                                    pgvReceiptUpload.setVisibility(View.INVISIBLE);
                                     Log.d("result", mUrl);
                                 }
                             });
                         }
                     }
-                }});
+                }})
+                .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                        ivReceipt.setVisibility(View.GONE);
+                        pgvReceiptUpload.setVisibility(View.VISIBLE);
+                        double progress = (100.0 * snapshot.getBytesTransferred()) / snapshot.getTotalByteCount();
+                        System.out.println("Upload is " + progress + "% done");
+                        pgvReceiptUpload.setProgress((int) progress);
+                    }
+                });
         }
     }
 
@@ -191,6 +205,7 @@ public class NewTransaction extends AppCompatActivity {
         atvDescription.setText("");
         etAmount.requestFocus();
         ivReceipt.setImageResource(0);
+        pgvReceiptUpload.setProgress(0);
     }
 
     private void showDatePickerDiaglog(View v){
@@ -297,6 +312,7 @@ public class NewTransaction extends AppCompatActivity {
             Picasso.get()
                     .load(url)
                     .resize(width, width*2/3)
+                    .rotate(90)
                     .centerCrop()
                     .into(ivReceipt);
                     

@@ -90,8 +90,8 @@ public class NewTransaction extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        Intent intent = getIntent();
-        mProject = (Project) intent.getSerializableExtra("NewTransaction");
+        //Intent intent = getIntent();
+        //mProject = (Project) intent.getSerializableExtra("NewTransaction");
 
         // get all data needed to save the transaction
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(PROJECT_NAME, 0);
@@ -106,6 +106,16 @@ public class NewTransaction extends AppCompatActivity {
         pgvReceiptUpload = (ProgressBar)findViewById(R.id.pbUploadReceipt);
 
         /*Get transaction object*/
+        Intent transIntent = getIntent();
+        Transaction transaction = (Transaction) transIntent.getSerializableExtra("transaction");
+        if(transaction == null){
+            transaction = new Transaction();
+        }
+        this.mTransaction = transaction;
+        tvTransDate.setText(mTransaction.getDate());
+        etAmount.setText(String.valueOf(transaction.getAmount()));
+        atvDescription.setText(mTransaction.getDescription());
+        showImage(mTransaction.getImageUrl());
 
         //showImage(mTransaction.getImageUrl());
 
@@ -223,17 +233,35 @@ public class NewTransaction extends AppCompatActivity {
 
         ddf.show(getSupportFragmentManager(), "datePickerTrans");
     }
-
+    //100 => 80  originalValue - newValue = 20
+    //100 => 200 originalValue - newValue = -100
     private void saveTransaction(){
-        String id = mDatabaseReference.push().getKey();
-        String date = tvTransDate.getText().toString();
-        Double amount = Double.parseDouble(etAmount.getText().toString());
-        String description = atvDescription.getText().toString();
-        mTransaction = new Transaction(id, date, amount, description, mUrl, mCurrentUserName);
-        Log.d("url: ", mUrl);
-        mDatabaseReference.child(mCurrentProjectId + "/" + id).setValue(mTransaction);
+        mTransaction.setDate(tvTransDate.getText().toString());
+        //mTransaction.setAmount(Double.parseDouble(etAmount.getText().toString()));
+        mTransaction.setDescription(atvDescription.getText().toString());
+        if(mTransaction.getId() == null){
+            mTransaction.setAuthor(mCurrentUserName);
+            mTransaction.setImageUrl(mUrl);
+            mTransaction.setAmount(Double.parseDouble(etAmount.getText().toString()));
+            String id = mDatabaseReference.push().getKey();
+            mDatabaseReference.child(mCurrentProjectId + "/" + id).setValue(mTransaction);
+            // new transaction so just save the amount in the text view
+            getTotalsProject(mTransaction.getAmount(), mTransaction.getDescription());
+        }else{
+            Double originalAmount = mTransaction.getAmount();
+            Double newAmount = Double.valueOf(etAmount.getText().toString());
+            // This will be the amount that will need to be added or subtracted from the totals
+            Double amountToUpdate = (originalAmount - newAmount) * -1.0;
+            mTransaction.setAmount(newAmount);
+            mDatabaseReference.child(mCurrentProjectId + "/" + mTransaction.getId()).setValue(mTransaction);
+            getTotalsProject(amountToUpdate, mTransaction.getDescription());
+        }
 
-        getTotalsProject(amount, description);
+        //mTransaction = new Transaction(id, date, amount, description, mUrl, mCurrentUserName);
+       // Log.d("url: ", mUrl);
+        //mDatabaseReference.child(mCurrentProjectId + "/" + id).setValue(mTransaction);
+
+
     }
 
     private void getTotalsProject(final Double amount, final String transactionType){
@@ -259,6 +287,9 @@ public class NewTransaction extends AppCompatActivity {
         });
     }
 
+    /* This is done here to reflect the total right away so another user looking at the list of projects can see
+    * the up-to-date totals
+    * */
     private void updateProjectTotal(Double amount, String transactionType){
         if(transactionType.toLowerCase().equals(INCOMES) || transactionType.toLowerCase().equals(INCOME)){
             Double newTotalIncomes = mTotalIncomes + amount;

@@ -133,13 +133,14 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
             tvDescription = (TextView) itemView.findViewById(R.id.tv_trans_desc);
             tvDate = (TextView) itemView.findViewById(R.id.tv_trans_date);
             tvAmount = (TextView) itemView.findViewById(R.id.tv_trans_amount);
+            itemView.setOnClickListener(this);
         }
 
         @Override
         public void onClick(View v) {
             int position = getAdapterPosition();
             Transaction selectedTransaction = projTransactions.get(position);
-            Intent intent = new Intent(v.getContext(), Transaction.class);
+            Intent intent = new Intent(v.getContext(), NewTransaction.class);
             intent.putExtra("transaction", selectedTransaction);
             itemView.getContext().startActivity(intent);
         }

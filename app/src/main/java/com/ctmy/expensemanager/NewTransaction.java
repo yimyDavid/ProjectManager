@@ -60,7 +60,7 @@ public class NewTransaction extends AppCompatActivity {
     private String mCurrentProjectId;
     private String mCurrentUserName;
     private String mCurrentDate;
-    private String mUrl;
+    private String mUrl = "";
 
     private Double mTotalExpenses;
     private Double mTotalIncomes;
@@ -237,13 +237,14 @@ public class NewTransaction extends AppCompatActivity {
     //100 => 200 originalValue - newValue = -100
     private void saveTransaction(){
         mTransaction.setDate(tvTransDate.getText().toString());
-        //mTransaction.setAmount(Double.parseDouble(etAmount.getText().toString()));
         mTransaction.setDescription(atvDescription.getText().toString());
+        mTransaction.setAuthor(mCurrentUserName);
+        mTransaction.setImageUrl(mUrl);
+        //TODO: Need to make sure to store/update the url
         if(mTransaction.getId() == null){
-            mTransaction.setAuthor(mCurrentUserName);
-            mTransaction.setImageUrl(mUrl);
             mTransaction.setAmount(Double.parseDouble(etAmount.getText().toString()));
             String id = mDatabaseReference.push().getKey();
+            mTransaction.setId(id);
             mDatabaseReference.child(mCurrentProjectId + "/" + id).setValue(mTransaction);
             // new transaction so just save the amount in the text view
             getTotalsProject(mTransaction.getAmount(), mTransaction.getDescription());
@@ -256,11 +257,6 @@ public class NewTransaction extends AppCompatActivity {
             mDatabaseReference.child(mCurrentProjectId + "/" + mTransaction.getId()).setValue(mTransaction);
             getTotalsProject(amountToUpdate, mTransaction.getDescription());
         }
-
-        //mTransaction = new Transaction(id, date, amount, description, mUrl, mCurrentUserName);
-       // Log.d("url: ", mUrl);
-        //mDatabaseReference.child(mCurrentProjectId + "/" + id).setValue(mTransaction);
-
 
     }
 

@@ -105,11 +105,14 @@ public class NewTransaction extends AppCompatActivity {
         ivReceipt = (ImageView) findViewById(R.id.imgvReceipt);
         pgvReceiptUpload = (ProgressBar)findViewById(R.id.pbUploadReceipt);
 
-        /*Get transaction object*/
+        /* Get transaction object */
         Intent transIntent = getIntent();
         Transaction transaction = (Transaction) transIntent.getSerializableExtra("transaction");
         if(transaction == null){
             transaction = new Transaction();
+
+            // Set current date if this is a new transaction
+            setCurrentDate();
         }
         this.mTransaction = transaction;
         tvTransDate.setText(mTransaction.getDate());
@@ -124,11 +127,6 @@ public class NewTransaction extends AppCompatActivity {
         mDatabaseReference = FirebaseUtil.mDatabaseReference;
         FirebaseAuth firebaseAuth = FirebaseUtil.mFirebaseAuth;
         mCurrentUserName = firebaseAuth.getCurrentUser().getDisplayName();
-
-        // Set date view to current date at start up
-        Calendar date = Calendar.getInstance();
-        mCurrentDate = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(date.getTime());
-        tvTransDate.setText(mCurrentDate);
 
         tvTransDate.setOnClickListener(new View.OnClickListener() {
                @Override
@@ -344,5 +342,12 @@ public class NewTransaction extends AppCompatActivity {
                     .into(ivReceipt);
                     
         }
+    }
+
+    private void setCurrentDate(){
+        // Set date view to current date at start up
+        Calendar date = Calendar.getInstance();
+        mCurrentDate = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(date.getTime());
+        tvTransDate.setText(mCurrentDate);
     }
 }

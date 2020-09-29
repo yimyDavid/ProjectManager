@@ -110,17 +110,16 @@ public class NewTransaction extends AppCompatActivity {
         Transaction transaction = (Transaction) transIntent.getSerializableExtra("transaction");
         if(transaction == null){
             transaction = new Transaction();
-
+            Log.d("Hello: ", "Date");
             // Set current date if this is a new transaction
             setCurrentDate();
+        }else {
+            this.mTransaction = transaction;
+            tvTransDate.setText(mTransaction.getDate());
+            etAmount.setText(String.valueOf(transaction.getAmount()));
+            atvDescription.setText(mTransaction.getDescription());
+            showImage(mTransaction.getImageUrl());
         }
-        this.mTransaction = transaction;
-        tvTransDate.setText(mTransaction.getDate());
-        etAmount.setText(String.valueOf(transaction.getAmount()));
-        atvDescription.setText(mTransaction.getDescription());
-        showImage(mTransaction.getImageUrl());
-
-        //showImage(mTransaction.getImageUrl());
 
         FirebaseUtil.openFbReference("transactions", null);
         mFirebaseDatabase = FirebaseUtil.mFirebaseDatabase;
@@ -348,6 +347,7 @@ public class NewTransaction extends AppCompatActivity {
         // Set date view to current date at start up
         Calendar date = Calendar.getInstance();
         mCurrentDate = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(date.getTime());
+        Log.d("function", mCurrentDate);
         tvTransDate.setText(mCurrentDate);
     }
 }

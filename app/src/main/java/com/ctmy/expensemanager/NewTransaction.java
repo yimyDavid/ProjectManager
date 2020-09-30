@@ -164,6 +164,12 @@ public class NewTransaction extends AppCompatActivity {
             case R.id.attach_receipt_trans:
                 dispatchTakePictureIntent();
                 return true;
+            case R.id.select_receipt_trans:
+                Log.d("Select:", "Photo Selected");
+                return true;
+            case R.id.cancel_trans:
+                finish();
+                return true;
         }
         return super.onOptionsItemSelected(item);
     }

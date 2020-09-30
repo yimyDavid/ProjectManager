@@ -83,8 +83,8 @@ public class ProjectTransaction extends AppCompatActivity  implements ValuesFrom
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu){
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.project_menu, menu);
+        //MenuInflater inflater = getMenuInflater();
+        //inflater.inflate(R.menu.project_menu, menu);
         return true;
     }
 

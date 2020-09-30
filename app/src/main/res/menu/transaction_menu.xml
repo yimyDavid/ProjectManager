@@ -2,7 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item android:id="@+id/attach_receipt_trans"
-        android:title="Attach"
+        android:title="@string/attach"
         android:icon="@mipmap/ic_receipt_white_24dp"
         app:showAsAction="always" />
+    <item android:id="@+id/select_receipt_trans"
+        android:title="@string/select"
+        android:icon="@mipmap/ic_folder_open_white_24dp"
+        app:showAsAction="always"/>
+    <item android:id="@+id/cancel_trans"
+        android:title="@string/close"
+        app:showAsAction="never"
+        />
+
+
 </menu>

@@ -17,7 +17,8 @@
         <activity
             android:name=".ProjectManagerActivity"
             android:label="@string/title_activity_main2"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,19 +28,22 @@
         <activity
             android:name=".newProject"
             android:label="@string/new_project_title"
-            android:theme="@style/AppTheme.NoActionBar">
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".ProjectTransaction"
             android:label="@string/proj_trans_acitivity"
             android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".ProjectManagerActivity">
+            android:parentActivityName=".ProjectManagerActivity"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".NewTransaction"
             android:label="New Transaction"
             android:theme="@style/AppTheme.NoActionBar"
-            android:parentActivityName=".ProjectTransaction">
+            android:parentActivityName=".ProjectTransaction"
+            android:screenOrientation="portrait">
         </activity>
 
         <provider

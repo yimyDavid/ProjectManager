@@ -75,6 +75,7 @@ public class NewTransaction extends AppCompatActivity {
     final String INCOMES = "ingresos";
     final String INCOME = "ingreso";
     static final int REQUEST_TAKE_PHOTO = 2;
+    static final int PICTURE_REQUEST = 11;
     String currentPhotoPath;
     Uri mPhotoURI;
 
@@ -111,15 +112,18 @@ public class NewTransaction extends AppCompatActivity {
         if(transaction == null){
             transaction = new Transaction();
             Log.d("Hello: ", "Date");
+            transaction.setDate(setCurrentDate());
             // Set current date if this is a new transaction
-            setCurrentDate();
-        }else {
-            this.mTransaction = transaction;
+            //setCurrentDate();
+        }//else {
+        this.mTransaction = transaction;
+
             tvTransDate.setText(mTransaction.getDate());
             etAmount.setText(String.valueOf(transaction.getAmount()));
             atvDescription.setText(mTransaction.getDescription());
             showImage(mTransaction.getImageUrl());
-        }
+        //}
+
 
         FirebaseUtil.openFbReference("transactions", null);
         mFirebaseDatabase = FirebaseUtil.mFirebaseDatabase;
@@ -165,7 +169,7 @@ public class NewTransaction extends AppCompatActivity {
                 dispatchTakePictureIntent();
                 return true;
             case R.id.select_receipt_trans:
-                Log.d("Select:", "Photo Selected");
+                dispatchSelectPictureIntent();
                 return true;
             case R.id.cancel_trans:
                 finish();
@@ -179,37 +183,11 @@ public class NewTransaction extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == REQUEST_TAKE_PHOTO && resultCode == RESULT_OK){
             /*Uri imageUri = data.getData(); This didn't work, it was returning null
-            * so I ended up saving the uri in a member variable(mPhotoURI) in dispatchTakePictureIntent() */
-            StorageReference ref = FirebaseUtil.mStorageRef.child(mPhotoURI.getLastPathSegment());
-            ref.putFile(mPhotoURI).addOnSuccessListener(this, new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                @Override
-                public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                    if(taskSnapshot.getMetadata() != null){
-                        if(taskSnapshot.getMetadata().getReference() != null){
-                            Task<Uri> result = taskSnapshot.getStorage().getDownloadUrl();
-                            result.addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    mUrl = uri.toString();
-                                    showImage(mUrl);
-                                    ivReceipt.setVisibility(View.VISIBLE);
-                                    pgvReceiptUpload.setVisibility(View.INVISIBLE);
-                                    Log.d("result", mUrl);
-                                }
-                            });
-                        }
-                    }
-                }})
-                .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
-                        ivReceipt.setVisibility(View.GONE);
-                        pgvReceiptUpload.setVisibility(View.VISIBLE);
-                        double progress = (100.0 * snapshot.getBytesTransferred()) / snapshot.getTotalByteCount();
-                        System.out.println("Upload is " + progress + "% done");
-                        pgvReceiptUpload.setProgress((int) progress);
-                    }
-                });
+             * so I ended up saving the uri in a member variable(mPhotoURI) in dispatchTakePictureIntent() */
+            uploadPicture(mPhotoURI);
+        }else if(requestCode == PICTURE_REQUEST && resultCode == RESULT_OK){
+            Uri imageUri = data.getData();
+            uploadPicture(imageUri);
         }
     }
 
@@ -219,6 +197,9 @@ public class NewTransaction extends AppCompatActivity {
         etAmount.requestFocus();
         ivReceipt.setImageResource(0);
         pgvReceiptUpload.setProgress(0);
+
+        mTransaction = new Transaction();
+        tvTransDate.setText(setCurrentDate());
     }
 
     private void showDatePickerDiaglog(View v){
@@ -239,11 +220,12 @@ public class NewTransaction extends AppCompatActivity {
     //100 => 80  originalValue - newValue = 20
     //100 => 200 originalValue - newValue = -100
     private void saveTransaction(){
+        Log.d("date null", tvTransDate.getText().toString());
         mTransaction.setDate(tvTransDate.getText().toString());
+
         mTransaction.setDescription(atvDescription.getText().toString());
         mTransaction.setAuthor(mCurrentUserName);
         mTransaction.setImageUrl(mUrl);
-        //TODO: Need to make sure to store/update the url
         if(mTransaction.getId() == null){
             mTransaction.setAmount(Double.parseDouble(etAmount.getText().toString()));
             String id = mDatabaseReference.push().getKey();
@@ -252,6 +234,7 @@ public class NewTransaction extends AppCompatActivity {
             // new transaction so just save the amount in the text view
             getTotalsProject(mTransaction.getAmount(), mTransaction.getDescription());
         }else{
+            Log.d("here", "else");
             Double originalAmount = mTransaction.getAmount();
             Double newAmount = Double.valueOf(etAmount.getText().toString());
             // This will be the amount that will need to be added or subtracted from the totals
@@ -260,7 +243,6 @@ public class NewTransaction extends AppCompatActivity {
             mDatabaseReference.child(mCurrentProjectId + "/" + mTransaction.getId()).setValue(mTransaction);
             getTotalsProject(amountToUpdate, mTransaction.getDescription());
         }
-
     }
 
     private void getTotalsProject(final Double amount, final String transactionType){
@@ -297,7 +279,6 @@ public class NewTransaction extends AppCompatActivity {
             Double newTotalExpenses = mTotalExpenses + amount;
             mDatabaseReferenceTotal.child(mCurrentProjectId).child("totalExpenses").setValue(newTotalExpenses);
         }
-
     }
 
     private void dispatchTakePictureIntent(){
@@ -336,6 +317,13 @@ public class NewTransaction extends AppCompatActivity {
         return image;
     }
 
+    private void dispatchSelectPictureIntent(){
+        Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
+        intent.setType("image/jpeg");
+        intent.putExtra(intent.EXTRA_LOCAL_ONLY, true);
+        startActivityForResult(intent.createChooser(intent, "Select Picture"), PICTURE_REQUEST);
+    }
+
     private void showImage(String url){
         if(url != null && url.isEmpty() == false){
             int width = Resources.getSystem().getDisplayMetrics().widthPixels;
@@ -345,15 +333,48 @@ public class NewTransaction extends AppCompatActivity {
                     .rotate(90)
                     .centerCrop()
                     .into(ivReceipt);
-                    
         }
     }
 
-    private void setCurrentDate(){
+    private String setCurrentDate(){
         // Set date view to current date at start up
         Calendar date = Calendar.getInstance();
         mCurrentDate = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(date.getTime());
         Log.d("function", mCurrentDate);
-        tvTransDate.setText(mCurrentDate);
+        return mCurrentDate;
+    }
+
+    private void uploadPicture(Uri imageUri){
+        StorageReference ref = FirebaseUtil.mStorageRef.child(imageUri.getLastPathSegment());
+        ref.putFile(imageUri).addOnSuccessListener(this, new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                if(taskSnapshot.getMetadata() != null){
+                    if(taskSnapshot.getMetadata().getReference() != null){
+                        Task<Uri> result = taskSnapshot.getStorage().getDownloadUrl();
+                        result.addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                mUrl = uri.toString();
+                                showImage(mUrl);
+                                ivReceipt.setVisibility(View.VISIBLE);
+                                pgvReceiptUpload.setVisibility(View.INVISIBLE);
+                                Log.d("result", mUrl);
+                            }
+                        });
+                    }
+                }
+            }})
+                .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                        ivReceipt.setVisibility(View.GONE);
+                        pgvReceiptUpload.setVisibility(View.VISIBLE);
+                        double progress = (100.0 * snapshot.getBytesTransferred()) / snapshot.getTotalByteCount();
+                        System.out.println("Upload is " + progress + "% done");
+                        pgvReceiptUpload.setProgress((int) progress);
+                    }
+                });
+
     }
 }

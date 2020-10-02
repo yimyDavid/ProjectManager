@@ -113,17 +113,14 @@ public class NewTransaction extends AppCompatActivity {
             transaction = new Transaction();
             Log.d("Hello: ", "Date");
             transaction.setDate(setCurrentDate());
-            // Set current date if this is a new transaction
-            //setCurrentDate();
-        }//else {
+        }
         this.mTransaction = transaction;
-
-            tvTransDate.setText(mTransaction.getDate());
-            etAmount.setText(String.valueOf(transaction.getAmount()));
-            atvDescription.setText(mTransaction.getDescription());
-            showImage(mTransaction.getImageUrl());
-        //}
-
+        tvTransDate.setText(mTransaction.getDate());
+        etAmount.setText(String.valueOf(transaction.getAmount()));
+        atvDescription.setText(mTransaction.getDescription());
+        showImage(mTransaction.getImageUrl());
+        // set it to existing path so is not set to empty when editing
+        mUrl = mTransaction.getImageUrl();
 
         FirebaseUtil.openFbReference("transactions", null);
         mFirebaseDatabase = FirebaseUtil.mFirebaseDatabase;
@@ -198,8 +195,10 @@ public class NewTransaction extends AppCompatActivity {
         ivReceipt.setImageResource(0);
         pgvReceiptUpload.setProgress(0);
 
+        // this will allow to enter a new transaction after editing another
         mTransaction = new Transaction();
         tvTransDate.setText(setCurrentDate());
+        mUrl="";
     }
 
     private void showDatePickerDiaglog(View v){

@@ -1,39 +1,35 @@
 package com.ctmy.expensemanager;
 
-import com.google.firebase.database.ServerValue;
+import android.app.Activity;
 
 import java.text.DateFormat;
+import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 import java.util.TimeZone;
 
 public class DateUtil {
+
+    private static Activity contextCaller;
 
     public static Long getEpochTimeStamp(){
         return System.currentTimeMillis();
     }
 
-    /*public static Long stringToEpoch(String stringDate){
-        return Long.valueOf(stringDate);
-    }*/
+    public static String epochToDateString(Long epoch, final Activity caller){
+        contextCaller = caller;
+        Format dateFormat = android.text.format.DateFormat.getDateFormat(caller.getApplicationContext());
+        String pattern = ((SimpleDateFormat) dateFormat).toLocalizedPattern();
 
-    public static String epochToDateString(Long epoch, String timezone){
-        Date date = new Date(System.currentTimeMillis());
-
-        DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        format.setTimeZone(TimeZone.getTimeZone("Etc/UTC"));
-        String formatted = format.format(date);
-        System.out.println(formatted);
-        format.setTimeZone(TimeZone.getTimeZone("Australia/Sydney"));
-        formatted = format.format(date);
-        System.out.println(formatted);
+        DateFormat format = new SimpleDateFormat(pattern);
+        String timeZone = TimeZone.getDefault().getID();
+        format.setTimeZone(TimeZone.getTimeZone(timeZone));
+        String formatted = format.format(epoch);
 
         return formatted;
     }
     /* The result is to display it in the views*/
     public static String convertUTCtoCurrentTime(Long dateMillis){
-
+        return null;
     }
 }

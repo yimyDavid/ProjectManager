@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class Transaction implements Serializable {
     private String id;
-    private String date;
+    private Long date;
     private double amount;
     private String description;
     private String imageUrl;
@@ -13,7 +13,7 @@ public class Transaction implements Serializable {
 
     public Transaction(){}
 
-    public Transaction(String id, String date, double amount,String description, String imageUrl, String author){
+    public Transaction(String id, Long date, double amount,String description, String imageUrl, String author){
         this.setId(id);
         this.setDate(date);
         this.setAmount(amount);
@@ -30,11 +30,11 @@ public class Transaction implements Serializable {
         this.id = id;
     }
 
-    public String getDate() {
+    public Long getDate() {
         return date;
     }
 
-    public void setDate(String date) {
+    public void setDate(Long date) {
         this.date = date;
     }
 

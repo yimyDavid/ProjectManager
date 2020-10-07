@@ -91,9 +91,6 @@ public class NewTransaction extends AppCompatActivity {
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-        //Intent intent = getIntent();
-        //mProject = (Project) intent.getSerializableExtra("NewTransaction");
-
         // get all data needed to save the transaction
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(PROJECT_NAME, 0);
         mCurrentProjectId = sharedPreferences.getString("project_id","");
@@ -115,7 +112,7 @@ public class NewTransaction extends AppCompatActivity {
             transaction.setDate(DateUtil.getEpochTimeStamp());
         }
         this.mTransaction = transaction;
-        tvTransDate.setText(DateUtil.convertUTCtoCurrentTime(mTransaction.getDate()));
+        tvTransDate.setText(DateUtil.epochToDateString(mTransaction.getDate(), this));
         etAmount.setText(String.valueOf(transaction.getAmount()));
         atvDescription.setText(mTransaction.getDescription());
         showImage(mTransaction.getImageUrl());

@@ -1,5 +1,6 @@
 package com.ctmy.expensemanager;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -22,11 +23,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.ResourceBundle;
 
 import static com.ctmy.expensemanager.FirebaseUtil.PROJECT_NAME;
 
@@ -123,6 +121,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         return projTransactions.size();
     }
 
+
     public class TransactionViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         TextView tvDescription;
         TextView tvDate;
@@ -147,7 +146,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
         public void bind(Transaction transaction) {
             tvDescription.setText(transaction.getDescription());
-            tvDate.setText(transaction.getDate());
+            tvDate.setText(DateUtil.epochToDateString(transaction.getDate(), (Activity) itemView.getContext()));
             tvAmount.setText(String.valueOf(transaction.getAmount()));
 
             String transactionType = transaction.getDescription().toLowerCase();

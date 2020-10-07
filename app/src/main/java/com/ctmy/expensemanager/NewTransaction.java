@@ -112,10 +112,10 @@ public class NewTransaction extends AppCompatActivity {
         if(transaction == null){
             transaction = new Transaction();
             Log.d("Hello: ", "Date");
-            transaction.setDate(setCurrentDate());
+            transaction.setDate(DateUtil.getEpochTimeStamp());
         }
         this.mTransaction = transaction;
-        tvTransDate.setText(mTransaction.getDate());
+        tvTransDate.setText(DateUtil.convertUTCtoCurrentTime(mTransaction.getDate()));
         etAmount.setText(String.valueOf(transaction.getAmount()));
         atvDescription.setText(mTransaction.getDescription());
         showImage(mTransaction.getImageUrl());
@@ -220,7 +220,8 @@ public class NewTransaction extends AppCompatActivity {
     //100 => 200 originalValue - newValue = -100
     private void saveTransaction(){
         Log.d("date null", tvTransDate.getText().toString());
-        mTransaction.setDate(tvTransDate.getText().toString());
+        //TODO: convert string date to epoch
+        mTransaction.setDate(DateUtil.dateStringToEpoch(tvTransDate.getText().toString(), this));
 
         mTransaction.setDescription(atvDescription.getText().toString());
         mTransaction.setAuthor(mCurrentUserName);

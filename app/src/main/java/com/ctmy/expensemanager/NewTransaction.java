@@ -1,5 +1,6 @@
 package com.ctmy.expensemanager;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
@@ -206,7 +207,8 @@ public class NewTransaction extends AppCompatActivity {
             @Override
             public void dateDialogFragmentDateSet(Calendar date) {
                 TextView tv = (TextView) findViewById(R.id.tv_date);
-                String stringOfDate = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(date.getTime());
+                String pattern = DateUtil.getDatePattern((Activity) tv.getContext());
+                String stringOfDate = new SimpleDateFormat(pattern, Locale.ENGLISH).format(date.getTime());
                 tv.setText(stringOfDate);
             }
         });
@@ -217,7 +219,7 @@ public class NewTransaction extends AppCompatActivity {
     //100 => 200 originalValue - newValue = -100
     private void saveTransaction(){
         Log.d("date null", tvTransDate.getText().toString());
-        //TODO: convert string date to epoch
+        //TODO: format string in textview correctly so it can coverterted correctly
         mTransaction.setDate(DateUtil.dateStringToEpoch(tvTransDate.getText().toString(), this));
 
         mTransaction.setDescription(atvDescription.getText().toString());
@@ -333,11 +335,13 @@ public class NewTransaction extends AppCompatActivity {
         }
     }
 
+    //TODO: check if this is setting the date backwards is the textview
     private String setCurrentDate(){
         // Set date view to current date at start up
         Calendar date = Calendar.getInstance();
-        mCurrentDate = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(date.getTime());
-        Log.d("function", mCurrentDate);
+        String pattern = DateUtil.getDatePattern(this);
+        mCurrentDate = new SimpleDateFormat(pattern, Locale.ENGLISH).format(date.getTime());
+        Log.d("function", mCurrentDate + pattern);
         return mCurrentDate;
     }
 

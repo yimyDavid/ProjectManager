@@ -18,13 +18,17 @@ public class DateUtil {
         return System.currentTimeMillis();
     }
 
-    public static String epochToDateString(Long epoch, final Activity caller){
+    public static String getDatePattern(final Activity caller){
         contextCaller = caller;
         Format dateFormat = android.text.format.DateFormat.getDateFormat(contextCaller.getApplicationContext());
         String pattern = ((SimpleDateFormat) dateFormat).toLocalizedPattern();
 
-        Log.d("date format", pattern);
+        return pattern;
+    }
 
+    public static String epochToDateString(Long epoch, final Activity caller){
+        contextCaller = caller;
+        String pattern = getDatePattern(contextCaller);
         DateFormat format = new SimpleDateFormat(pattern);
         String timeZone = TimeZone.getDefault().getID();
         format.setTimeZone(TimeZone.getTimeZone(timeZone));
@@ -39,10 +43,9 @@ public class DateUtil {
 
     public static Long dateStringToEpoch(String dateString, final Activity caller) {
         contextCaller = caller;
-        //If for some reason the string is empty, return the current time in milliseconds
-        Format dateFormat = android.text.format.DateFormat.getDateFormat(contextCaller.getApplicationContext());
-        String pattern = ((SimpleDateFormat) dateFormat).toLocalizedPattern();
+       String pattern = getDatePattern(contextCaller);
 
+        //If for some reason the string is empty, return the current time in milliseconds
         if(dateString == null || dateString.isEmpty()){
             return getEpochTimeStamp();
         }

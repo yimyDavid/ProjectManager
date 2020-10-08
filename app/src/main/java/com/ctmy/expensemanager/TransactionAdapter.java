@@ -22,6 +22,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -54,6 +55,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         mDatabaseReferene = FirebaseUtil.mDatabaseReference;
         projTransactions = new ArrayList<>();
 
+        Query transactionsByDate = mDatabaseReferene.orderByChild("date");
         //Set them to 0 since there are only two types of transactions
         mProjectTotals.put(INCOMES, 0.00);
         mProjectTotals.put(EXPENSES, 0.00);
@@ -96,7 +98,8 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
             }
         };
-        mDatabaseReferene.addChildEventListener(mChildListener);
+       // mDatabaseReferene.addChildEventListener(mChildListener);
+        transactionsByDate.addChildEventListener(mChildListener);
 
     }
 

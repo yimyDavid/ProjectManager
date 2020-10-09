@@ -35,6 +35,7 @@ public class newProject extends AppCompatActivity {
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
     private ChildEventListener mChildListener;
+    String pattern;
 
     // view's fields
     EditText txtTitle;
@@ -65,8 +66,9 @@ public class newProject extends AppCompatActivity {
         tvDueDate = (TextView) findViewById(R.id.dueDate);
         btSaveProject = (Button) findViewById(R.id.btn_create_proj);
         // Set date view to current date at start up
+        pattern = DateUtil.getDatePattern(this);
         Calendar date = Calendar.getInstance();
-        String mCurrentDate = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(date.getTime());
+        String mCurrentDate = new SimpleDateFormat(pattern, Locale.ENGLISH).format(date.getTime());
         tvDueDate.setText(mCurrentDate);
 
         initList();
@@ -163,7 +165,7 @@ public class newProject extends AppCompatActivity {
             @Override
             public void dateDialogFragmentDateSet(Calendar date) {
                 TextView tv = (TextView) findViewById(R.id.dueDate);
-                String stringOfDate = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH).format(date.getTime());
+                String stringOfDate = new SimpleDateFormat(pattern, Locale.ENGLISH).format(date.getTime());
                 tv.setText(stringOfDate);
             }
         });
@@ -187,8 +189,9 @@ public class newProject extends AppCompatActivity {
     }
 
     private String getCurrentDate(){
+        //String pattern = DateUtil.getDatePattern(this);
         Calendar c = Calendar.getInstance();
-        String selectedDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:s", Locale.ENGLISH).format(c.getTime());
+        String selectedDate = new SimpleDateFormat(pattern, Locale.ENGLISH).format(c.getTime());
         return selectedDate;
     }
 

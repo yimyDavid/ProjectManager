@@ -25,6 +25,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
+import java.util.TimeZone;
 
 public class newProject extends AppCompatActivity {
     private ArrayList<ProjectType> mProjectTypes;
@@ -41,7 +42,7 @@ public class newProject extends AppCompatActivity {
     EditText txtTitle;
     TextView tvDueDate;
     String spProjType;
-    String creationDate;
+    Long creationDate;
     Button btSaveProject;
 
     // List of project types
@@ -176,9 +177,9 @@ public class newProject extends AppCompatActivity {
 
     private void saveProject(){
         String projectTitle = txtTitle.getText().toString();
-        String dueDate = tvDueDate.getText().toString();
+        Long dueDate = DateUtil.dateStringToEpoch(tvDueDate.getText().toString(), this);
         String projectId = mDatabaseReference.push().getKey();
-        creationDate = getCurrentDate();
+        creationDate = DateUtil.getEpochTimeStamp();
         Project project = new Project(projectId, projectTitle, dueDate, creationDate, spProjType, 0.00, 0.00);
         mDatabaseReference.child(projectId).setValue(project);
     }

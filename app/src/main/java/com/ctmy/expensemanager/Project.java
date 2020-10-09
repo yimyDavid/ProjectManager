@@ -4,8 +4,8 @@ import java.io.Serializable;
 
 public class Project implements Serializable {
     private String projectId;
-    private String DueDate;
-    private String creationDate;
+    private Long DueDate;
+    private Long creationDate;
     private String projectName;
     private String projectType;
     private double totalExpenses;
@@ -13,7 +13,7 @@ public class Project implements Serializable {
 
     public Project(){}
 
-    public Project(String projectId, String projectName, String dueDate, String creationDate, String projectType, Double totalExpenses, Double totalIncomes){
+    public Project(String projectId, String projectName, Long dueDate, Long creationDate, String projectType, Double totalExpenses, Double totalIncomes){
         this.setProjectId(projectId);
         this.setProjectName(projectName);
         this.setDueDate(dueDate);
@@ -39,19 +39,19 @@ public class Project implements Serializable {
         this.projectName = projectName;
     }
 
-    public String getDueDate() {
+    public Long getDueDate() {
         return DueDate;
     }
 
-    public void setDueDate(String dueDate) {
+    public void setDueDate(Long dueDate) {
         DueDate = dueDate;
     }
 
-    public String getCreationDate() {
+    public Long getCreationDate() {
         return creationDate;
     }
 
-    public void setCreationDate(String creationDate) {
+    public void setCreationDate(Long creationDate) {
         this.creationDate = creationDate;
     }
 

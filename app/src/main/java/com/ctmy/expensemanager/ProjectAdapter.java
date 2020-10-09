@@ -1,5 +1,6 @@
 package com.ctmy.expensemanager;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
@@ -111,7 +112,7 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ProjectV
                 tvBalance.setTextColor(Color.RED);
             }
             tvTitle.setText(project.getProjectName());
-            tvDueDate.setText(project.getDueDate());
+            tvDueDate.setText(DateUtil.epochToDateString(project.getDueDate(), (Activity) itemView.getContext()));
             tvTotalExpenses.setText(String.valueOf(totalExpenses));
             tvTotalIncomes.setText(String.valueOf(totalIncomes));
             tvBalance.setText(String.valueOf(totalIncomes-totalExpenses));

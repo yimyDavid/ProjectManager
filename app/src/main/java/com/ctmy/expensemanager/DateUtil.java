@@ -33,7 +33,7 @@ public class DateUtil {
         String timeZone = TimeZone.getDefault().getID();
         format.setTimeZone(TimeZone.getTimeZone(timeZone));
         String formatted = format.format(epoch);
-
+        
         return formatted;
     }
     /* The result is to display it in the views*/

@@ -33,7 +33,7 @@ public class DateUtil {
         String timeZone = TimeZone.getDefault().getID();
         format.setTimeZone(TimeZone.getTimeZone(timeZone));
         String formatted = format.format(epoch);
-        
+
         return formatted;
     }
     /* The result is to display it in the views*/
@@ -44,14 +44,15 @@ public class DateUtil {
     public static Long dateStringToEpoch(String dateString, final Activity caller) {
         contextCaller = caller;
        String pattern = getDatePattern(contextCaller);
-
+    //TODO: convert date in textview back to epoch GMT/UTC
         //If for some reason the string is empty, return the current time in milliseconds
         if(dateString == null || dateString.isEmpty()){
             return getEpochTimeStamp();
         }
 
         try {
-            SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+            DateFormat sdf = new SimpleDateFormat(pattern);
+            sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
             Date dt = sdf.parse(dateString);
             long epochTime = dt.getTime();
             return epochTime;

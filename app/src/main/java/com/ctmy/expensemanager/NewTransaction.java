@@ -195,6 +195,8 @@ public class NewTransaction extends AppCompatActivity {
 
         // this will allow to enter a new transaction after editing another
         mTransaction = new Transaction();
+        //this will reset the date after saving/editing the transaction.
+        //It makes sure that new transaction is not saved with the previous trans date
         tvTransDate.setText(setCurrentDate());
         mUrl="";
     }
@@ -209,6 +211,9 @@ public class NewTransaction extends AppCompatActivity {
                 TextView tv = (TextView) findViewById(R.id.tv_date);
                 String pattern = DateUtil.getDatePattern((Activity) tv.getContext());
                 String stringOfDate = new SimpleDateFormat(pattern, Locale.ENGLISH).format(date.getTime());
+                long epoch = DateUtil.dateStringToEpoch(stringOfDate, NewTransaction.this);
+                Log.d("datefromPicker", String.valueOf(epoch));
+                Log.d("datestring", stringOfDate);
                 tv.setText(stringOfDate);
             }
         });

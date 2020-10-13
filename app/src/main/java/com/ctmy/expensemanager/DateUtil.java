@@ -23,15 +23,20 @@ public class DateUtil {
         contextCaller = caller;
         Format dateFormat = android.text.format.DateFormat.getDateFormat(contextCaller.getApplicationContext());
         String pattern = ((SimpleDateFormat) dateFormat).toLocalizedPattern();
-        String fullPattern = pattern + " HH:mm:ss";
-        Log.d("pattern", fullPattern);
+        //String fullPattern = pattern + " HH:mm:ss";
+        //Log.d("pattern", fullPattern);
 
-        return fullPattern;
+        return pattern;
     }
 
-    public static String epochToDateString(Long epoch, final Context caller){
+    public static String getLongDatePattern(final Context caller){
         contextCaller = caller;
-        String pattern = getDatePattern(contextCaller);
+        return getDatePattern(contextCaller) + "HH:mm:ss";
+    }
+
+    public static String epochToDateString(Long epoch, final String pattern){
+        //contextCaller = caller;
+        //String pattern = getDatePattern(contextCaller);
         DateFormat format = new SimpleDateFormat(pattern);
         String timeZone = TimeZone.getDefault().getID();
         //format.setTimeZone(TimeZone.getTimeZone(timeZone));
@@ -45,9 +50,9 @@ public class DateUtil {
         return null;
     }
 
-    public static Long dateStringToEpoch(String dateString, final Activity caller) {
-        contextCaller = caller;
-       String pattern = getDatePattern(contextCaller);
+    public static Long dateStringToEpoch(String dateString, final String pattern) {
+        //contextCaller = caller;
+       //String pattern = getDatePattern(contextCaller);
     //TODO: convert date in textview back to epoch GMT/UTC. fix epoch time conversion
         //If for some reason the string is empty, return the current time in milliseconds
         if(dateString == null || dateString.isEmpty()){

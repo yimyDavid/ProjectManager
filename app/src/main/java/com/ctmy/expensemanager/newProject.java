@@ -37,6 +37,7 @@ public class newProject extends AppCompatActivity {
     private DatabaseReference mDatabaseReference;
     private ChildEventListener mChildListener;
     String pattern;
+    String longPattern;
 
     // view's fields
     EditText txtTitle;
@@ -68,6 +69,7 @@ public class newProject extends AppCompatActivity {
         btSaveProject = (Button) findViewById(R.id.btn_create_proj);
         // Set date view to current date at start up
         pattern = DateUtil.getDatePattern(this);
+        longPattern = DateUtil.getLongDatePattern(this);
         Calendar date = Calendar.getInstance();
         String mCurrentDate = new SimpleDateFormat(pattern, Locale.ENGLISH).format(date.getTime());
         tvDueDate.setText(mCurrentDate);
@@ -177,7 +179,7 @@ public class newProject extends AppCompatActivity {
 
     private void saveProject(){
         String projectTitle = txtTitle.getText().toString();
-        Long dueDate = DateUtil.dateStringToEpoch(tvDueDate.getText().toString(), this);
+        Long dueDate = DateUtil.dateStringToEpoch(tvDueDate.getText().toString(), longPattern);
         String projectId = mDatabaseReference.push().getKey();
         creationDate = DateUtil.getEpochTimeStamp();
         Project project = new Project(projectId, projectTitle, dueDate, creationDate, spProjType, 0.00, 0.00);

@@ -61,10 +61,13 @@ public class NewTransaction extends AppCompatActivity {
     private String mCurrentProjectId;
     private String mCurrentUserName;
     private String mCurrentDate;
+    private String mLongCurrentDate;
     private String mUrl = "";
 
     private Double mTotalExpenses;
     private Double mTotalIncomes;
+    String pattern;
+    String longPattern;
 
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
@@ -112,8 +115,14 @@ public class NewTransaction extends AppCompatActivity {
             Log.d("Hello: ", "Date");
             transaction.setDate(DateUtil.getEpochTimeStamp());
         }
+
+        pattern = DateUtil.getDatePattern(this);
+        longPattern = DateUtil.getLongDatePattern(this);
+
         this.mTransaction = transaction;
-        tvTransDate.setText(DateUtil.epochToDateString(mTransaction.getDate(), this));
+        mCurrentDate = DateUtil.epochToDateString(mTransaction.getDate(), pattern);
+        mLongCurrentDate = DateUtil.epochToDateString(mTransaction.getDate(), longPattern);
+        tvTransDate.setText(mCurrentDate);
         etAmount.setText(String.valueOf(transaction.getAmount()));
         atvDescription.setText(mTransaction.getDescription());
         showImage(mTransaction.getImageUrl());
@@ -197,7 +206,8 @@ public class NewTransaction extends AppCompatActivity {
         mTransaction = new Transaction();
         //this will reset the date after saving/editing the transaction.
         //It makes sure that new transaction is not saved with the previous trans date
-        tvTransDate.setText(setCurrentDate());
+        tvTransDate.setText(setCurrentDate(pattern));
+        mLongCurrentDate = setLongCurrentDate(longPattern);
         mUrl="";
     }
 
@@ -210,11 +220,12 @@ public class NewTransaction extends AppCompatActivity {
             public void dateDialogFragmentDateSet(Calendar date) {
                 TextView tv = (TextView) findViewById(R.id.tv_date);
                 String pattern = DateUtil.getDatePattern((Activity) tv.getContext());
-                String stringOfDate = new SimpleDateFormat(pattern, Locale.ENGLISH).format(date.getTime());
-                long epoch = DateUtil.dateStringToEpoch(stringOfDate, NewTransaction.this);
+                mCurrentDate = new SimpleDateFormat(pattern, Locale.ENGLISH).format(date.getTime());
+                mLongCurrentDate = new SimpleDateFormat(longPattern, Locale.ENGLISH).format(date.getTime());
+                long epoch = DateUtil.dateStringToEpoch(mLongCurrentDate, longPattern);
                 Log.d("datefromPicker", String.valueOf(epoch));
-                Log.d("datestring", stringOfDate);
-                tv.setText(stringOfDate);
+                Log.d("datestring", mLongCurrentDate);
+                tv.setText(mCurrentDate);
             }
         });
 
@@ -225,7 +236,7 @@ public class NewTransaction extends AppCompatActivity {
     private void saveTransaction(){
         Log.d("date null", tvTransDate.getText().toString());
         //TODO: format string in textview correctly so it can coverterted correctly
-        mTransaction.setDate(DateUtil.dateStringToEpoch(tvTransDate.getText().toString(), this));
+        mTransaction.setDate(DateUtil.dateStringToEpoch(mLongCurrentDate, longPattern));
 
         mTransaction.setDescription(atvDescription.getText().toString());
         mTransaction.setAuthor(mCurrentUserName);
@@ -340,15 +351,21 @@ public class NewTransaction extends AppCompatActivity {
         }
     }
 
-    //TODO: check if this is setting the date backwards is the textview
-    private String setCurrentDate(){
+    private String setCurrentDate(String pattern){
         // Set date view to current date at start up
         Calendar date = Calendar.getInstance();
-        String pattern = DateUtil.getDatePattern(this);
+        //String pattern = DateUtil.getDatePattern(this);
+        //String longPatter = DateUtil.getLongDatePattern(this);
         mCurrentDate = new SimpleDateFormat(pattern, Locale.ENGLISH).format(date.getTime());
         Log.d("function", mCurrentDate + pattern);
         return mCurrentDate;
     }
+
+    private String setLongCurrentDate(String longPattern){
+        return setCurrentDate(longPattern);
+    }
+
+
 
     private void uploadPicture(Uri imageUri){
         StorageReference ref = FirebaseUtil.mStorageRef.child(imageUri.getLastPathSegment());

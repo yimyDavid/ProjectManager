@@ -111,8 +111,10 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ProjectV
             if(balance < 0){
                 tvBalance.setTextColor(Color.RED);
             }
+
+            String shortPattern = DateUtil.getDatePattern(itemView.getContext());
             tvTitle.setText(project.getProjectName());
-            tvDueDate.setText(DateUtil.epochToDateString(project.getDueDate(), (Activity) itemView.getContext()));
+            tvDueDate.setText(DateUtil.epochToDateString(project.getDueDate(), shortPattern));
             tvTotalExpenses.setText(String.valueOf(totalExpenses));
             tvTotalIncomes.setText(String.valueOf(totalIncomes));
             tvBalance.setText(String.valueOf(totalIncomes-totalExpenses));

@@ -112,7 +112,7 @@ public class NewTransaction extends AppCompatActivity {
         Transaction transaction = (Transaction) transIntent.getSerializableExtra("transaction");
         if(transaction == null){
             transaction = new Transaction();
-            Log.d("Hello: ", "Date");
+           // Log.d("Hello: ", "Date");
             transaction.setDate(DateUtil.getEpochTimeStamp());
         }
 
@@ -223,8 +223,8 @@ public class NewTransaction extends AppCompatActivity {
                 mCurrentDate = new SimpleDateFormat(pattern, Locale.ENGLISH).format(date.getTime());
                 mLongCurrentDate = new SimpleDateFormat(longPattern, Locale.ENGLISH).format(date.getTime());
                 long epoch = DateUtil.dateStringToEpoch(mLongCurrentDate, longPattern);
-                Log.d("datefromPicker", String.valueOf(epoch));
-                Log.d("datestring", mLongCurrentDate);
+               // Log.d("datefromPicker", String.valueOf(epoch));
+               // Log.d("datestring", mLongCurrentDate);
                 tv.setText(mCurrentDate);
             }
         });
@@ -234,7 +234,7 @@ public class NewTransaction extends AppCompatActivity {
     //100 => 80  originalValue - newValue = 20
     //100 => 200 originalValue - newValue = -100
     private void saveTransaction(){
-        Log.d("date null", tvTransDate.getText().toString());
+        //Log.d("date null", tvTransDate.getText().toString());
         //TODO: format string in textview correctly so it can coverterted correctly
         mTransaction.setDate(DateUtil.dateStringToEpoch(mLongCurrentDate, longPattern));
 
@@ -249,7 +249,7 @@ public class NewTransaction extends AppCompatActivity {
             // new transaction so just save the amount in the text view
             getTotalsProject(mTransaction.getAmount(), mTransaction.getDescription());
         }else{
-            Log.d("here", "else");
+           // Log.d("here", "else");
             Double originalAmount = mTransaction.getAmount();
             Double newAmount = Double.valueOf(etAmount.getText().toString());
             // This will be the amount that will need to be added or subtracted from the totals
@@ -273,7 +273,7 @@ public class NewTransaction extends AppCompatActivity {
                 mTotalIncomes = project.getTotalIncomes();
 
                 updateProjectTotal(amount, transactionType);
-                Log.d("Totals", "Exp:" + mTotalExpenses + " Inc:" + mTotalIncomes);
+               // Log.d("Totals", "Exp:" + mTotalExpenses + " Inc:" + mTotalIncomes);
             }
 
             @Override
@@ -309,7 +309,7 @@ public class NewTransaction extends AppCompatActivity {
             // Continue only if the File was successfully created
             if(photoFile != null){
                 mPhotoURI = FileProvider.getUriForFile(this, "com.ctmy.expensemanager.fileprovider", photoFile);
-                Log.d("Create:", String.valueOf(mPhotoURI) + currentPhotoPath);
+                //Log.d("Create:", String.valueOf(mPhotoURI) + currentPhotoPath);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, mPhotoURI);
                 startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
             }
@@ -357,7 +357,7 @@ public class NewTransaction extends AppCompatActivity {
         //String pattern = DateUtil.getDatePattern(this);
         //String longPatter = DateUtil.getLongDatePattern(this);
         mCurrentDate = new SimpleDateFormat(pattern, Locale.ENGLISH).format(date.getTime());
-        Log.d("function", mCurrentDate + pattern);
+       // Log.d("function", mCurrentDate + pattern);
         return mCurrentDate;
     }
 
@@ -382,7 +382,7 @@ public class NewTransaction extends AppCompatActivity {
                                 showImage(mUrl);
                                 ivReceipt.setVisibility(View.VISIBLE);
                                 pgvReceiptUpload.setVisibility(View.INVISIBLE);
-                                Log.d("result", mUrl);
+                               // Log.d("result", mUrl);
                             }
                         });
                     }
@@ -394,7 +394,7 @@ public class NewTransaction extends AppCompatActivity {
                         ivReceipt.setVisibility(View.GONE);
                         pgvReceiptUpload.setVisibility(View.VISIBLE);
                         double progress = (100.0 * snapshot.getBytesTransferred()) / snapshot.getTotalByteCount();
-                        System.out.println("Upload is " + progress + "% done");
+                        //System.out.println("Upload is " + progress + "% done");
                         pgvReceiptUpload.setProgress((int) progress);
                     }
                 });

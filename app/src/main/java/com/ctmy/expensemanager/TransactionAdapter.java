@@ -48,7 +48,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
         this.valuesFromAdapter = valuesFromAdapter;
         SharedPreferences sharedPreferences = context.getSharedPreferences(PROJECT_NAME, 0);
         currentProjectId = sharedPreferences.getString("project_id", "");
-        Log.d("Id from Adapter", currentProjectId);
+        //Log.d("Id from Adapter", currentProjectId);
 
         FirebaseUtil.openFbReference("transactions/" + currentProjectId, null);
         mFirebaseDatabase = FirebaseUtil.mFirebaseDatabase;
@@ -67,7 +67,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
                 String transactionDesc = transaction.getDescription().toLowerCase();
 
                 if(transactionDesc.equals(INCOMES) || transactionDesc.equals(INCOME)){
-                    Log.d("ingresos", transactionDesc);
+                   // Log.d("ingresos", transactionDesc);
                     Double subTotal = mProjectTotals.get(INCOMES);
                     mProjectTotals.put(INCOMES, subTotal + transaction.getAmount());
                 }else {

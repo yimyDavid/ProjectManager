@@ -149,7 +149,7 @@ public class newProject extends AppCompatActivity {
                for(DataSnapshot types: snapshot.getChildren()){
                    val = (String) types.getValue();
                    mbadprojectype.add(val);
-                   Log.d(TAG, String.valueOf(val));
+                   //Log.d(TAG, String.valueOf(val));
                }
             }
 

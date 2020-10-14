@@ -47,7 +47,7 @@ public class ProjectManagerActivity extends AppCompatActivity {
                         .signOut(this)
                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                             public void onComplete(@NonNull Task<Void> task) {
-                                Log.d("Logout", "User Logged Out");
+                                //Log.d("Logout", "User Logged Out");
                                 FirebaseUtil.attachListener();
                             }
                         });

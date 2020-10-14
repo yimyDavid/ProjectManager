@@ -1,8 +1,8 @@
 <resources>
     <string name="action_settings">Configuracion</string>
     <string name="new_project_title">Nuevo Proyecto</string>
-    <string name="app_name">ProjectManager</string>
-    <string name="title_activity_main2">Projectos</string>
+    <string name="app_name">Administracion de Proyectos</string>
+    <string name="title_activity_main2">Proyectos</string>
     <string name="income">Entrada</string>
     <string name="expenses">Gastos</string>
     <string name="title_activity_new_project">new_project</string>
@@ -23,13 +23,13 @@
     <string name="lbl_num9">9</string>
     <string name="lbl_num_clear">C</string>
     <string name="btn_ok">Guardar</string>
-    <string name="lbl_project_name">Nombre del Projecto</string>
+    <string name="lbl_project_name">Nombre del Proyecto</string>
     <string name="lbl_proj_due_date">Fecha Estimada</string>
-    <string name="lbl_proj_type">Tipo de Project</string>
-    <string name="create_project">Crear Projecto</string>
+    <string name="lbl_proj_type">Tipo de Proyecto</string>
+    <string name="create_project">Crear Proyecto</string>
     <string name="et_proj_name">Nombre</string>
     <string name="et_due_date">01/01/1990</string>
-    <string name="enter_project_name">Ingrese el nombre del projecto</string>
+    <string name="enter_project_name">Ingrese el nombre del proyecto</string>
     <string name="choose_approximate_due_date">Elija una fecha de terminacion</string>
     <string name="total_spent">Total Gastos</string>
     <string name="tv_amount">0.00</string>
@@ -37,11 +37,11 @@
     <string name="tv_total_incomes">4,567.00</string>
     <string name="lbl_transactions">Transacciones</string>
     <string name="btn_add_trans">+ Nuevo</string>
-    <string name="background_project">Imagen del project</string>
+    <string name="background_project">Imagen del proyecto</string>
     <string name="tv_incomes">0.00</string>
     <string name="lbl_expenses">0.00</string>
     <string name="lbl_due_date">12 May 2020</string>
-    <string name="cv_project_name">My Project</string>
+    <string name="cv_project_name">Mi Proyecto</string>
     <string name="lbl_trans_desc">Bloques</string>
     <string name="lbl_trans_date">01/01/1990</string>
     <string name="lbl_trans_amount">0.00</string>

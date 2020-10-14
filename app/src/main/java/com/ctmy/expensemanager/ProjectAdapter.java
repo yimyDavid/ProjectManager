@@ -38,7 +38,7 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ProjectV
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 Project project = dataSnapshot.getValue(Project.class);
-                Log.d("Deal: ", project.getProjectName());
+                //Log.d("Deal: ", project.getProjectName());
                 project.setProjectId(dataSnapshot.getKey());
                 projectList.add(project);
                 notifyItemInserted(projectList.size()-1);
@@ -123,7 +123,7 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ProjectV
         @Override
         public void onClick(View v) {
             int position = getAdapterPosition();
-            Log.d("Click", String.valueOf(position));
+            //Log.d("Click", String.valueOf(position));
             Project selectedProj = projectList.get(position);
             Intent intent = new Intent(v.getContext(), ProjectTransaction.class);
             intent.putExtra("Project", selectedProj);

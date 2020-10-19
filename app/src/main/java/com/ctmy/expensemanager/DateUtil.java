@@ -24,14 +24,14 @@ public class DateUtil {
         Format dateFormat = android.text.format.DateFormat.getDateFormat(contextCaller.getApplicationContext());
         String pattern = ((SimpleDateFormat) dateFormat).toLocalizedPattern();
         //String fullPattern = pattern + " HH:mm:ss";
-        //Log.d("pattern", fullPattern);
+        Log.d("pattern", pattern);
 
         return pattern;
     }
 
     public static String getLongDatePattern(final Context caller){
         contextCaller = caller;
-        return getDatePattern(contextCaller) + "HH:mm:ss";
+        return getDatePattern(contextCaller) + " " + "HH:mm:ss";
     }
 
     public static String epochToDateString(Long epoch, final String pattern){

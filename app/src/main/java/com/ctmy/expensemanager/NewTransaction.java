@@ -118,6 +118,7 @@ public class NewTransaction extends AppCompatActivity {
 
         pattern = DateUtil.getDatePattern(this);
         longPattern = DateUtil.getLongDatePattern(this);
+        Log.d("long", longPattern);
 
         this.mTransaction = transaction;
         mCurrentDate = DateUtil.epochToDateString(mTransaction.getDate(), pattern);

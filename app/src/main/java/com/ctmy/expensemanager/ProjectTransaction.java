@@ -14,6 +14,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import org.w3c.dom.Text;
 
 import java.util.HashMap;
@@ -28,6 +31,8 @@ public class ProjectTransaction extends AppCompatActivity  implements ValuesFrom
     TextView tvTotalIncomes;
 
     String mProjectTitle="";
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mDatabaseReference;
     // final String PROJECT_NAME = "com.ctmy.expensemanager.PROJECT_NAME";
 
     @Override
@@ -73,6 +78,14 @@ public class ProjectTransaction extends AppCompatActivity  implements ValuesFrom
             editor.putString("project_name", project.getProjectName());
             editor.putString("project_id", project.getProjectId());
             editor.commit();
+
+            /* update total for main project */
+            FirebaseUtil.openFbReference("projects", null);
+            mFirebaseDatabase = FirebaseUtil.mFirebaseDatabase;
+            mDatabaseReference = FirebaseUtil.mDatabaseReference;
+            mDatabaseReference.child(project.getProjectId()).child("totalIncomes").setValue(Double.valueOf(tvTotalIncomes.getText().toString()));
+            mDatabaseReference.child(project.getProjectId()).child("totalExpenses").setValue(Double.valueOf(tvTotalExpenses.getText().toString()));
+
         }
 
         setTitle(getResources().getText(R.string.proj_trans_acitivity) + " " + mProjectTitle);

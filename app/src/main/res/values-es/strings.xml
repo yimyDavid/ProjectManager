@@ -34,7 +34,7 @@
     <string name="total_spent">Total Gastos</string>
     <string name="tv_amount">0.00</string>
     <string name="total_incomes">Total Entradas:</string>
-    <string name="tv_total_incomes">4,567.00</string>
+    <string name="tv_total_incomes">0.0</string>
     <string name="lbl_transactions">Transacciones</string>
     <string name="btn_add_trans">+ Nuevo</string>
     <string name="background_project">Imagen del proyecto</string>

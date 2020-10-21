@@ -236,13 +236,14 @@ public class NewTransaction extends AppCompatActivity {
     //100 => 200 originalValue - newValue = -100
     private void saveTransaction(){
         //Log.d("date null", tvTransDate.getText().toString());
-        //TODO: format string in textview correctly so it can coverterted correctly
+        //TODO: Check if the transaction description change as well as the amount, so the totals can be correctly updated.
         mTransaction.setDate(DateUtil.dateStringToEpoch(mLongCurrentDate, longPattern));
 
-        mTransaction.setDescription(atvDescription.getText().toString());
+        //mTransaction.setDescription(atvDescription.getText().toString());
         mTransaction.setAuthor(mCurrentUserName);
         mTransaction.setImageUrl(mUrl);
         if(mTransaction.getId() == null){
+            mTransaction.setDescription(atvDescription.getText().toString());
             mTransaction.setAmount(Double.parseDouble(etAmount.getText().toString()));
             String id = mDatabaseReference.push().getKey();
             mTransaction.setId(id);
@@ -251,6 +252,16 @@ public class NewTransaction extends AppCompatActivity {
             getTotalsProject(mTransaction.getAmount(), mTransaction.getDescription());
         }else{
            // Log.d("here", "else");
+            /*if text/tv is different
+            *   if (desc == ingreso && tv == ingresos) || (desc == ingresos && tv == ingreso)
+            *        if amount <> tvAmount then
+            *           substract/add accordingly as below
+            *   else
+            *       subract original value from incomes/expenses. Get type from trans/tv
+            *       add new value to incomes/expenses.            Get type from trans/tv
+            *
+            * else {do the rest below}*/
+
             Double originalAmount = mTransaction.getAmount();
             Double newAmount = Double.valueOf(etAmount.getText().toString());
             // This will be the amount that will need to be added or subtracted from the totals

@@ -20,6 +20,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ProjectViewHolder> {
@@ -112,12 +113,13 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ProjectV
                 tvBalance.setTextColor(Color.RED);
             }
 
+            DecimalFormat df = new DecimalFormat("#0.00");
             String shortPattern = DateUtil.getDatePattern(itemView.getContext());
             tvTitle.setText(project.getProjectName());
             tvDueDate.setText(DateUtil.epochToDateString(project.getDueDate(), shortPattern));
-            tvTotalExpenses.setText(String.valueOf(totalExpenses));
-            tvTotalIncomes.setText(String.valueOf(totalIncomes));
-            tvBalance.setText(String.valueOf(totalIncomes-totalExpenses));
+            tvTotalExpenses.setText(String.valueOf(df.format(totalExpenses)));
+            tvTotalIncomes.setText(String.valueOf(df.format(totalIncomes)));
+            tvBalance.setText(String.valueOf(df.format(balance)));
         }
 
         @Override

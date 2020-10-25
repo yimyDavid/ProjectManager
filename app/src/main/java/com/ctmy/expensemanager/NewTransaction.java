@@ -262,6 +262,44 @@ public class NewTransaction extends AppCompatActivity {
             *
             * else {do the rest below}*/
 
+            // new pseudo code
+            /*
+            * if(desc is not equal to (incomes or income)
+            *
+            * */
+            if(!mTransaction.getDescription().equals(atvDescription.getText().toString())) {
+                if ((mTransaction.getDescription().equals(INCOME) && atvDescription.getText().toString().equals(INCOMES)) ||
+                    (mTransaction.getDescription().equals(INCOMES) && atvDescription.getText().toString().equals(INCOME))) {
+                        if(mTransaction.getAmount() != Double.parseDouble(etAmount.getText().toString())){
+                            Double originalAmount = mTransaction.getAmount();
+                            Double newAmount = Double.parseDouble(etAmount.getText().toString());
+                            // This will be the amount that will need to be added or subtracted from the totals
+                            Double amountToUpdate = (originalAmount - newAmount) * -1.0;
+                            mTransaction.setAmount(newAmount);
+                            mDatabaseReference.child(mCurrentProjectId + "/" + mTransaction.getId()).setValue(mTransaction);
+                            getTotalsProject(amountToUpdate, mTransaction.getDescription());
+                        }
+
+                }else{
+                    if(atvDescription.getText().toString().equals(INCOME) || atvDescription.getText().toString().equals(INCOMES)){
+
+                        Double originalAmount = mTransaction.getAmount();
+                        Double newAmount = Double.valueOf(etAmount.getText().toString());
+                        // This will be the amount that will need to be added or subtracted from the totals
+                       // Double amountToUpdate = (originalAmount - newAmount) * -1.0;
+
+
+                        // Add
+                        getTotalsProject(newAmount, atvDescription.getText().toString());
+                        // Subtract
+                        getTotalsProject(-newAmount, mTransaction.getDescription());
+                        mTransaction.setDescription(atvDescription.getText().toString());
+                        mTransaction.setAmount(newAmount);
+                        mDatabaseReference.child(mCurrentProjectId + "/" + mTransaction.getId()).setValue(mTransaction);
+                    }
+
+                }
+            }
             Double originalAmount = mTransaction.getAmount();
             Double newAmount = Double.valueOf(etAmount.getText().toString());
             // This will be the amount that will need to be added or subtracted from the totals

@@ -31,7 +31,7 @@ public class DateUtil {
 
     public static String getLongDatePattern(final Context caller){
         contextCaller = caller;
-        return getDatePattern(contextCaller) + "HH:mm:ss";
+        return getDatePattern(contextCaller) + " " + "HH:mm:ss";
     }
 
     public static String epochToDateString(Long epoch, final String pattern){

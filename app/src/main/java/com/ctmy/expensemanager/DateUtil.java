@@ -24,7 +24,7 @@ public class DateUtil {
         Format dateFormat = android.text.format.DateFormat.getDateFormat(contextCaller.getApplicationContext());
         String pattern = ((SimpleDateFormat) dateFormat).toLocalizedPattern();
         //String fullPattern = pattern + " HH:mm:ss";
-        //Log.d("pattern", fullPattern);
+        Log.d("pattern", pattern);
 
         return pattern;
     }

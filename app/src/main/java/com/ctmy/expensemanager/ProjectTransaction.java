@@ -75,8 +75,6 @@ public class ProjectTransaction extends AppCompatActivity  implements ValuesFrom
 
         );
 
-        initializeDisplayTransactions();
-
         if(project == null){
             project = new Project();
             SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(PROJECT_NAME, 0);
@@ -90,11 +88,9 @@ public class ProjectTransaction extends AppCompatActivity  implements ValuesFrom
             editor.putString("project_name", project.getProjectName());
             editor.putString("project_id", project.getProjectId());
             editor.commit();
-
-
-
         }
 
+        initializeDisplayTransactions();
         setTitle(getResources().getText(R.string.proj_trans_acitivity) + " " + mProjectTitle);
     }
 

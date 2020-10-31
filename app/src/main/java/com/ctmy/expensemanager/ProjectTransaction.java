@@ -22,8 +22,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.w3c.dom.Text;
-
 import java.util.HashMap;
 
 import static com.ctmy.expensemanager.FirebaseUtil.PROJECT_NAME;
@@ -141,8 +139,6 @@ public class ProjectTransaction extends AppCompatActivity  implements ValuesFrom
                 mDatabaseReference.child(projectId).child("totalExpenses").setValue(expenses);
 
             }
-
-
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 

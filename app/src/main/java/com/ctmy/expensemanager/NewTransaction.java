@@ -47,6 +47,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import static com.ctmy.expensemanager.FirebaseUtil.PROJECT_NAME;
 
 public class NewTransaction extends AppCompatActivity {
@@ -87,6 +90,9 @@ public class NewTransaction extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        Logger log = LoggerFactory.getLogger(NewTransaction.class);
+
         setContentView(R.layout.activity_new_transaction);
         Toolbar toolbar = findViewById(R.id.toolbarTrans);
         setSupportActionBar(toolbar);
@@ -118,7 +124,7 @@ public class NewTransaction extends AppCompatActivity {
 
         pattern = DateUtil.getDatePattern(this);
         longPattern = DateUtil.getLongDatePattern(this);
-        Log.d("long", longPattern);
+        log.info("long", longPattern);
 
         this.mTransaction = transaction;
         mCurrentDate = DateUtil.epochToDateString(mTransaction.getDate(), pattern);

@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -53,6 +54,8 @@ public class ProjectManagerActivity extends AppCompatActivity {
                         });
                 FirebaseUtil.detachListener();
                 return true;
+            case R.id.send_log:
+                Toast.makeText(this, "Sending Log", Toast.LENGTH_LONG).show();
         }
         return super.onOptionsItemSelected(item);
     }

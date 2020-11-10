@@ -1,7 +1,5 @@
 package com.ctmy.expensemanager;
 
-import android.view.View;
-
 public class ProjectType {
     private String typeName;
     private int typeImage;

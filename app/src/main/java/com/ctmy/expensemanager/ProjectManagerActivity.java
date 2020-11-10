@@ -91,16 +91,16 @@ public class ProjectManagerActivity extends AppCompatActivity {
         String to[] = {"yimysol@gmail.com"};
         Intent intent = ShareCompat.IntentBuilder.from(this)
                  .setStream(uri) // uri from FileProvider
-                .setType("text/html")
+                .setType("message/rfc822")
                 .getIntent()
                 .setAction(Intent.ACTION_SEND) //Change if needed
-                .setDataAndType(uri, "vnd.android.cursor.dir/email")
+                //.setDataAndType(uri, "vnd.android.cursor.dir/email")
                 .putExtra(Intent.EXTRA_EMAIL, to)
                 .putExtra(Intent.EXTRA_SUBJECT, "Logs Expense Manager")
                 .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
-        startActivity(intent);
-    
+        startActivity(Intent.createChooser(intent, "Send email..."));
+
     }
 
     @Override

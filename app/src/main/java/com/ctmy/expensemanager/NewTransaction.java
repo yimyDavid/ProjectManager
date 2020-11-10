@@ -125,7 +125,8 @@ public class NewTransaction extends AppCompatActivity {
         pattern = DateUtil.getDatePattern(this);
         longPattern = DateUtil.getLongDatePattern(this);
         log.info("long date pattern" + longPattern);
-        log.info("path " + getFilesDir());
+        log.info("pathabsolute " + getFilesDir().getAbsolutePath());
+        log.info("This is my new test that is working");
 
         this.mTransaction = transaction;
         mCurrentDate = DateUtil.epochToDateString(mTransaction.getDate(), pattern);

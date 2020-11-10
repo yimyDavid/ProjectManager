@@ -1,7 +1,11 @@
 package com.ctmy.expensemanager;
 
+import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -12,6 +16,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.app.ShareCompat;
+import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -19,6 +25,8 @@ import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import java.io.File;
 
 public class ProjectManagerActivity extends AppCompatActivity {
     RecyclerView rvProjects;
@@ -55,7 +63,8 @@ public class ProjectManagerActivity extends AppCompatActivity {
                 FirebaseUtil.detachListener();
                 return true;
             case R.id.send_log:
-                Toast.makeText(this, "Sending Log", Toast.LENGTH_LONG).show();
+                sendLog();
+                //Toast.makeText(this, "Sending Log", Toast.LENGTH_LONG).show();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -68,6 +77,30 @@ public class ProjectManagerActivity extends AppCompatActivity {
         LinearLayoutManager projectsLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
         rvProjects.setLayoutManager(projectsLayoutManager);
 
+    }
+
+    private void sendLog(){
+        File imagePath = new File(getFilesDir(), "log");
+        imagePath.mkdir();
+        File imageFile = new File(imagePath.getPath(), "expense_mngr.log");
+
+        // Write data in your file
+
+        Uri uri = FileProvider.getUriForFile(this, "com.ctmy.expensemanager.fileprovider", imageFile);
+
+        String to[] = {"yimysol@gmail.com"};
+        Intent intent = ShareCompat.IntentBuilder.from(this)
+                 .setStream(uri) // uri from FileProvider
+                .setType("text/html")
+                .getIntent()
+                .setAction(Intent.ACTION_SEND) //Change if needed
+                .setDataAndType(uri, "vnd.android.cursor.dir/email")
+                .putExtra(Intent.EXTRA_EMAIL, to)
+                .putExtra(Intent.EXTRA_SUBJECT, "Logs Expense Manager")
+                .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+        startActivity(intent);
+    
     }
 
     @Override

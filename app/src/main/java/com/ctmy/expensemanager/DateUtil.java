@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.text.DateFormat;
 import java.text.Format;
 import java.text.ParseException;
@@ -12,6 +15,8 @@ import java.util.Date;
 import java.util.TimeZone;
 
 public class DateUtil {
+
+    static Logger log = LoggerFactory.getLogger(DateUtil.class);
 
     private static Context contextCaller;
 
@@ -24,7 +29,7 @@ public class DateUtil {
         Format dateFormat = android.text.format.DateFormat.getDateFormat(contextCaller.getApplicationContext());
         String pattern = ((SimpleDateFormat) dateFormat).toLocalizedPattern();
         //String fullPattern = pattern + " HH:mm:ss";
-        Log.d("pattern", pattern);
+        log.info("getDatePattern " + pattern );
 
         return pattern;
     }
@@ -40,7 +45,7 @@ public class DateUtil {
         DateFormat format = new SimpleDateFormat(pattern);
         String timeZone = TimeZone.getDefault().getID();
         //format.setTimeZone(TimeZone.getTimeZone(timeZone));
-        Log.d("timezone", timeZone);
+        log.info("epochToDateString " + timeZone);
         String formatted = format.format(epoch);
 
         return formatted;
@@ -64,7 +69,7 @@ public class DateUtil {
             //sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
             Date dt = sdf.parse(dateString);
             long epochTime = dt.getTime();
-            Log.d("dateStringToEp", String.valueOf(epochTime));
+            log.info("dateStringToEpock " + String.valueOf(epochTime));
             return epochTime;
         } catch (ParseException e) {
             e.printStackTrace();

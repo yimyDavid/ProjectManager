@@ -86,12 +86,13 @@ public class NewTransaction extends AppCompatActivity {
     String currentPhotoPath;
     Uri mPhotoURI;
 
+    Logger log = LoggerFactory.getLogger(NewTransaction.class);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        Logger log = LoggerFactory.getLogger(NewTransaction.class);
+        //Logger log = LoggerFactory.getLogger(NewTransaction.class);
 
         setContentView(R.layout.activity_new_transaction);
         Toolbar toolbar = findViewById(R.id.toolbarTrans);
@@ -124,9 +125,8 @@ public class NewTransaction extends AppCompatActivity {
 
         pattern = DateUtil.getDatePattern(this);
         longPattern = DateUtil.getLongDatePattern(this);
-        log.info("long date pattern" + longPattern);
-        log.info("pathabsolute " + getFilesDir().getAbsolutePath());
-        log.info("This is my new test that is working");
+        log.info("onCreate " + longPattern);
+        //log.info("pathabsolute " + getFilesDir().getAbsolutePath());
 
         this.mTransaction = transaction;
         mCurrentDate = DateUtil.epochToDateString(mTransaction.getDate(), pattern);
@@ -232,6 +232,7 @@ public class NewTransaction extends AppCompatActivity {
                 mCurrentDate = new SimpleDateFormat(pattern, Locale.ENGLISH).format(date.getTime());
                 mLongCurrentDate = new SimpleDateFormat(longPattern, Locale.ENGLISH).format(date.getTime());
                 long epoch = DateUtil.dateStringToEpoch(mLongCurrentDate, longPattern);
+                log.info("dateDialogFragmentDateSet " + mCurrentDate + " " + mLongCurrentDate);
                // Log.d("datefromPicker", String.valueOf(epoch));
                // Log.d("datestring", mLongCurrentDate);
                 tv.setText(mCurrentDate);
@@ -244,6 +245,7 @@ public class NewTransaction extends AppCompatActivity {
     //100 => 200 originalValue - newValue = -100
     private void saveTransaction(){
         mTransaction.setDate(DateUtil.dateStringToEpoch(mLongCurrentDate, longPattern));
+        log.info("saveTransaction " + mTransaction.getDate());
 
         mTransaction.setAuthor(mCurrentUserName);
         mTransaction.setImageUrl(mUrl);
@@ -388,7 +390,7 @@ public class NewTransaction extends AppCompatActivity {
         //String pattern = DateUtil.getDatePattern(this);
         //String longPatter = DateUtil.getLongDatePattern(this);
         mCurrentDate = new SimpleDateFormat(pattern, Locale.ENGLISH).format(date.getTime());
-       // Log.d("function", mCurrentDate + pattern);
+        log.info("setCurrentDate " + mCurrentDate + " " + pattern);
         return mCurrentDate;
     }
 

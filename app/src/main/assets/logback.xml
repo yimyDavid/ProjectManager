@@ -5,7 +5,7 @@
         <file>/data/data/com.ctmy.expensemanager/files/log/expense_mngr.log</file>
 
         <encoder>
-            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+            <pattern>%d{M/d/yyyy HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
 

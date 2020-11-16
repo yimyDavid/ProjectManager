@@ -12,6 +12,7 @@ import java.text.Format;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.TimeZone;
 
 public class DateUtil {
@@ -43,12 +44,18 @@ public class DateUtil {
         //contextCaller = caller;
         //String pattern = getDatePattern(contextCaller);
         DateFormat format = new SimpleDateFormat(pattern);
+
+        DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.SHORT, Locale.getDefault());
+
         String timeZone = TimeZone.getDefault().getID();
         //format.setTimeZone(TimeZone.getTimeZone(timeZone));
         log.info("epochToDateString " + timeZone);
         String formatted = format.format(epoch);
 
-        return formatted;
+        //return formatted;
+        Log.d("New Format", dateFormat.format(epoch));
+        log.info("New Format " + dateFormat.format(epoch));
+        return dateFormat.format(epoch);
     }
     /* The result is to display it in the views*/
     public static String convertUTCtoCurrentTime(Long dateMillis){

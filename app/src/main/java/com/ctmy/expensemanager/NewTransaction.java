@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -23,6 +24,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.content.FileProvider;
@@ -42,6 +44,7 @@ import com.squareup.picasso.Picasso;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -71,6 +74,7 @@ public class NewTransaction extends AppCompatActivity {
     private Double mTotalIncomes;
     String pattern;
     String longPattern;
+    private Long mEpochTime;
 
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
@@ -88,6 +92,7 @@ public class NewTransaction extends AppCompatActivity {
 
     Logger log = LoggerFactory.getLogger(NewTransaction.class);
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -122,6 +127,14 @@ public class NewTransaction extends AppCompatActivity {
            // Log.d("Hello: ", "Date");
             transaction.setDate(DateUtil.getEpochTimeStamp());
         }
+
+        /*Test Date*/
+        DateFormat ffInstance = DateFormat.getDateTimeInstance(DateFormat.SHORT
+                , DateFormat.SHORT, Locale.getDefault());
+        Log.d("TEST DATE", ffInstance.format(System.currentTimeMillis()));
+        Log.d("Locale ", this.getResources().getConfiguration().locale.getCountry());
+        Log.d("Locale ", String.valueOf(Locale.getDefault()));
+
 
         pattern = DateUtil.getDatePattern(this);
         longPattern = DateUtil.getLongDatePattern(this);
@@ -227,15 +240,21 @@ public class NewTransaction extends AppCompatActivity {
 
             @Override
             public void dateDialogFragmentDateSet(Calendar date) {
+
+                /* New implementation*/
+                //TODO: save the date(epoch) selected in a global variable
+                String newDate = DateUtil.epochToDateString(date.getTimeInMillis(), "");
+
                 TextView tv = (TextView) findViewById(R.id.tv_date);
-                String pattern = DateUtil.getDatePattern((Activity) tv.getContext());
-                mCurrentDate = new SimpleDateFormat(pattern, Locale.ENGLISH).format(date.getTime());
-                mLongCurrentDate = new SimpleDateFormat(longPattern, Locale.ENGLISH).format(date.getTime());
+                /*String pattern = DateUtil.getDatePattern(getApplicationContext());
+                mCurrentDate = new SimpleDateFormat(pattern).format(date.getTime());
+                mLongCurrentDate = new SimpleDateFormat(longPattern).format(date.getTime());
                 long epoch = DateUtil.dateStringToEpoch(mLongCurrentDate, longPattern);
                 log.info("dateDialogFragmentDateSet " + mCurrentDate + " " + mLongCurrentDate);
+                */
                // Log.d("datefromPicker", String.valueOf(epoch));
                // Log.d("datestring", mLongCurrentDate);
-                tv.setText(mCurrentDate);
+                tv.setText(newDate);
             }
         });
 

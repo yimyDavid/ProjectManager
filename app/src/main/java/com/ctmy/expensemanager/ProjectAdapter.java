@@ -113,7 +113,7 @@ public class ProjectAdapter extends RecyclerView.Adapter<ProjectAdapter.ProjectV
                 tvBalance.setTextColor(Color.RED);
             }
 
-            DecimalFormat df = new DecimalFormat("#0.00");
+            DecimalFormat df = new DecimalFormat("#.00");
             String shortPattern = DateUtil.getDatePattern(itemView.getContext());
             tvTitle.setText(project.getProjectName());
             tvDueDate.setText(DateUtil.epochToDateString(project.getDueDate(), shortPattern));

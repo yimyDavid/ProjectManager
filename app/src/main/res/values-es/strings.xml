@@ -53,4 +53,8 @@
     <string name="enter_transaction_description">Descripcion de la transaccion</string>
     <string name="description">Descripcion</string>
     <string name="enter_amount">Entre el monto</string>
+    <string name="close">Cerrar</string>
+    <string name="select">Selectionar</string>
+    <string name="attach">Adjuntar</string>
+    <string name="send_log">Enviar Registro</string>
 </resources>

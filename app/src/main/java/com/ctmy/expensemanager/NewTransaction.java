@@ -136,15 +136,17 @@ public class NewTransaction extends AppCompatActivity {
         Log.d("Locale ", String.valueOf(Locale.getDefault()));
 
 
-        pattern = DateUtil.getDatePattern(this);
-        longPattern = DateUtil.getLongDatePattern(this);
-        log.info("onCreate " + longPattern);
+        ///pattern = DateUtil.getDatePattern(this);
+        ///longPattern = DateUtil.getLongDatePattern(this);
+        //log.info("onCreate " + longPattern);
         //log.info("pathabsolute " + getFilesDir().getAbsolutePath());
 
         this.mTransaction = transaction;
-        mCurrentDate = DateUtil.epochToDateString(mTransaction.getDate(), pattern);
-        mLongCurrentDate = DateUtil.epochToDateString(mTransaction.getDate(), longPattern);
-        tvTransDate.setText(mCurrentDate);
+        mEpochTime = mTransaction.getDate();
+        log.info("onCrate " + mEpochTime);
+        //mCurrentDate = DateUtil.epochToDateString(mTransaction.getDate(), pattern);
+        //mLongCurrentDate = DateUtil.epochToDateString(mTransaction.getDate(), longPattern);
+        tvTransDate.setText(DateUtil.epochToDateString(mEpochTime,""));
         etAmount.setText(String.valueOf(transaction.getAmount()));
         atvDescription.setText(mTransaction.getDescription());
         showImage(mTransaction.getImageUrl());
@@ -228,8 +230,12 @@ public class NewTransaction extends AppCompatActivity {
         mTransaction = new Transaction();
         //this will reset the date after saving/editing the transaction.
         //It makes sure that new transaction is not saved with the previous trans date
-        tvTransDate.setText(setCurrentDate(pattern));
-        mLongCurrentDate = setLongCurrentDate(longPattern);
+        mEpochTime = DateUtil.getEpochTimeStamp();
+        tvTransDate.setText(DateUtil.epochToDateString(mEpochTime, ""));
+        log.info("cleanFields " + tvTransDate.getText().toString());
+        log.info("cleanFields " + mEpochTime);
+        ///tvTransDate.setText(setCurrentDate(pattern));
+        ///mLongCurrentDate = setLongCurrentDate(longPattern);
         mUrl="";
     }
 
@@ -242,8 +248,9 @@ public class NewTransaction extends AppCompatActivity {
             public void dateDialogFragmentDateSet(Calendar date) {
 
                 /* New implementation*/
-                //TODO: save the date(epoch) selected in a global variable
-                String newDate = DateUtil.epochToDateString(date.getTimeInMillis(), "");
+                mEpochTime = date.getTimeInMillis();
+                String newDate = DateUtil.epochToDateString(mEpochTime, "");
+
 
                 TextView tv = (TextView) findViewById(R.id.tv_date);
                 /*String pattern = DateUtil.getDatePattern(getApplicationContext());
@@ -255,6 +262,7 @@ public class NewTransaction extends AppCompatActivity {
                // Log.d("datefromPicker", String.valueOf(epoch));
                // Log.d("datestring", mLongCurrentDate);
                 tv.setText(newDate);
+                log.info("DateDialog " + tv.getText().toString());
             }
         });
 
@@ -263,7 +271,8 @@ public class NewTransaction extends AppCompatActivity {
     //100 => 80  originalValue - newValue = 20
     //100 => 200 originalValue - newValue = -100
     private void saveTransaction(){
-        mTransaction.setDate(DateUtil.dateStringToEpoch(mLongCurrentDate, longPattern));
+        //mTransaction.setDate(DateUtil.dateStringToEpoch(mLongCurrentDate, longPattern));
+        mTransaction.setDate(mEpochTime);
         log.info("saveTransaction " + mTransaction.getDate());
 
         mTransaction.setAuthor(mCurrentUserName);
@@ -403,19 +412,19 @@ public class NewTransaction extends AppCompatActivity {
         }
     }
 
-    private String setCurrentDate(String pattern){
+    /*private String setCurrentDate(String pattern){
         // Set date view to current date at start up
         Calendar date = Calendar.getInstance();
         //String pattern = DateUtil.getDatePattern(this);
         //String longPatter = DateUtil.getLongDatePattern(this);
         mCurrentDate = new SimpleDateFormat(pattern, Locale.ENGLISH).format(date.getTime());
-        log.info("setCurrentDate " + mCurrentDate + " " + pattern);
+        ///log.info("setCurrentDate " + mCurrentDate + " " + pattern);
         return mCurrentDate;
-    }
+    }*/
 
-    private String setLongCurrentDate(String longPattern){
+   /* private String setLongCurrentDate(String longPattern){
         return setCurrentDate(longPattern);
-    }
+    }*/
 
 
 

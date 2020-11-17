@@ -43,18 +43,18 @@ public class DateUtil {
     public static String epochToDateString(Long epoch, final String pattern){
         //contextCaller = caller;
         //String pattern = getDatePattern(contextCaller);
-        DateFormat format = new SimpleDateFormat(pattern);
+       /// DateFormat format = new SimpleDateFormat(pattern);
 
         DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.SHORT, Locale.getDefault());
 
-        String timeZone = TimeZone.getDefault().getID();
+        ///String timeZone = TimeZone.getDefault().getID();
         //format.setTimeZone(TimeZone.getTimeZone(timeZone));
-        log.info("epochToDateString " + timeZone);
-        String formatted = format.format(epoch);
+        //log.info("epochToDateString " + timeZone);
+        ///String formatted = format.format(epoch);
 
         //return formatted;
-        Log.d("New Format", dateFormat.format(epoch));
         log.info("New Format " + dateFormat.format(epoch));
+
         return dateFormat.format(epoch);
     }
     /* The result is to display it in the views*/

@@ -149,7 +149,7 @@ public class TransactionAdapter extends RecyclerView.Adapter<TransactionAdapter.
 
         public void bind(Transaction transaction) {
             tvDescription.setText(transaction.getDescription());
-            tvDate.setText(DateUtil.epochToDateString(transaction.getDate(), DateUtil.getDatePattern(itemView.getContext())));
+            tvDate.setText(DateUtil.epochToDateString(transaction.getDate()));
             tvAmount.setText(String.valueOf(transaction.getAmount()));
 
             String transactionType = transaction.getDescription().toLowerCase();

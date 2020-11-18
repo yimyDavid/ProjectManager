@@ -19,40 +19,12 @@ public class DateUtil {
 
     static Logger log = LoggerFactory.getLogger(DateUtil.class);
 
-    private static Context contextCaller;
-
     public static Long getEpochTimeStamp(){
         return System.currentTimeMillis();
     }
 
-    public static String getDatePattern(final Context caller){
-        contextCaller = caller;
-        Format dateFormat = android.text.format.DateFormat.getDateFormat(contextCaller.getApplicationContext());
-        String pattern = ((SimpleDateFormat) dateFormat).toLocalizedPattern();
-        //String fullPattern = pattern + " HH:mm:ss";
-        log.info("getDatePattern " + pattern );
-
-        return pattern;
-    }
-
-    public static String getLongDatePattern(final Context caller){
-        contextCaller = caller;
-        return getDatePattern(contextCaller) + " " + "HH:mm:ss";
-    }
-
-    public static String epochToDateString(Long epoch, final String pattern){
-        //contextCaller = caller;
-        //String pattern = getDatePattern(contextCaller);
-       /// DateFormat format = new SimpleDateFormat(pattern);
-
+    public static String epochToDateString(Long epoch){
         DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.SHORT, Locale.getDefault());
-
-        ///String timeZone = TimeZone.getDefault().getID();
-        //format.setTimeZone(TimeZone.getTimeZone(timeZone));
-        //log.info("epochToDateString " + timeZone);
-        ///String formatted = format.format(epoch);
-
-        //return formatted;
         log.info("New Format " + dateFormat.format(epoch));
 
         return dateFormat.format(epoch);
@@ -63,9 +35,6 @@ public class DateUtil {
     }
 
     public static Long dateStringToEpoch(String dateString, final String pattern) {
-        //contextCaller = caller;
-       //String pattern = getDatePattern(contextCaller);
-    //TODO: convert date in textview back to epoch GMT/UTC. fix epoch time conversion
         //If for some reason the string is empty, return the current time in milliseconds
         if(dateString == null || dateString.isEmpty()){
             return getEpochTimeStamp();

@@ -31,13 +31,10 @@ public class newProject extends AppCompatActivity {
     private ArrayList<ProjectType> mProjectTypes;
     private TypeAdapter mAdapter;
 
-    private static final String TAG = "DocSnippets";
-
     private FirebaseDatabase mFirebaseDatabase;
     private DatabaseReference mDatabaseReference;
     private ChildEventListener mChildListener;
-    String pattern;
-    String longPattern;
+    private Long mEpochTime;
 
     // view's fields
     EditText txtTitle;
@@ -67,12 +64,10 @@ public class newProject extends AppCompatActivity {
         txtTitle = (EditText) findViewById(R.id.tv_proj_name);
         tvDueDate = (TextView) findViewById(R.id.dueDate);
         btSaveProject = (Button) findViewById(R.id.btn_create_proj);
-        // Set date view to current date at start up
-        pattern = DateUtil.getDatePattern(this);
-        longPattern = DateUtil.getLongDatePattern(this);
-        Calendar date = Calendar.getInstance();
-        String mCurrentDate = new SimpleDateFormat(pattern, Locale.ENGLISH).format(date.getTime());
-        tvDueDate.setText(mCurrentDate);
+
+        // get the current epoch time
+        mEpochTime = DateUtil.getEpochTimeStamp();
+        tvDueDate.setText(DateUtil.epochToDateString(mEpochTime));
 
         initList();
 
@@ -167,9 +162,10 @@ public class newProject extends AppCompatActivity {
 
             @Override
             public void dateDialogFragmentDateSet(Calendar date) {
-                TextView tv = (TextView) findViewById(R.id.dueDate);
-                String stringOfDate = new SimpleDateFormat(pattern, Locale.ENGLISH).format(date.getTime());
-                tv.setText(stringOfDate);
+                mEpochTime = date.getTimeInMillis();
+                String newDate = DateUtil.epochToDateString(mEpochTime);
+                TextView tvDate = (TextView) findViewById(R.id.dueDate);
+                tvDate.setText(newDate);
             }
         });
 
@@ -179,23 +175,15 @@ public class newProject extends AppCompatActivity {
 
     private void saveProject(){
         String projectTitle = txtTitle.getText().toString();
-        Long dueDate = DateUtil.dateStringToEpoch(tvDueDate.getText().toString(), longPattern);
         String projectId = mDatabaseReference.push().getKey();
         creationDate = DateUtil.getEpochTimeStamp();
-        Project project = new Project(projectId, projectTitle, dueDate, creationDate, spProjType, 0.00, 0.00);
+        Project project = new Project(projectId, projectTitle, mEpochTime, creationDate, spProjType, 0.00, 0.00);
         mDatabaseReference.child(projectId).setValue(project);
     }
 
     private void cleanFields(){
         txtTitle.setText("");
         //tvDueDate.setText("");
-    }
-
-    private String getCurrentDate(){
-        //String pattern = DateUtil.getDatePattern(this);
-        Calendar c = Calendar.getInstance();
-        String selectedDate = new SimpleDateFormat(pattern, Locale.ENGLISH).format(c.getTime());
-        return selectedDate;
     }
 
 }

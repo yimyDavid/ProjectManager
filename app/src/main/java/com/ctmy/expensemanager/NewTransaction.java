@@ -48,7 +48,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.Locale;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -66,14 +65,10 @@ public class NewTransaction extends AppCompatActivity {
     private String mReferenceFirebase = "transactions";
     private String mCurrentProjectId;
     private String mCurrentUserName;
-    private String mCurrentDate;
-    private String mLongCurrentDate;
     private String mUrl = "";
 
     private Double mTotalExpenses;
     private Double mTotalIncomes;
-    String pattern;
-    String longPattern;
     private Long mEpochTime;
 
     private FirebaseDatabase mFirebaseDatabase;
@@ -96,8 +91,6 @@ public class NewTransaction extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        //Logger log = LoggerFactory.getLogger(NewTransaction.class);
 
         setContentView(R.layout.activity_new_transaction);
         Toolbar toolbar = findViewById(R.id.toolbarTrans);
@@ -124,29 +117,14 @@ public class NewTransaction extends AppCompatActivity {
         Transaction transaction = (Transaction) transIntent.getSerializableExtra("transaction");
         if(transaction == null){
             transaction = new Transaction();
-           // Log.d("Hello: ", "Date");
             transaction.setDate(DateUtil.getEpochTimeStamp());
         }
-
-        /*Test Date*/
-        DateFormat ffInstance = DateFormat.getDateTimeInstance(DateFormat.SHORT
-                , DateFormat.SHORT, Locale.getDefault());
-        Log.d("TEST DATE", ffInstance.format(System.currentTimeMillis()));
-        Log.d("Locale ", this.getResources().getConfiguration().locale.getCountry());
-        Log.d("Locale ", String.valueOf(Locale.getDefault()));
-
-
-        ///pattern = DateUtil.getDatePattern(this);
-        ///longPattern = DateUtil.getLongDatePattern(this);
-        //log.info("onCreate " + longPattern);
-        //log.info("pathabsolute " + getFilesDir().getAbsolutePath());
 
         this.mTransaction = transaction;
         mEpochTime = mTransaction.getDate();
         log.info("onCrate " + mEpochTime);
-        //mCurrentDate = DateUtil.epochToDateString(mTransaction.getDate(), pattern);
-        //mLongCurrentDate = DateUtil.epochToDateString(mTransaction.getDate(), longPattern);
-        tvTransDate.setText(DateUtil.epochToDateString(mEpochTime,""));
+
+        tvTransDate.setText(DateUtil.epochToDateString(mEpochTime));
         etAmount.setText(String.valueOf(transaction.getAmount()));
         atvDescription.setText(mTransaction.getDescription());
         showImage(mTransaction.getImageUrl());
@@ -231,11 +209,9 @@ public class NewTransaction extends AppCompatActivity {
         //this will reset the date after saving/editing the transaction.
         //It makes sure that new transaction is not saved with the previous trans date
         mEpochTime = DateUtil.getEpochTimeStamp();
-        tvTransDate.setText(DateUtil.epochToDateString(mEpochTime, ""));
+        tvTransDate.setText(DateUtil.epochToDateString(mEpochTime));
         log.info("cleanFields " + tvTransDate.getText().toString());
         log.info("cleanFields " + mEpochTime);
-        ///tvTransDate.setText(setCurrentDate(pattern));
-        ///mLongCurrentDate = setLongCurrentDate(longPattern);
         mUrl="";
     }
 
@@ -249,18 +225,8 @@ public class NewTransaction extends AppCompatActivity {
 
                 /* New implementation*/
                 mEpochTime = date.getTimeInMillis();
-                String newDate = DateUtil.epochToDateString(mEpochTime, "");
-
-
+                String newDate = DateUtil.epochToDateString(mEpochTime);
                 TextView tv = (TextView) findViewById(R.id.tv_date);
-                /*String pattern = DateUtil.getDatePattern(getApplicationContext());
-                mCurrentDate = new SimpleDateFormat(pattern).format(date.getTime());
-                mLongCurrentDate = new SimpleDateFormat(longPattern).format(date.getTime());
-                long epoch = DateUtil.dateStringToEpoch(mLongCurrentDate, longPattern);
-                log.info("dateDialogFragmentDateSet " + mCurrentDate + " " + mLongCurrentDate);
-                */
-               // Log.d("datefromPicker", String.valueOf(epoch));
-               // Log.d("datestring", mLongCurrentDate);
                 tv.setText(newDate);
                 log.info("DateDialog " + tv.getText().toString());
             }
@@ -412,22 +378,6 @@ public class NewTransaction extends AppCompatActivity {
         }
     }
 
-    /*private String setCurrentDate(String pattern){
-        // Set date view to current date at start up
-        Calendar date = Calendar.getInstance();
-        //String pattern = DateUtil.getDatePattern(this);
-        //String longPatter = DateUtil.getLongDatePattern(this);
-        mCurrentDate = new SimpleDateFormat(pattern, Locale.ENGLISH).format(date.getTime());
-        ///log.info("setCurrentDate " + mCurrentDate + " " + pattern);
-        return mCurrentDate;
-    }*/
-
-   /* private String setLongCurrentDate(String longPattern){
-        return setCurrentDate(longPattern);
-    }*/
-
-
-
     private void uploadPicture(Uri imageUri){
         StorageReference ref = FirebaseUtil.mStorageRef.child(imageUri.getLastPathSegment());
         ref.putFile(imageUri).addOnSuccessListener(this, new OnSuccessListener<UploadTask.TaskSnapshot>() {
@@ -443,7 +393,6 @@ public class NewTransaction extends AppCompatActivity {
                                 showImage(mUrl);
                                 ivReceipt.setVisibility(View.VISIBLE);
                                 pgvReceiptUpload.setVisibility(View.INVISIBLE);
-                               // Log.d("result", mUrl);
                             }
                         });
                     }

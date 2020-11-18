@@ -82,7 +82,7 @@ public class newProject extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 ProjectType clickedItem = (ProjectType) parent.getItemAtPosition(position);
                 spProjType = clickedItem.getTypeName();
-                Toast.makeText(newProject.this, spProjType + " selected", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(newProject.this, spProjType + " selected", Toast.LENGTH_SHORT).show();
             }
 
             @Override

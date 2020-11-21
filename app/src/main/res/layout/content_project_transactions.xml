@@ -99,7 +99,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
-                android:background="@drawable/rectangle"
+                android:background="@drawable/gradient_round_box"
                 android:paddingLeft="16dp"
                 android:paddingRight="16dp"
                 android:text="@string/btn_add_trans"

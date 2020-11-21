@@ -15,14 +15,14 @@
             android:id="@+id/toolbarTrans"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
+            android:background="@drawable/gradient_box"
             app:popupTheme="@style/AppTheme.PopupOverlay" />
 
     </com.google.android.material.appbar.AppBarLayout>
 
     <include
         layout="@layout/content_projectmanager"
-        android:background="@color/backgroundColor" />
+        android:background="@color/done_status" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fab"
@@ -30,6 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
         android:layout_margin="@dimen/fab_margin"
+        android:background="@drawable/gradient_box"
         app:backgroundTint="@color/colorPrimary"
         app:srcCompat="@mipmap/ic_add_white_24dp" />
 

@@ -175,10 +175,15 @@ public class newProject extends AppCompatActivity {
 
     private void saveProject(){
         String projectTitle = txtTitle.getText().toString();
-        String projectId = mDatabaseReference.push().getKey();
-        creationDate = DateUtil.getEpochTimeStamp();
-        Project project = new Project(projectId, projectTitle, mEpochTime, creationDate, spProjType, 0.00, 0.00);
-        mDatabaseReference.child(projectId).setValue(project);
+        if(projectTitle.equals("") || projectTitle.isEmpty()){
+            String projectId = mDatabaseReference.push().getKey();
+            creationDate = DateUtil.getEpochTimeStamp();
+            Project project = new Project(projectId, projectTitle, mEpochTime, creationDate, spProjType, 0.00, 0.00);
+            mDatabaseReference.child(projectId).setValue(project);
+        }else{
+            Toast.makeText(newProject.this, R.string.reqProjectNameToast, Toast.LENGTH_LONG).show();
+        }
+
     }
 
     private void cleanFields(){

@@ -61,6 +61,7 @@ public class NewTransaction extends AppCompatActivity {
     Button btnSave;
     ImageView ivReceipt;
     ProgressBar pgvReceiptUpload;
+    Boolean mIsImagelarge = false;
 
     private String mReferenceFirebase = "transactions";
     private String mCurrentProjectId;
@@ -110,6 +111,8 @@ public class NewTransaction extends AppCompatActivity {
         atvDescription = (MultiAutoCompleteTextView) findViewById(R.id.atvDescription);
         btnSave = (Button) findViewById(R.id.btn_ok);
         ivReceipt = (ImageView) findViewById(R.id.imgvReceipt);
+        //ivReceipt.setTranslationZ(10);
+
         pgvReceiptUpload = (ProgressBar)findViewById(R.id.pbUploadReceipt);
 
         /* Get transaction object */
@@ -155,6 +158,22 @@ public class NewTransaction extends AppCompatActivity {
                 }catch (Exception e){
                     Toast.makeText(NewTransaction.this, "Error saving transaction", Toast.LENGTH_LONG).show();
                     e.printStackTrace();
+                }
+            }
+        });
+
+        ivReceipt.setOnClickListener(new View.OnClickListener(){
+
+            @Override
+            public void onClick(View v) {
+                if(mIsImagelarge == false){
+                    ivReceipt.setTranslationZ(10);
+                    showImageLarge(mUrl);
+                    mIsImagelarge = true;
+                }else{
+                    ivReceipt.setTranslationZ(0);
+                    showImage(mUrl);
+                    mIsImagelarge = false;
                 }
             }
         });
@@ -377,6 +396,19 @@ public class NewTransaction extends AppCompatActivity {
                     .into(ivReceipt);
         }
     }
+
+    private void showImageLarge(String url){
+        if(url != null && url.isEmpty() == false){
+            int width = Resources.getSystem().getDisplayMetrics().widthPixels;
+            Picasso.get()
+                    .load(url)
+                    .resize(width, width*2/3)
+                    .rotate(90)
+                    .centerInside()
+                    .into(ivReceipt);
+        }
+    }
+
 
     private void uploadPicture(Uri imageUri){
         StorageReference ref = FirebaseUtil.mStorageRef.child(imageUri.getLastPathSegment());

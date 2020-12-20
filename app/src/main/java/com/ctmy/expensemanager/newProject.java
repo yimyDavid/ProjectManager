@@ -175,7 +175,7 @@ public class newProject extends AppCompatActivity {
 
     private void saveProject(){
         String projectTitle = txtTitle.getText().toString();
-        if(projectTitle.equals("") || projectTitle.isEmpty()){
+        if(!projectTitle.equals("") || !projectTitle.isEmpty()){
             String projectId = mDatabaseReference.push().getKey();
             creationDate = DateUtil.getEpochTimeStamp();
             Project project = new Project(projectId, projectTitle, mEpochTime, creationDate, spProjType, 0.00, 0.00);

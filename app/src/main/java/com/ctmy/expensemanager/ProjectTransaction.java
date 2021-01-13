@@ -89,7 +89,7 @@ public class ProjectTransaction extends AppCompatActivity  implements ValuesFrom
         }
 
         initializeDisplayTransactions();
-        setTitle(getResources().getText(R.string.proj_trans_acitivity) + " " + mProjectTitle);
+        setTitle(mProjectTitle);
     }
 
     @Override

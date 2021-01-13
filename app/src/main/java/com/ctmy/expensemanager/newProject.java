@@ -183,12 +183,10 @@ public class newProject extends AppCompatActivity {
         }else{
             Toast.makeText(newProject.this, R.string.reqProjectNameToast, Toast.LENGTH_LONG).show();
         }
-
     }
 
     private void cleanFields(){
         txtTitle.setText("");
         //tvDueDate.setText("");
     }
-
 }
